@@ -1,0 +1,382 @@
+{
+  "title": "Research Before Production",
+  "duration": 50,
+  "fps": 60,
+  "bpm": 134.5,
+  "formats": [
+    "9x16",
+    "16x9"
+  ],
+  "marks": {
+    "hook": 0,
+    "stakes": 5.35316,
+    "proof": 10.70632,
+    "footprints": 16.05948,
+    "slate": 24.98141,
+    "cost": 32.11896,
+    "build": 35.68773,
+    "gap": 40.1487,
+    "drop": 41.04089,
+    "logo": 42.82528,
+    "outro": 46.39405,
+    "end": 50
+  },
+  "music": {
+    "style": "cinematic",
+    "key": "D",
+    "chords": [
+      "Dm",
+      "Dm",
+      "Bb",
+      "Dm",
+      "Bb",
+      "C",
+      "Dm",
+      "Bb",
+      "A",
+      "Dm",
+      "F",
+      "C",
+      "Bb",
+      "C",
+      "Dm",
+      "Bb",
+      "F",
+      "C",
+      "Gm",
+      "Bb",
+      "Gm",
+      "A",
+      "A",
+      "D",
+      "Bb",
+      "F",
+      "C",
+      "D"
+    ],
+    "sections": [
+      {
+        "at": 0,
+        "kind": "intro"
+      },
+      {
+        "at": 5.35316,
+        "kind": "full"
+      },
+      {
+        "at": 35.68773,
+        "kind": "build"
+      },
+      {
+        "at": 40.1487,
+        "kind": "gap"
+      },
+      {
+        "at": 41.04089,
+        "kind": "drop"
+      },
+      {
+        "at": 46.39405,
+        "kind": "outro"
+      }
+    ],
+    "accents": [
+      42.82528
+    ],
+    "melody": "auto",
+    "seed": 7
+  },
+  "sfx": [
+    {
+      "at": 0.4,
+      "synth": "whoosh",
+      "gain": -13,
+      "dur": 0.5
+    },
+    {
+      "at": 0.45,
+      "synth": "freeze",
+      "gain": -11
+    },
+    {
+      "at": 5.35316,
+      "lib": "whoosh-cinematic",
+      "gain": -13,
+      "align": "peak",
+      "maxlen": 1.4
+    },
+    {
+      "at": 10.75632,
+      "synth": "count",
+      "gain": -24,
+      "dur": 0.85
+    },
+    {
+      "at": 11.62632,
+      "synth": "pop",
+      "gain": -19
+    },
+    {
+      "at": 11.364,
+      "synth": "click",
+      "gain": -21
+    },
+    {
+      "at": 12.324,
+      "synth": "click",
+      "gain": -21
+    },
+    {
+      "at": 13.204,
+      "synth": "click",
+      "gain": -21
+    },
+    {
+      "at": 16.05948,
+      "lib": "whoosh-cinematic",
+      "gain": -14,
+      "align": "peak",
+      "maxlen": 1.4
+    },
+    {
+      "ticks": "assets/audio/steps.json",
+      "synth": "step",
+      "gain": -13
+    },
+    {
+      "at": 20.121000000000002,
+      "synth": "pop",
+      "gain": -22
+    },
+    {
+      "at": 20.771,
+      "synth": "pop",
+      "gain": -22,
+      "pitch": 1.06
+    },
+    {
+      "at": 21.586000000000002,
+      "synth": "pop",
+      "gain": -22,
+      "pitch": 1.12
+    },
+    {
+      "at": 22.496000000000002,
+      "synth": "pop",
+      "gain": -22,
+      "pitch": 1.19
+    },
+    {
+      "at": 24.98141,
+      "lib": "whoosh-cinematic",
+      "gain": -13,
+      "align": "peak",
+      "maxlen": 1.4
+    },
+    {
+      "at": 26.313,
+      "synth": "chalk",
+      "gain": -19,
+      "dur": 0.55
+    },
+    {
+      "at": 27.593,
+      "synth": "chalk",
+      "gain": -19,
+      "dur": 0.55
+    },
+    {
+      "at": 30.393,
+      "synth": "chalk",
+      "gain": -19,
+      "dur": 0.7
+    },
+    {
+      "at": 30.443,
+      "synth": "click",
+      "gain": -19
+    },
+    {
+      "at": 31.403000000000002,
+      "synth": "click",
+      "gain": -19,
+      "pitch": 0.85
+    },
+    {
+      "at": 32.11896,
+      "lib": "whoosh-short",
+      "gain": -15,
+      "align": "peak"
+    },
+    {
+      "at": 36.370999999999995,
+      "lib": "whoosh-short",
+      "gain": -15,
+      "align": "peak"
+    },
+    {
+      "at": 37.971,
+      "synth": "thump",
+      "gain": -15
+    },
+    {
+      "ticks": "assets/audio/clap.json",
+      "synth": "slate",
+      "gain": -4
+    },
+    {
+      "at": 41.04089,
+      "lib": "impact-bass-1",
+      "gain": -9,
+      "maxlen": 2.2
+    },
+    {
+      "at": 41.06089,
+      "lib": "sparkle",
+      "gain": -18,
+      "maxlen": 1.6
+    },
+    {
+      "at": 42.82528,
+      "synth": "shimmer",
+      "gain": -20
+    },
+    {
+      "at": 46.49405,
+      "synth": "pop",
+      "gain": -19
+    }
+  ],
+  "mix": {
+    "music": -4,
+    "sfx": 0,
+    "vo": 3,
+    "duck_db": -9,
+    "lufs": -14,
+    "ceiling_db": -1.9
+  },
+  "vo": {
+    "src": "assets/audio/vo_source.mp3",
+    "transcript": "assets/audio/vo_transcript.json",
+    "voice": "ElevenLabs · Sarah – Approachable and Informative · Eleven Multilingual v2 · speed 1.05, stability 50, similarity 75, style 5, speaker boost",
+    "units": [
+      {
+        "id": "hook",
+        "src": [
+          0.0,
+          4.115
+        ],
+        "at": 0.75
+      },
+      {
+        "id": "stakes",
+        "src": [
+          4.64,
+          9.383
+        ],
+        "at": 5.453
+      },
+      {
+        "id": "proof",
+        "src": [
+          9.842,
+          14.795
+        ],
+        "at": 10.806
+      },
+      {
+        "id": "footprints",
+        "src": [
+          15.238,
+          23.858
+        ],
+        "at": 16.209
+      },
+      {
+        "id": "mechanism",
+        "src": [
+          24.248,
+          30.661
+        ],
+        "at": 25.281
+      },
+      {
+        "id": "cost",
+        "src": [
+          31.098,
+          37.409
+        ],
+        "at": 32.219
+      },
+      {
+        "id": "research",
+        "src": [
+          37.674,
+          38.798
+        ],
+        "at": 38.83
+      },
+      {
+        "id": "roll",
+        "src": [
+          39.228,
+          39.835
+        ],
+        "at": 40.304,
+        "post": 0.0
+      },
+      {
+        "id": "cta",
+        "src": [
+          39.835,
+          45.514
+        ],
+        "at": 42.041,
+        "pre": 0.0
+      }
+    ],
+    "script": [
+      "Before anyone yells \"action\"... who is this video for?",
+      "A beautiful film, made for the wrong audience, plays to an empty room.",
+      "And no edit, no grade, no soundtrack can fix the wrong message.",
+      "Your audience is already leaving footprints. What they search. Save. Skip. Share.",
+      "Follow them first.",
+      "Research tells you who to cast, what hooks them in three seconds, and whether to shoot vertical... or wide.",
+      "Change it on paper? That costs an afternoon. Change it after the shoot? That's a reshoot.",
+      "Research first. Then roll.",
+      "Esha Bargate Productions. Let's find your audience... before we frame a single shot."
+    ]
+  },
+  "cues": {
+    "search": 20.091,
+    "save": 20.741,
+    "skip": 21.556,
+    "share": 22.466,
+    "for": 4.75,
+    "action": 2.35,
+    "room": 10.013,
+    "edit": 11.364,
+    "grade": 12.324,
+    "soundtrack": 13.204,
+    "message": 15.204,
+    "footprints": 18.411,
+    "follow": 23.741,
+    "first": 24.491,
+    "who": 26.313,
+    "hooks": 27.593,
+    "vertical": 30.393,
+    "wide": 31.353,
+    "paper": 32.881,
+    "afternoon": 34.561,
+    "shoot": 36.721,
+    "reshoot": 37.921,
+    "research2": 38.811,
+    "then": 40.281,
+    "roll": 40.436,
+    "esha": 42.041,
+    "lets": 44.101,
+    "before": 45.951,
+    "shot": 47.406
+  },
+  "three": "0.181.2"
+}

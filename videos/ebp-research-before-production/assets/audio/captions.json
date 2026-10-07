@@ -1,0 +1,164 @@
+[
+ {
+  "t0": 0.75,
+  "t1": 3.565,
+  "text": "Before anyone yells \"action\"...",
+  "unit": "hook"
+ },
+ {
+  "t0": 3.595,
+  "t1": 5.135,
+  "text": "who is this video for?",
+  "unit": "hook"
+ },
+ {
+  "t0": 5.438,
+  "t1": 6.723,
+  "text": "A beautiful film,",
+  "unit": "stakes"
+ },
+ {
+  "t0": 6.753,
+  "t1": 8.563,
+  "text": "made for the wrong audience,",
+  "unit": "stakes"
+ },
+ {
+  "t0": 8.658,
+  "t1": 10.466,
+  "text": "plays to an empty room.",
+  "unit": "stakes"
+ },
+ {
+  "t0": 10.789,
+  "t1": 12.829,
+  "text": "And no edit, no grade,",
+  "unit": "proof"
+ },
+ {
+  "t0": 12.859,
+  "t1": 14.614,
+  "text": "no soundtrack can fix",
+  "unit": "proof"
+ },
+ {
+  "t0": 14.644,
+  "t1": 16.029,
+  "text": "the wrong message.",
+  "unit": "proof"
+ },
+ {
+  "t0": 16.191,
+  "t1": 17.821,
+  "text": "Your audience is already",
+  "unit": "footprints"
+ },
+ {
+  "t0": 17.851,
+  "t1": 19.456,
+  "text": "leaving footprints.",
+  "unit": "footprints"
+ },
+ {
+  "t0": 19.486,
+  "t1": 20.711,
+  "text": "What they search.",
+  "unit": "footprints"
+ },
+ {
+  "t0": 20.741,
+  "t1": 23.711,
+  "text": "Save. Skip. Share.",
+  "unit": "footprints"
+ },
+ {
+  "t0": 23.741,
+  "t1": 25.099,
+  "text": "Follow them first.",
+  "unit": "footprints"
+ },
+ {
+  "t0": 25.263,
+  "t1": 27.333,
+  "text": "Research tells you who to cast,",
+  "unit": "mechanism"
+ },
+ {
+  "t0": 27.363,
+  "t1": 28.123,
+  "text": "what hooks them",
+  "unit": "mechanism"
+ },
+ {
+  "t0": 28.153,
+  "t1": 29.338,
+  "text": "in three seconds,",
+  "unit": "mechanism"
+ },
+ {
+  "t0": 29.368,
+  "t1": 31.083,
+  "text": "and whether to shoot vertical...",
+  "unit": "mechanism"
+ },
+ {
+  "t0": 31.113,
+  "t1": 31.964,
+  "text": "or wide.",
+  "unit": "mechanism"
+ },
+ {
+  "t0": 32.201,
+  "t1": 33.551,
+  "text": "Change it on paper?",
+  "unit": "cost"
+ },
+ {
+  "t0": 33.581,
+  "t1": 35.606,
+  "text": "That costs an afternoon.",
+  "unit": "cost"
+ },
+ {
+  "t0": 35.636,
+  "t1": 37.396,
+  "text": "Change it after the shoot?",
+  "unit": "cost"
+ },
+ {
+  "t0": 37.426,
+  "t1": 38.781,
+  "text": "That's a reshoot.",
+  "unit": "cost"
+ },
+ {
+  "t0": 38.811,
+  "t1": 40.224,
+  "text": "Research first.",
+  "unit": "research"
+ },
+ {
+  "t0": 40.281,
+  "t1": 40.906,
+  "text": "Then roll.",
+  "unit": "roll"
+ },
+ {
+  "t0": 42.041,
+  "t1": 44.071,
+  "text": "Esha Bargate Productions.",
+  "unit": "cta"
+ },
+ {
+  "t0": 44.101,
+  "t1": 45.796,
+  "text": "Let's find your audience...",
+  "unit": "cta"
+ },
+ {
+  "t0": 45.951,
+  "t1": 47.99,
+  "text": "before we frame a single shot.",
+  "unit": "cta"
+ }
+]

@@ -1,0 +1,758 @@
+{
+ "units": [
+  {
+   "id": "hook",
+   "at": 0.75,
+   "end": 4.865
+  },
+  {
+   "id": "stakes",
+   "at": 5.453,
+   "end": 10.196
+  },
+  {
+   "id": "proof",
+   "at": 10.806,
+   "end": 15.759
+  },
+  {
+   "id": "footprints",
+   "at": 16.209,
+   "end": 24.829
+  },
+  {
+   "id": "mechanism",
+   "at": 25.281,
+   "end": 31.694
+  },
+  {
+   "id": "cost",
+   "at": 32.219,
+   "end": 38.53
+  },
+  {
+   "id": "research",
+   "at": 38.83,
+   "end": 39.954
+  },
+  {
+   "id": "roll",
+   "at": 40.304,
+   "end": 40.911
+  },
+  {
+   "id": "cta",
+   "at": 42.041,
+   "end": 47.72
+  }
+ ],
+ "words": [
+  {
+   "w": "Before",
+   "line": 0,
+   "unit": "hook",
+   "t0": 0.75,
+   "t1": 1.39
+  },
+  {
+   "w": "anyone",
+   "line": 0,
+   "unit": "hook",
+   "t0": 1.39,
+   "t1": 1.71
+  },
+  {
+   "w": "yells",
+   "line": 0,
+   "unit": "hook",
+   "t0": 1.71,
+   "t1": 2.27
+  },
+  {
+   "w": "\"action\"...",
+   "line": 0,
+   "unit": "hook",
+   "t0": 2.35,
+   "t1": 3.47
+  },
+  {
+   "w": "who",
+   "line": 0,
+   "unit": "hook",
+   "t0": 3.595,
+   "t1": 3.79
+  },
+  {
+   "w": "is",
+   "line": 0,
+   "unit": "hook",
+   "t0": 3.79,
+   "t1": 4.03
+  },
+  {
+   "w": "this",
+   "line": 0,
+   "unit": "hook",
+   "t0": 4.03,
+   "t1": 4.27
+  },
+  {
+   "w": "video",
+   "line": 0,
+   "unit": "hook",
+   "t0": 4.27,
+   "t1": 4.59
+  },
+  {
+   "w": "for?",
+   "line": 0,
+   "unit": "hook",
+   "t0": 4.75,
+   "t1": 4.985
+  },
+  {
+   "w": "A",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 5.438,
+   "t1": 5.613
+  },
+  {
+   "w": "beautiful",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 5.613,
+   "t1": 6.253
+  },
+  {
+   "w": "film,",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 6.253,
+   "t1": 6.573
+  },
+  {
+   "w": "made",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 6.753,
+   "t1": 7.133
+  },
+  {
+   "w": "for",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 7.133,
+   "t1": 7.293
+  },
+  {
+   "w": "the",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 7.293,
+   "t1": 7.453
+  },
+  {
+   "w": "wrong",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 7.453,
+   "t1": 7.773
+  },
+  {
+   "w": "audience,",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 7.773,
+   "t1": 8.413
+  },
+  {
+   "w": "plays",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 8.658,
+   "t1": 9.133
+  },
+  {
+   "w": "to",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 9.133,
+   "t1": 9.373
+  },
+  {
+   "w": "an",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 9.373,
+   "t1": 9.533
+  },
+  {
+   "w": "empty",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 9.533,
+   "t1": 10.013
+  },
+  {
+   "w": "room.",
+   "line": 1,
+   "unit": "stakes",
+   "t0": 10.013,
+   "t1": 10.316
+  },
+  {
+   "w": "And",
+   "line": 2,
+   "unit": "proof",
+   "t0": 10.789,
+   "t1": 11.044
+  },
+  {
+   "w": "no",
+   "line": 2,
+   "unit": "proof",
+   "t0": 11.044,
+   "t1": 11.364
+  },
+  {
+   "w": "edit,",
+   "line": 2,
+   "unit": "proof",
+   "t0": 11.364,
+   "t1": 12.004
+  },
+  {
+   "w": "no",
+   "line": 2,
+   "unit": "proof",
+   "t0": 12.004,
+   "t1": 12.324
+  },
+  {
+   "w": "grade,",
+   "line": 2,
+   "unit": "proof",
+   "t0": 12.324,
+   "t1": 12.859
+  },
+  {
+   "w": "no",
+   "line": 2,
+   "unit": "proof",
+   "t0": 12.859,
+   "t1": 13.204
+  },
+  {
+   "w": "soundtrack",
+   "line": 2,
+   "unit": "proof",
+   "t0": 13.204,
+   "t1": 13.924
+  },
+  {
+   "w": "can",
+   "line": 2,
+   "unit": "proof",
+   "t0": 14.004,
+   "t1": 14.244
+  },
+  {
+   "w": "fix",
+   "line": 2,
+   "unit": "proof",
+   "t0": 14.244,
+   "t1": 14.644
+  },
+  {
+   "w": "the",
+   "line": 2,
+   "unit": "proof",
+   "t0": 14.644,
+   "t1": 14.804
+  },
+  {
+   "w": "wrong",
+   "line": 2,
+   "unit": "proof",
+   "t0": 14.804,
+   "t1": 15.204
+  },
+  {
+   "w": "message.",
+   "line": 2,
+   "unit": "proof",
+   "t0": 15.204,
+   "t1": 15.879
+  },
+  {
+   "w": "Your",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 16.191,
+   "t1": 16.491
+  },
+  {
+   "w": "audience",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 16.491,
+   "t1": 17.211
+  },
+  {
+   "w": "is",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 17.211,
+   "t1": 17.451
+  },
+  {
+   "w": "already",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 17.451,
+   "t1": 17.851
+  },
+  {
+   "w": "leaving",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 17.851,
+   "t1": 18.411
+  },
+  {
+   "w": "footprints.",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 18.411,
+   "t1": 19.451
+  },
+  {
+   "w": "What",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 19.486,
+   "t1": 19.771
+  },
+  {
+   "w": "they",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 19.771,
+   "t1": 20.091
+  },
+  {
+   "w": "search.",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 20.091,
+   "t1": 20.651
+  },
+  {
+   "w": "Save.",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 20.741,
+   "t1": 21.451
+  },
+  {
+   "w": "Skip.",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 21.556,
+   "t1": 22.251
+  },
+  {
+   "w": "Share.",
+   "line": 3,
+   "unit": "footprints",
+   "t0": 22.466,
+   "t1": 23.611
+  },
+  {
+   "w": "Follow",
+   "line": 4,
+   "unit": "footprints",
+   "t0": 23.741,
+   "t1": 24.171
+  },
+  {
+   "w": "them",
+   "line": 4,
+   "unit": "footprints",
+   "t0": 24.171,
+   "t1": 24.491
+  },
+  {
+   "w": "first.",
+   "line": 4,
+   "unit": "footprints",
+   "t0": 24.491,
+   "t1": 24.949
+  },
+  {
+   "w": "Research",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 25.263,
+   "t1": 25.833
+  },
+  {
+   "w": "tells",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 25.833,
+   "t1": 26.153
+  },
+  {
+   "w": "you",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 26.153,
+   "t1": 26.313
+  },
+  {
+   "w": "who",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 26.313,
+   "t1": 26.633
+  },
+  {
+   "w": "to",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 26.633,
+   "t1": 26.793
+  },
+  {
+   "w": "cast,",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 26.793,
+   "t1": 27.273
+  },
+  {
+   "w": "what",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 27.363,
+   "t1": 27.593
+  },
+  {
+   "w": "hooks",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 27.593,
+   "t1": 27.993
+  },
+  {
+   "w": "them",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 27.993,
+   "t1": 28.153
+  },
+  {
+   "w": "in",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 28.153,
+   "t1": 28.313
+  },
+  {
+   "w": "three",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 28.313,
+   "t1": 28.633
+  },
+  {
+   "w": "seconds,",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 28.633,
+   "t1": 29.273
+  },
+  {
+   "w": "and",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 29.368,
+   "t1": 29.513
+  },
+  {
+   "w": "whether",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 29.513,
+   "t1": 29.833
+  },
+  {
+   "w": "to",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 29.833,
+   "t1": 29.993
+  },
+  {
+   "w": "shoot",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 29.993,
+   "t1": 30.393
+  },
+  {
+   "w": "vertical...",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 30.393,
+   "t1": 31.113
+  },
+  {
+   "w": "or",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 31.113,
+   "t1": 31.353
+  },
+  {
+   "w": "wide.",
+   "line": 5,
+   "unit": "mechanism",
+   "t0": 31.353,
+   "t1": 31.814
+  },
+  {
+   "w": "Change",
+   "line": 6,
+   "unit": "cost",
+   "t0": 32.201,
+   "t1": 32.561
+  },
+  {
+   "w": "it",
+   "line": 6,
+   "unit": "cost",
+   "t0": 32.561,
+   "t1": 32.721
+  },
+  {
+   "w": "on",
+   "line": 6,
+   "unit": "cost",
+   "t0": 32.721,
+   "t1": 32.881
+  },
+  {
+   "w": "paper?",
+   "line": 6,
+   "unit": "cost",
+   "t0": 32.881,
+   "t1": 33.581
+  },
+  {
+   "w": "That",
+   "line": 6,
+   "unit": "cost",
+   "t0": 33.581,
+   "t1": 33.841
+  },
+  {
+   "w": "costs",
+   "line": 6,
+   "unit": "cost",
+   "t0": 33.841,
+   "t1": 34.321
+  },
+  {
+   "w": "an",
+   "line": 6,
+   "unit": "cost",
+   "t0": 34.321,
+   "t1": 34.561
+  },
+  {
+   "w": "afternoon.",
+   "line": 6,
+   "unit": "cost",
+   "t0": 34.561,
+   "t1": 35.601
+  },
+  {
+   "w": "Change",
+   "line": 6,
+   "unit": "cost",
+   "t0": 35.636,
+   "t1": 36.081
+  },
+  {
+   "w": "it",
+   "line": 6,
+   "unit": "cost",
+   "t0": 36.081,
+   "t1": 36.241
+  },
+  {
+   "w": "after",
+   "line": 6,
+   "unit": "cost",
+   "t0": 36.241,
+   "t1": 36.481
+  },
+  {
+   "w": "the",
+   "line": 6,
+   "unit": "cost",
+   "t0": 36.481,
+   "t1": 36.721
+  },
+  {
+   "w": "shoot?",
+   "line": 6,
+   "unit": "cost",
+   "t0": 36.721,
+   "t1": 37.426
+  },
+  {
+   "w": "That's",
+   "line": 6,
+   "unit": "cost",
+   "t0": 37.426,
+   "t1": 37.761
+  },
+  {
+   "w": "a",
+   "line": 6,
+   "unit": "cost",
+   "t0": 37.761,
+   "t1": 37.921
+  },
+  {
+   "w": "reshoot.",
+   "line": 6,
+   "unit": "cost",
+   "t0": 37.921,
+   "t1": 38.65
+  },
+  {
+   "w": "Research",
+   "line": 7,
+   "unit": "research",
+   "t0": 38.811,
+   "t1": 39.556
+  },
+  {
+   "w": "first.",
+   "line": 7,
+   "unit": "research",
+   "t0": 39.556,
+   "t1": 40.074
+  },
+  {
+   "w": "Then",
+   "line": 7,
+   "unit": "roll",
+   "t0": 40.281,
+   "t1": 40.436
+  },
+  {
+   "w": "roll.",
+   "line": 7,
+   "unit": "roll",
+   "t0": 40.436,
+   "t1": 40.756
+  },
+  {
+   "w": "Esha",
+   "line": 8,
+   "unit": "cta",
+   "t0": 42.041,
+   "t1": 42.366
+  },
+  {
+   "w": "Bargate",
+   "line": 8,
+   "unit": "cta",
+   "t0": 42.526,
+   "t1": 43.166
+  },
+  {
+   "w": "Productions.",
+   "line": 8,
+   "unit": "cta",
+   "t0": 43.166,
+   "t1": 44.046
+  },
+  {
+   "w": "Let's",
+   "line": 8,
+   "unit": "cta",
+   "t0": 44.101,
+   "t1": 44.446
+  },
+  {
+   "w": "find",
+   "line": 8,
+   "unit": "cta",
+   "t0": 44.446,
+   "t1": 44.766
+  },
+  {
+   "w": "your",
+   "line": 8,
+   "unit": "cta",
+   "t0": 44.766,
+   "t1": 45.006
+  },
+  {
+   "w": "audience...",
+   "line": 8,
+   "unit": "cta",
+   "t0": 45.006,
+   "t1": 45.646
+  },
+  {
+   "w": "before",
+   "line": 8,
+   "unit": "cta",
+   "t0": 45.951,
+   "t1": 46.286
+  },
+  {
+   "w": "we",
+   "line": 8,
+   "unit": "cta",
+   "t0": 46.286,
+   "t1": 46.446
+  },
+  {
+   "w": "frame",
+   "line": 8,
+   "unit": "cta",
+   "t0": 46.446,
+   "t1": 46.846
+  },
+  {
+   "w": "a",
+   "line": 8,
+   "unit": "cta",
+   "t0": 46.846,
+   "t1": 47.006
+  },
+  {
+   "w": "single",
+   "line": 8,
+   "unit": "cta",
+   "t0": 47.006,
+   "t1": 47.406
+  },
+  {
+   "w": "shot.",
+   "line": 8,
+   "unit": "cta",
+   "t0": 47.406,
+   "t1": 47.84
+  }
+ ]
+}

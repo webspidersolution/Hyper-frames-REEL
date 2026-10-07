@@ -1,0 +1,8 @@
+# regenerable intermediates (tools/score.py, sfx.py, vo.py, mix.py rebuild them); mix.wav is kept for rendering
+assets/audio/music.wav
+assets/audio/sfx.wav
+assets/audio/vo.wav
+assets/audio/mix_raw.wav
+snapshots/
+renders/
+node_modules/
