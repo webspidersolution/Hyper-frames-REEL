@@ -11,8 +11,8 @@ OpenArt GPT Image 2.5 for photo plates (1K, low quality), prompted per `/chatgpt
 
 | # | Decision | Recommendation |
 |---|---|---|
-| D1 | **How the ElevenLabs VO gets made.** No ElevenLabs key is in this cloud environment. | Add `ELEVENLABS_API_KEY` to the environment settings (cloud environment menu → Edit → Network secrets, or an environment variable). A new session picks it up, so we continue from this file in that session. Alternative: you generate the VO from §4 in the ElevenLabs app and upload the MP3 here. The plan must be paid (Starter or higher), because free-plan output can't be used commercially. |
-| D2 | **Voice** | A warm, confident female narrator with a neutral international English accent (EBP sells from SF, LA and Mumbai). I'll send 3 short auditions of the hook line before generating the full VO. Say if you want an Indian-English or US accent, or a male voice. |
+| D1 | **How the ElevenLabs VO gets made** | **Decided: you generate it manually** in the ElevenLabs app from §4 and upload it here. The ElevenLabs plan must be paid (Starter or higher), because free-plan output can't be used commercially. |
+| D2 | **Voice** | **Sarah – Mature, Reassuring, Confident** (premade), with Lily or George as alternates. Settings are in §4. |
 | D3 | **Hook** | H1, "the frozen clap" (§3). |
 | D4 | **Render path.** This container has **no GPU**. Hyperreel renders on the GPU (`--gpu --browser-gpu`), and the skill forbids a silent fallback to CPU. | Build and render the drafts here with software WebGL (slower, same pixels), then render the 60 fps finals on your GPU PC (`git pull` and run 2 commands), or here on CPU if you accept roughly 1–2 h per format. |
 | D5 | **Length and formats** | 9:16 (Reels/Shorts) and 16:9 (YouTube, LinkedIn, website), **about 44 s**, locked to whole music bars once the VO is recorded. |
@@ -79,24 +79,37 @@ rate, not on views.
 
 ---
 
-## 4. Voiceover script (draft, about 95 words)
+## 4. Voiceover script (LOCKED 2026-10-07, 100 words, about 40 s of speech)
 
-| Beat | VO line | On-screen type |
-|---|---|---|
-| Hook | "Before anyone yells *action*… who is this video for?" | WHO IS THIS **FOR?** |
-| Stakes | "A beautiful film made for the wrong audience plays to an empty room." | A beautiful film. **An empty room.** |
-| Proof | ⟨verified stat line, about 12 words⟩ | ⟨stat + source⟩ |
-| Footprints | "Your audience leaves footprints — what they search, save, skip and share. Follow them first." | SEARCHED · SAVED · SKIPPED · SHARED |
-| Mechanism | "Research tells you who to cast, what hooks them in three seconds, and whether you shoot vertical or wide." | WHO → cast & voice · HOOK → first 3 s · FORMAT → 9:16 or 16:9 |
-| Cost | "Change your mind on paper, it costs an afternoon. After the shoot, it's a reshoot." | ON PAPER: an afternoon · AFTER THE SHOOT: **a reshoot** |
-| Payoff | "Research first. Then roll." | RESEARCH FIRST. **THEN ROLL.** |
-| CTA | "Esha Bargate Productions. Let's find your audience before we frame a shot." | logo lockup + **BOOK A STRATEGY CALL** · eshabargateproductions.com |
+The VO is generated manually in the ElevenLabs app (D1). The script needs no statistic. The proof beat is a principle
+line, and any verified stat goes **on screen only** in F3, so the VO never waits on research.
 
-**ElevenLabs settings:** model `eleven_v3`, falling back to `eleven_multilingual_v2` if v3's timestamp alignment
-misbehaves. Stability ≈ 0.5, similarity ≈ 0.75, style ≈ 0.15, speed 1.0. One take per line through
-`/v1/text-to-speech/{voice}/with-timestamps`, which gives word timings that drive the kinetic type and the `.srt`.
-Each line starts on a bar line, and the result is resampled to 48 kHz `assets/audio/vo.wav`. `tools/mix.py` already
-ducks the music under `vo.wav`.
+| # | Beat | VO line | On-screen type |
+|---|---|---|---|
+| 1 | Hook | "Before anyone yells "action"... who is this video for?" | WHO IS THIS **FOR?** |
+| 2 | Stakes | "A beautiful film, made for the wrong audience, plays to an empty room." | A beautiful film. **An empty room.** |
+| 3 | Proof | "And no edit, no grade, no soundtrack can fix the wrong message." | ⟨verified stat + source, if found⟩ / NO EDIT · NO GRADE · NO SOUNDTRACK |
+| 4 | Footprints | "Your audience is already leaving footprints. What they search. Save. Skip. Share." | SEARCH · SAVE · SKIP · SHARE |
+| 5 | Turn | "Follow them first." | FOLLOW THEM **FIRST.** |
+| 6 | Mechanism | "Research tells you who to cast, what hooks them in three seconds, and whether to shoot vertical... or wide." | WHO → cast & voice · HOOK → first 3 s · FORMAT → 9:16 or 16:9 |
+| 7 | Cost | "Change it on paper? That costs an afternoon. Change it after the shoot? That's a reshoot." | ON PAPER: an afternoon · AFTER THE SHOOT: **a reshoot** |
+| 8 | Payoff | "Research first. Then roll." | RESEARCH FIRST. **THEN ROLL.** |
+| 9 | CTA | "Esha Bargate Productions. Let's find your audience... before we frame a single shot." | logo lockup + **BOOK A STRATEGY CALL** · eshabargateproductions.com |
+
+**ElevenLabs (manual, in the app):**
+- Voice **Sarah – Mature, Reassuring, Confident** (premade, `EXAVITQu4vr4xnSDxMaL`). Alternates: **Lily – Velvety
+  Actress** (`pFZP5JQG7iQjIQuC4Bku`, British, more cinematic) and **George – Warm, Captivating Storyteller**
+  (`JBFqnCBsd6RMkjVDRZzb`, British male).
+- Model **Eleven Multilingual v2**. Speed 1.00 · Stability 50 % · Similarity 75 % · Style exaggeration 5 % · Speaker
+  boost ON.
+- One full read with a blank line between paragraphs. Make 3 takes and keep the best. Regenerate any weak line on its
+  own with the same settings so it splices invisibly. Download the highest quality the plan offers.
+- **Pronunciation:** confirm with the client how "Esha Bargate" is said. If the voice gets it wrong, respell it **in
+  the VO text only** (the screen keeps the real spelling).
+
+**In the pipeline:** the VO is split at its pauses (ffmpeg `silencedetect`), each line is placed on a bar line, the
+words are aligned for the kinetic type and the `.srt`, and the result is resampled to 48 kHz `assets/audio/vo.wav`.
+`tools/mix.py` ducks the music under it.
 
 ---
 
@@ -282,8 +295,8 @@ sits within the EBP ink/red range; no faces (P5); the plate survives the 9:16 sa
    *(installs Chrome headless shell via `npx hyperframes browser ensure`, and `pip install soundfile`)*
 2. **Assets:** logo split into L/R feet (PIL), fonts bundled, plates P1–P5 generated (10 images). I send you a
    contact sheet.
-3. **VO:** auditions → you pick a voice → full VO with timestamps → `vo.wav` + `words.json` + `captions.srt`. You
-   approve the read.
+3. **VO:** you upload the ElevenLabs read → split at pauses, lines placed on bars, words aligned →
+   `vo.wav` + `words.json` + `captions.srt`.
 4. **Score + beat grid** (`score.py`); VO lines placed on bars; duration locked.
 5. **STORYBOARD.md** with frame stills → your OK (the hyperreel shotlist stop).
 6. **Build:** `body.html`, `film.css`, `film.js`, `hero3d.js` (the clapperboard), `physics.js` (hinge + footsteps →
