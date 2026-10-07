@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg12"
+   xml:space="preserve"
+   enable-background="new 0 0 200 200"
+   viewBox="0 0 200 200"
+   y="0px"
+   x="0px"
+   version="1.1"><metadata
+   id="metadata16"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata>
+
+  
+  <defs
+   id="defs522097" />
+  <linearGradient
+   spreadMethod="pad"
+   y2="30%"
+   x2="-10%"
+   y1="120%"
+   x1="30%"
+   id="3d_gradient2-logo-7c4f2d9a-50c5-4748-b106-c9e9c410a420">
+    <stop
+   id="stop522074"
+   stop-opacity="1"
+   stop-color="#ffffff"
+   offset="0%" />
+    <stop
+   id="stop522076"
+   stop-opacity="1"
+   stop-color="#000000"
+   offset="100%" />
+  </linearGradient>
+  <linearGradient
+   gradientTransform="rotate(-30)"
+   spreadMethod="pad"
+   y2="30%"
+   x2="-10%"
+   y1="120%"
+   x1="30%"
+   id="3d_gradient3-logo-7c4f2d9a-50c5-4748-b106-c9e9c410a420">
+    <stop
+   id="stop522079"
+   stop-opacity="1"
+   stop-color="#ffffff"
+   offset="0%" />
+    <stop
+   id="stop522081"
+   stop-opacity="1"
+   stop-color="#cccccc"
+   offset="50%" />
+    <stop
+   id="stop522083"
+   stop-opacity="1"
+   stop-color="#000000"
+   offset="100%" />
+  </linearGradient>
+  <path
+   class="c1"
+   d="m 113.36139,72.877385 27.72319,62.652225 H 122.06811 L 101.55109,89.191033 81.034068,135.52961 H 71.02632 L 40.00001,65.471177 h 10.909018 c 4.60413,0 9.508235,3.202668 11.409891,7.406208 L 83.736543,121.41792 99.749884,85.187531 91.042482,65.471177 H 101.9515 c 4.60413,0 9.50824,3.202668 11.40989,7.406208 z"
+   stroke-miterlimit="2"
+   id="path11"
+   style="font-style:normal;font-weight:normal;font-size:medium;line-height:1;font-family:'Brandmark Serif 40 Color';font-variant-ligatures:normal;text-align:center;text-anchor:middle;fill:#5a5e64;stroke:#5a5e64;stroke-width:0;stroke-linejoin:miter;stroke-miterlimit:2" />
+  <circle
+   class="c3"
+   cx="150.99255"
+   cy="73.477844"
+   r="9.0074587"
+   stroke-miterlimit="2"
+   id="circle13"
+   style="font-style:normal;font-weight:normal;font-size:medium;line-height:1;font-family:'Brandmark Serif 40 Color';font-variant-ligatures:normal;text-align:center;text-anchor:middle;fill:#92c131;stroke:#92c131;stroke-width:0;stroke-linejoin:miter;stroke-miterlimit:2" />
+
+</svg>

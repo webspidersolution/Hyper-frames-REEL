@@ -1,0 +1,1119 @@
+{
+ "title": "Web Spider Solutions \u2014 Get found",
+ "duration": 35.0,
+ "fps": 30,
+ "bpm": 148,
+ "formats": [
+  "16x9"
+ ],
+ "marks": {
+  "hook": 0,
+  "ring": 7.7667,
+  "brand": 8.9333,
+  "prompt": 11.3,
+  "burst": 13.3333,
+  "seconds": 14.6,
+  "code": 15.6,
+  "web": 21.0667,
+  "tagline": 28.0,
+  "logo": 32.45,
+  "end": 35.0
+ },
+ "music": {
+  "style": "modern",
+  "key": "G",
+  "chords": [
+   "Em",
+   "Em",
+   "Cmaj7",
+   "D",
+   "Dsus4",
+   "G",
+   "D",
+   "Em",
+   "C",
+   "G",
+   "D",
+   "Em",
+   "C",
+   "Em",
+   "C",
+   "D",
+   "Dsus4",
+   "G",
+   "C",
+   "D",
+   "G",
+   "G"
+  ],
+  "sections": [
+   {
+    "at": 0,
+    "kind": "intro"
+   },
+   {
+    "at": 5.676,
+    "kind": "build"
+   },
+   {
+    "at": 7.45,
+    "kind": "gap"
+   },
+   {
+    "at": 7.7667,
+    "kind": "drop",
+    "snap": false
+   },
+   {
+    "at": 15.405,
+    "kind": "full"
+   },
+   {
+    "at": 21.08,
+    "kind": "intro"
+   },
+   {
+    "at": 24.73,
+    "kind": "build"
+   },
+   {
+    "at": 27.72,
+    "kind": "gap"
+   },
+   {
+    "at": 28.0,
+    "kind": "drop",
+    "snap": false
+   },
+   {
+    "at": 32.45,
+    "kind": "outro",
+    "snap": false
+   }
+  ],
+  "accents": [
+   9.85,
+   32.45
+  ],
+  "melody": "auto",
+  "seed": 11
+ },
+ "sfx": [
+  {
+   "at": 0.0,
+   "lib": "cinematic-hit",
+   "gain": -15,
+   "maxlen": 1.2
+  },
+  {
+   "at": 0.0,
+   "lib": "glitch-3",
+   "gain": -26,
+   "maxlen": 0.9
+  },
+  {
+   "at": 0.4667,
+   "synth": "tick",
+   "gain": -20
+  },
+  {
+   "at": 0.6,
+   "lib": "mouse-click",
+   "gain": -18
+  },
+  {
+   "at": 0.6667,
+   "synth": "pop",
+   "gain": -15
+  },
+  {
+   "at": 0.7,
+   "synth": "shimmer",
+   "gain": -24
+  },
+  {
+   "at": 0.8,
+   "synth": "tick",
+   "gain": -28,
+   "pitch": 1.3
+  },
+  {
+   "at": 0.9,
+   "synth": "tick",
+   "gain": -28,
+   "pitch": 1.3
+  },
+  {
+   "at": 1.02,
+   "synth": "tick",
+   "gain": -28,
+   "pitch": 1.3
+  },
+  {
+   "at": 1.12,
+   "synth": "tick",
+   "gain": -28,
+   "pitch": 1.3
+  },
+  {
+   "at": 1.2,
+   "synth": "tick",
+   "gain": -28,
+   "pitch": 1.3
+  },
+  {
+   "at": 1.3,
+   "lib": "glitch-1",
+   "gain": -18,
+   "maxlen": 0.35,
+   "fade": 0.08
+  },
+  {
+   "at": 1.42,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.15
+  },
+  {
+   "at": 1.5,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.15
+  },
+  {
+   "at": 1.58,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.15
+  },
+  {
+   "at": 1.66,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.15
+  },
+  {
+   "at": 1.76,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.15
+  },
+  {
+   "at": 1.9667,
+   "lib": "glitch-1",
+   "gain": -17,
+   "maxlen": 0.35,
+   "fade": 0.08
+  },
+  {
+   "at": 2.1,
+   "lib": "text-pop",
+   "gain": -14
+  },
+  {
+   "at": 2.2667,
+   "synth": "shimmer",
+   "gain": -20
+  },
+  {
+   "at": 2.6667,
+   "lib": "swish",
+   "gain": -17,
+   "align": "peak"
+  },
+  {
+   "at": 2.8667,
+   "synth": "thump",
+   "gain": -22,
+   "pitch": 1.6
+  },
+  {
+   "at": 3.4667,
+   "lib": "fast-swipe",
+   "gain": -17,
+   "align": "peak"
+  },
+  {
+   "at": 3.5,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 0.8
+  },
+  {
+   "at": 3.5667,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 0.88
+  },
+  {
+   "at": 3.6333,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 0.9600000000000001
+  },
+  {
+   "at": 3.7,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.04
+  },
+  {
+   "at": 3.7667,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.12
+  },
+  {
+   "at": 3.8333,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.2000000000000002
+  },
+  {
+   "at": 4.2667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 4.3667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 4.6667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 4.7667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 5.0667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 5.1667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 5.6667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 5.7667,
+   "synth": "tick",
+   "gain": -22
+  },
+  {
+   "at": 5.8667,
+   "lib": "zoom-in",
+   "gain": -18,
+   "maxlen": 1.0
+  },
+  {
+   "at": 7.0667,
+   "lib": "reverse-whoosh",
+   "gain": -18,
+   "align": "peak"
+  },
+  {
+   "at": 7.3,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.0
+  },
+  {
+   "at": 7.3667,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.06
+  },
+  {
+   "at": 7.4,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.12
+  },
+  {
+   "at": 7.4667,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.18
+  },
+  {
+   "at": 7.5,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.24
+  },
+  {
+   "at": 7.5333,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.3
+  },
+  {
+   "at": 7.5667,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.3599999999999999
+  },
+  {
+   "at": 7.6,
+   "synth": "pop",
+   "gain": -23,
+   "pitch": 1.42
+  },
+  {
+   "at": 7.6667,
+   "synth": "tick",
+   "gain": -18,
+   "pitch": 0.8
+  },
+  {
+   "at": 7.7667,
+   "lib": "sub-drop",
+   "gain": -10,
+   "maxlen": 1.6
+  },
+  {
+   "at": 7.7667,
+   "lib": "cinematic-hit",
+   "gain": -13,
+   "maxlen": 1.4
+  },
+  {
+   "at": 8.0667,
+   "synth": "shimmer",
+   "gain": -19
+  },
+  {
+   "at": 8.9333,
+   "lib": "swoosh-transition",
+   "gain": -15,
+   "align": "peak",
+   "maxlen": 1.6
+  },
+  {
+   "at": 9.0,
+   "synth": "tick",
+   "gain": -24,
+   "pitch": 1.2
+  },
+  {
+   "at": 9.06,
+   "synth": "tick",
+   "gain": -24,
+   "pitch": 1.2
+  },
+  {
+   "at": 9.12,
+   "synth": "tick",
+   "gain": -24,
+   "pitch": 1.2
+  },
+  {
+   "at": 9.18,
+   "synth": "tick",
+   "gain": -24,
+   "pitch": 1.2
+  },
+  {
+   "at": 9.4,
+   "synth": "tick",
+   "gain": -24,
+   "pitch": 0.7
+  },
+  {
+   "at": 9.5,
+   "synth": "tick",
+   "gain": -24,
+   "pitch": 0.7
+  },
+  {
+   "at": 9.85,
+   "lib": "text-pop",
+   "gain": -12
+  },
+  {
+   "at": 9.4,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.0
+  },
+  {
+   "at": 9.465,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.03
+  },
+  {
+   "at": 9.53,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.06
+  },
+  {
+   "at": 9.595,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.09
+  },
+  {
+   "at": 9.66,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.12
+  },
+  {
+   "at": 9.725,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.15
+  },
+  {
+   "at": 9.79,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.18
+  },
+  {
+   "at": 9.855,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.21
+  },
+  {
+   "at": 9.92,
+   "synth": "tick",
+   "gain": -27,
+   "pitch": 1.24
+  },
+  {
+   "at": 11.2667,
+   "lib": "swish",
+   "gain": -16,
+   "align": "peak"
+  },
+  {
+   "at": 11.3667,
+   "lib": "swoosh-up",
+   "gain": -20,
+   "align": "peak",
+   "maxlen": 1.2
+  },
+  {
+   "at": 11.85,
+   "synth": "pop",
+   "gain": -23
+  },
+  {
+   "at": 12.0,
+   "to": 12.82,
+   "every": 0.05,
+   "lib": "key-press",
+   "gain": -30,
+   "maxlen": 0.12,
+   "fade": 0.03
+  },
+  {
+   "at": 12.6,
+   "lib": "zoom-in",
+   "gain": -18,
+   "maxlen": 0.9
+  },
+  {
+   "at": 13.2,
+   "lib": "mouse-click",
+   "gain": -12
+  },
+  {
+   "at": 13.3667,
+   "lib": "fast-swipe",
+   "gain": -12,
+   "align": "peak"
+  },
+  {
+   "at": 13.4333,
+   "to": 14.2667,
+   "every": 0.06,
+   "synth": "tick",
+   "gain": -23,
+   "pitch": 1.35
+  },
+  {
+   "at": 13.42,
+   "synth": "pop",
+   "gain": -22
+  },
+  {
+   "at": 14.5667,
+   "lib": "swish",
+   "gain": -14,
+   "align": "peak"
+  },
+  {
+   "at": 14.65,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.1
+  },
+  {
+   "at": 14.685,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.12
+  },
+  {
+   "at": 14.72,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.1400000000000001
+  },
+  {
+   "at": 14.755,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.1600000000000001
+  },
+  {
+   "at": 14.79,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.1800000000000002
+  },
+  {
+   "at": 14.825,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.2000000000000002
+  },
+  {
+   "at": 14.86,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.2200000000000002
+  },
+  {
+   "at": 14.895,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.2400000000000002
+  },
+  {
+   "at": 14.93,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.26
+  },
+  {
+   "at": 14.965,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.28
+  },
+  {
+   "at": 15.0,
+   "synth": "pop",
+   "gain": -25,
+   "pitch": 1.3
+  },
+  {
+   "at": 15.4,
+   "lib": "click-soft",
+   "gain": -15
+  },
+  {
+   "at": 15.5667,
+   "lib": "swish",
+   "gain": -19,
+   "align": "peak"
+  },
+  {
+   "at": 15.6,
+   "synth": "thump",
+   "gain": -21,
+   "pitch": 1.3
+  },
+  {
+   "at": 15.8,
+   "synth": "pop",
+   "gain": -23
+  },
+  {
+   "at": 15.8,
+   "to": 16.6667,
+   "every": 0.045,
+   "lib": "key-press",
+   "gain": -32,
+   "maxlen": 0.1,
+   "fade": 0.03
+  },
+  {
+   "at": 17.4,
+   "lib": "swish",
+   "gain": -16,
+   "align": "peak"
+  },
+  {
+   "at": 17.4667,
+   "synth": "tick",
+   "gain": -19,
+   "pitch": 1.45
+  },
+  {
+   "at": 17.5333,
+   "synth": "tick",
+   "gain": -19,
+   "pitch": 1.45
+  },
+  {
+   "at": 17.6,
+   "synth": "tick",
+   "gain": -19,
+   "pitch": 1.45
+  },
+  {
+   "at": 17.6667,
+   "synth": "tick",
+   "gain": -19,
+   "pitch": 1.45
+  },
+  {
+   "at": 17.7333,
+   "synth": "tick",
+   "gain": -19,
+   "pitch": 1.45
+  },
+  {
+   "at": 17.12,
+   "synth": "pop",
+   "gain": -23
+  },
+  {
+   "at": 18.1,
+   "lib": "error",
+   "gain": -17,
+   "maxlen": 0.9
+  },
+  {
+   "at": 18.7,
+   "lib": "glitch-3",
+   "gain": -21,
+   "maxlen": 0.8,
+   "fade": 0.2
+  },
+  {
+   "at": 18.7,
+   "to": 19.4,
+   "every": 0.05,
+   "synth": "tick",
+   "gain": -29,
+   "pitch": 2.0
+  },
+  {
+   "at": 19.4333,
+   "lib": "correct-answer",
+   "gain": -15,
+   "maxlen": 1.2
+  },
+  {
+   "at": 19.6667,
+   "lib": "swish",
+   "gain": -19,
+   "align": "peak"
+  },
+  {
+   "at": 18.865,
+   "synth": "pop",
+   "gain": -23
+  },
+  {
+   "at": 19.7667,
+   "lib": "swoosh-up",
+   "gain": -17,
+   "align": "peak",
+   "maxlen": 1.0
+  },
+  {
+   "at": 19.9333,
+   "lib": "drum-hit",
+   "gain": -22,
+   "maxlen": 0.5,
+   "fade": 0.1
+  },
+  {
+   "at": 20.0333,
+   "lib": "drum-hit",
+   "gain": -22,
+   "maxlen": 0.5,
+   "fade": 0.1
+  },
+  {
+   "at": 20.1333,
+   "lib": "drum-hit",
+   "gain": -22,
+   "maxlen": 0.5,
+   "fade": 0.1
+  },
+  {
+   "at": 20.2333,
+   "lib": "drum-hit",
+   "gain": -22,
+   "maxlen": 0.5,
+   "fade": 0.1
+  },
+  {
+   "at": 20.3667,
+   "lib": "drum-hit",
+   "gain": -19,
+   "maxlen": 0.5,
+   "fade": 0.1
+  },
+  {
+   "at": 20.4,
+   "synth": "shimmer",
+   "gain": -20
+  },
+  {
+   "at": 21.0333,
+   "lib": "reverse-whoosh",
+   "gain": -15,
+   "align": "peak"
+  },
+  {
+   "at": 21.13,
+   "synth": "pop",
+   "gain": -27,
+   "pitch": 0.9
+  },
+  {
+   "at": 21.2,
+   "synth": "pop",
+   "gain": -27,
+   "pitch": 0.9500000000000001
+  },
+  {
+   "at": 21.28,
+   "synth": "pop",
+   "gain": -27,
+   "pitch": 1.0
+  },
+  {
+   "at": 21.37,
+   "synth": "pop",
+   "gain": -27,
+   "pitch": 1.05
+  },
+  {
+   "at": 21.47,
+   "synth": "pop",
+   "gain": -27,
+   "pitch": 1.1
+  },
+  {
+   "at": 21.62,
+   "synth": "pop",
+   "gain": -21,
+   "pitch": 1.1
+  },
+  {
+   "at": 22.3,
+   "synth": "pop",
+   "gain": -21,
+   "pitch": 1.1
+  },
+  {
+   "at": 23.32,
+   "synth": "pop",
+   "gain": -21,
+   "pitch": 1.1
+  },
+  {
+   "at": 23.75,
+   "lib": "paper-swipe",
+   "gain": -20,
+   "align": "peak"
+  },
+  {
+   "at": 23.85,
+   "to": 24.6,
+   "every": 0.07,
+   "synth": "pop",
+   "gain": -28,
+   "pitch": 1.3
+  },
+  {
+   "at": 24.73,
+   "lib": "reverse-cymbal",
+   "gain": -21,
+   "align": "peak",
+   "maxlen": 1.2
+  },
+  {
+   "at": 24.82,
+   "to": 25.85,
+   "every": 0.055,
+   "synth": "tick",
+   "gain": -25,
+   "pitch": 0.95
+  },
+  {
+   "at": 25.95,
+   "lib": "sparkle",
+   "gain": -18,
+   "maxlen": 1.4
+  },
+  {
+   "at": 26.3,
+   "to": 27.3,
+   "every": 0.09,
+   "synth": "pop",
+   "gain": -26,
+   "pitch": 1.4
+  },
+  {
+   "at": 27.95,
+   "lib": "swish",
+   "gain": -17,
+   "align": "peak"
+  },
+  {
+   "at": 28.0,
+   "lib": "sub-drop",
+   "gain": -15,
+   "maxlen": 1.6
+  },
+  {
+   "at": 28.21,
+   "synth": "pop",
+   "gain": -25
+  },
+  {
+   "at": 28.65,
+   "synth": "pop",
+   "gain": -25
+  },
+  {
+   "at": 29.05,
+   "synth": "pop",
+   "gain": -25
+  },
+  {
+   "at": 29.15,
+   "lib": "text-pop",
+   "gain": -15
+  },
+  {
+   "at": 30.095,
+   "lib": "text-pop",
+   "gain": -15
+  },
+  {
+   "at": 31.195,
+   "lib": "text-pop",
+   "gain": -15
+  },
+  {
+   "at": 31.25,
+   "synth": "shimmer",
+   "gain": -21
+  },
+  {
+   "at": 32.1,
+   "lib": "swish",
+   "gain": -18,
+   "align": "peak"
+  },
+  {
+   "at": 32.45,
+   "lib": "cinematic-hit",
+   "gain": -12,
+   "maxlen": 1.8
+  },
+  {
+   "at": 32.47,
+   "lib": "sparkle",
+   "gain": -17,
+   "maxlen": 1.6
+  },
+  {
+   "at": 33.0,
+   "synth": "pop",
+   "gain": -24
+  }
+ ],
+ "mix": {
+  "music": -3,
+  "sfx": -1,
+  "vo": 0,
+  "lufs": -14,
+  "ceiling_db": -1.9
+ },
+ "cuts": [
+  1.3,
+  1.9667,
+  7.7667,
+  8.9333,
+  11.3,
+  13.3333,
+  13.6,
+  14.6,
+  15.6,
+  17.4333,
+  17.8,
+  19.7,
+  21.0667,
+  28.0
+ ],
+ "vo": {
+  "src": "assets/audio/vo_take3.mp3",
+  "take": "ElevenLabs Brian, take 3 (12:06:50)",
+  "units": [
+   {
+    "src": [
+     0.06,
+     1.33
+    ],
+    "at": 0.0,
+    "text": "Too many agencies,"
+   },
+   {
+    "src": [
+     1.48,
+     2.12
+    ],
+    "at": 1.355,
+    "text": "tabs,"
+   },
+   {
+    "src": [
+     2.26,
+     2.84
+    ],
+    "at": 2.055,
+    "text": "tools."
+   },
+   {
+    "src": [
+     3.41,
+     5.65
+    ],
+    "at": 3.075,
+    "text": "Scattered across countless platforms."
+   },
+   {
+    "src": [
+     6.99,
+     8.26
+    ],
+    "at": 7.155,
+    "text": "What if it all connected?"
+   },
+   {
+    "src": [
+     8.94,
+     11.11
+    ],
+    "at": 8.96,
+    "text": "Meet WebSpider Solutions."
+   },
+   {
+    "src": [
+     11.8,
+     15.44
+    ],
+    "at": 11.87,
+    "text": "Tell us your goal and see multiple growth paths in seconds."
+   },
+   {
+    "src": [
+     16.09,
+     17.1
+    ],
+    "at": 15.775,
+    "text": "Rank on Google,"
+   },
+   {
+    "src": [
+     17.32,
+     18.89
+    ],
+    "at": 17.1,
+    "text": "show up in AI search,"
+   },
+   {
+    "src": [
+     19.05,
+     20.845
+    ],
+    "at": 18.84,
+    "text": "and let WebSpider make it work."
+   },
+   {
+    "src": [
+     21.8,
+     25.07
+    ],
+    "at": 21.225,
+    "text": "Bring ads, SEO, and social together."
+   },
+   {
+    "src": [
+     25.46,
+     28.445
+    ],
+    "at": 24.775,
+    "text": "Connect the dots and scale what matters."
+   },
+   {
+    "src": [
+     29.35,
+     33.085
+    ],
+    "at": 28.18,
+    "text": "One team to plan, launch, and grow."
+   },
+   {
+    "src": [
+     34.055,
+     35.825
+    ],
+    "at": 32.53,
+    "text": "WebSpider Solutions."
+   }
+  ]
+ },
+ "cues": {
+  "tabs": 1.38,
+  "tools": 2.08,
+  "scattered": 3.1,
+  "what": 7.18,
+  "connected": 7.8,
+  "meet": 8.985,
+  "webspider": 9.335,
+  "solutions": 9.89,
+  "tell": 11.895,
+  "andsee": 13.015,
+  "in_seconds": 14.65,
+  "rank": 15.8,
+  "show": 17.12,
+  "andlet": 18.865,
+  "make_it_work": 20.0,
+  "bring": 21.25,
+  "seo": 22.295,
+  "social": 23.315,
+  "connect": 24.8,
+  "scale": 26.265,
+  "one": 28.21,
+  "plan": 29.15,
+  "launch": 30.095,
+  "grow": 31.195,
+  "name": 32.55
+ }
+}
