@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Web Spider Solutions — Get found · 16x9</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script type="importmap">
+      { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.module.js",
+                     "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.2/examples/jsm/" } }
+    </script>
+    <style>
+html, body { width: 1920px; height: 1080px; }
+/* WSS "Get found" film. Brand kit v1.1: cream #f2f3ef, slate #5a5e64, spring #92c131 (the one accent), leaf #7fa042.
+   Ink #141618 is the dark ground. No CSS variables on captured layers. */
+@font-face { font-family: "Display"; src: url("assets/fonts/poppins-latin-600-normal.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: "Display"; src: url("assets/fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "UI"; src: url("assets/fonts/poppins-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "UI"; src: url("assets/fonts/poppins-latin-500-normal.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "Body"; src: url("assets/fonts/arimo-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Body"; src: url("assets/fonts/arimo-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Mono"; src: url("assets/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Mono"; src: url("assets/fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { margin: 0; overflow: hidden; background: #141618; }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "UI", sans-serif; color: #f2f3ef;
+        -webkit-font-smoothing: antialiased; }
+.scene, .front { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; display: none; }
+.front { background: transparent; pointer-events: none; }
+.abs { position: absolute; left: 0; top: 0; }
+.nowrap { white-space: nowrap; }
+canvas.gl { position: absolute; left: 0; top: 0; display: none; }
+img.plate { position: absolute; left: 0; top: 0; width: 2304px; height: 1296px; transform-origin: 0 0; }
+
+/* masked words: hidden words sit 150 % below their mask and are transparent */
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.08em 0.1em 0.2em; margin: -0.08em -0.1em -0.2em; }
+.wi { display: inline-block; opacity: 0; transform: translateY(150%); }
+.stk { position: relative; display: inline-block; }
+.stk .box { position: absolute; left: -0.14em; right: -0.14em; top: 0.1em; bottom: 0.02em; background-color: #92c131; border-radius: 0.14em;
+            box-shadow: 0 0.06em 0 #6d7f53; transform-origin: 0 50%; }
+.stk .t { position: relative; }
+
+/* ---------- 1–3: dark opener + network ---------- */
+#s1 { background-color: #141618; }
+#s1-glow, #net-glow { position: absolute; width: 1400px; height: 1400px; left: -700px; top: -700px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(146,193,49,0.34) 0%, rgba(146,193,49,0.12) 30%, rgba(146,193,49,0) 64%); }
+#s1-hair { position: absolute; left: 0; top: 539px; width: 1920px; height: 2px; background-color: rgba(242,243,239,0.16); }
+#s1-box { position: absolute; overflow: visible; }
+#s1-box rect { fill: none; stroke: rgba(242,243,239,0.42); stroke-width: 2; }
+#s1-phrase { position: absolute; left: 0; top: 0; width: 1920px; text-align: center; font-family: "Display"; font-weight: 600;
+             font-size: 76px; line-height: 1.1; white-space: nowrap; }
+#s1-phrase .lead { color: #a7adb3; }
+#s1-phrase .slot { position: relative; display: inline-block; text-align: left; }
+#s1-phrase .slot .alt { position: absolute; left: 0; top: 0; }
+#s1-phrase .stk .t0 { color: #f2f3ef; }
+#s1-phrase .stk .t { position: absolute; left: 0; top: 0; color: #141618; }
+#s1-caret { position: absolute; width: 5px; height: 78px; background-color: #92c131; border-radius: 2px; }
+#shards { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.sh { position: absolute; left: 0; top: 0; white-space: nowrap; transform-origin: 50% 50%; opacity: 0; }
+.sh.tab { padding: 10px 22px 12px; border: 2px solid rgba(242,243,239,0.38); border-bottom: none; border-radius: 14px 14px 0 0;
+          font-family: "Body"; font-size: 24px; color: #d9dcd6; }
+.sh.tab i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #92c131; margin-right: 10px; }
+.sh.pill { padding: 8px 18px; border-radius: 30px; background-color: rgba(242,243,239,0.08); border: 1px solid rgba(242,243,239,0.22);
+           font-family: "Body"; font-size: 24px; color: #cfd3cd; }
+.sh.mono { font-family: "Mono"; font-size: 24px; color: #9aa0a6; }
+.sh.glyph { font-family: "Mono"; font-size: 40px; color: #e7e9e3; }
+.sh.badge { width: 46px; height: 46px; border-radius: 50%; background-color: #92c131; color: #141618; font-family: "Display";
+            font-weight: 600; font-size: 24px; text-align: center; line-height: 46px; }
+.sh.stars { font-size: 30px; color: #e7e9e3; letter-spacing: 4px; }
+#world { position: absolute; left: 0; top: 0; width: 4000px; height: 1400px; transform-origin: 0 0; }
+#net { position: absolute; left: 0; top: 0; overflow: visible; }
+#net path { fill: none; stroke: #e7e9e3; stroke-width: 2.4; stroke-linecap: round; }
+#net .thin { stroke: rgba(231,233,227,0.5); stroke-width: 1.6; }
+#net circle.nd { fill: #f2f3ef; }
+#net circle.bz { fill: #92c131; }
+.node { position: absolute; left: 0; top: 0; white-space: nowrap; }
+.node .ic { position: absolute; left: 0; top: 0; width: 52px; height: 52px; }
+.node .ic svg { width: 52px; height: 52px; overflow: visible; }
+.node .ic svg * { fill: none; stroke: #e7e9e3; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.node .lb { position: absolute; left: 68px; top: -4px; font-family: "UI"; font-weight: 500; font-size: 34px; color: #f2f3ef; }
+.node .sb { position: absolute; left: 68px; top: 40px; font-family: "Body"; font-size: 22px; color: #a7adb3; }
+#s1-head { position: absolute; left: 0; top: 0; padding: 14px 30px 18px; border-radius: 22px; background-color: rgba(20,22,24,0.94);
+           box-shadow: 0 0 0 1px rgba(242,243,239,0.08); font-family: "Display"; font-weight: 600; font-size: 56px; line-height: 1.1;
+           white-space: nowrap; color: #f2f3ef; }
+#s1-q, #f2-q { position: absolute; left: 0; width: 1920px; text-align: center; font-family: "Display"; font-weight: 600;
+               font-size: 52px; line-height: 1.12; white-space: nowrap; color: #f2f3ef; }
+#f2-q .acc, #s1-q .acc { color: #92c131; }
+#s1-dots { position: absolute; left: 0; top: 0; overflow: visible; }
+#s1-dots rect { fill: #f2f3ef; }
+
+/* ---------- 4–5: ring + brand ---------- */
+#s2 { background-color: #f2f3ef; }
+#s2-rays { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+#s2-disc { position: absolute; left: 0; top: 0; width: 200px; height: 200px; border-radius: 50%; background-color: #141618;
+           transform-origin: 50% 50%; }
+#s3 { background-color: #f2f3ef; background-image: radial-gradient(120% 90% at 50% 45%, #f6f7f3 0%, #eceee7 70%, #e6e8e0 100%); }
+#f3-meet { position: absolute; left: 0; top: 262px; width: 1920px; text-align: center; font-family: "UI"; font-weight: 500;
+           font-size: 44px; color: #5a5e64; white-space: nowrap; }
+#f3-guides { position: absolute; left: 0; top: 0; overflow: visible; }
+#f3-guides line, #f3-guides circle, #f3-guides rect { fill: none; stroke: rgba(90,94,100,0.32); stroke-width: 1.5; }
+.logo { position: absolute; overflow: visible; }
+
+/* ---------- 6: brief over the sea ---------- */
+#s4 { background-color: #e9e4da; }
+#s4-ui { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+#s4-head { position: absolute; left: 0; top: 330px; width: 1920px; text-align: center; font-family: "Display"; font-weight: 600;
+           font-size: 76px; color: #2b2f33; white-space: nowrap; }
+#brief { position: absolute; left: 430px; top: 470px; width: 1060px; height: 104px; border-radius: 52px; background-color: #fbfbf8;
+         box-shadow: 0 18px 50px rgba(40,52,60,0.18), 0 2px 0 rgba(255,255,255,0.8) inset; }
+#brief .plus { position: absolute; left: 34px; top: 26px; width: 52px; height: 52px; font-family: "UI"; font-weight: 400; font-size: 44px;
+               line-height: 52px; color: #5a5e64; text-align: center; }
+#brief .txt { position: absolute; left: 100px; top: 32px; font-family: "Body"; font-size: 32px; color: #2b2f33; white-space: nowrap; }
+#brief .txt .ph { color: #8b9096; }
+#brief .cur { display: inline-block; width: 3px; height: 34px; background-color: #5a5e64; vertical-align: -6px; margin-left: 2px; }
+#brief .chip { position: absolute; left: 700px; top: 34px; font-family: "Body"; font-size: 24px; color: #5a5e64; white-space: nowrap; }
+#brief .mic { position: absolute; left: 902px; top: 30px; width: 44px; height: 44px; }
+#brief .mic svg * { fill: none; stroke: #5a5e64; stroke-width: 2.6; stroke-linecap: round; }
+#send { position: absolute; left: 966px; top: 18px; width: 68px; height: 68px; border-radius: 50%; background-color: #92c131;
+        box-shadow: 0 6px 18px rgba(109,127,83,0.45); }
+#send svg, #hub-btn svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+#send svg path, #hub-btn svg path { fill: none; stroke: #141618; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- 7–8: growth-path fan ---------- */
+#s5 { background-color: #f2f3ef; }
+#s5-rings { position: absolute; left: 0; top: 0; overflow: visible; }
+#s5-rings circle { fill: none; stroke: rgba(146,193,49,0.28); }
+#cards { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.card { position: absolute; left: 0; top: 0; width: 320px; height: 196px; border-radius: 20px; overflow: hidden;
+        box-shadow: 0 14px 34px rgba(30,36,40,0.22); transform-origin: 50% 50%; font-family: "Body"; }
+.card .hd { position: absolute; left: 22px; top: 16px; font-family: "UI"; font-weight: 500; font-size: 26px; line-height: 1.2; white-space: nowrap; }
+.card .sb { position: absolute; left: 22px; top: 58px; font-size: 18px; line-height: 1.2; white-space: nowrap; opacity: 0.85; }
+.card svg { position: absolute; left: 0; top: 0; width: 320px; height: 196px; overflow: visible; }
+#hub { position: absolute; left: 0; top: 0; width: 240px; height: 240px; border-radius: 50%; background-color: #fbfbf8; transform-origin: 50% 50%;
+       box-shadow: 0 0 0 10px rgba(255,255,255,0.5); }
+#hub-btn { position: absolute; left: 0; top: 0; width: 96px; height: 96px; border-radius: 50%; background-color: #92c131;
+           box-shadow: 0 8px 22px rgba(109,127,83,0.45); }
+.cap { position: absolute; left: 0; top: 0; padding: 14px 30px 16px; border-radius: 40px; background-color: rgba(20,22,24,0.9); opacity: 0;
+       box-shadow: 0 0 0 1px rgba(242,243,239,0.1);
+       font-family: "Display"; font-weight: 600; font-size: 40px; color: #f2f3ef; white-space: nowrap; }
+.cap .acc { color: #92c131; }
+
+/* ---------- 9: in seconds ---------- */
+#s6 { background-color: #eef1e6; background-image: radial-gradient(90% 80% at 50% 45%, #f7f8f2 0%, #eef1e6 60%, #e2e8d4 100%); }
+#sec { position: absolute; left: 0; top: 0; width: 1920px; text-align: center; font-family: "Display"; font-weight: 600; font-size: 150px;
+       color: #141618; white-space: nowrap; }
+#sec .ch { display: inline-block; }
+#selbox { position: absolute; left: 0; top: 0; background-color: #92c131; border-radius: 14px; transform-origin: 0 0; }
+
+/* ---------- 10–13: editor over the forest ---------- */
+#s7 { background-color: #2c3a33; }
+#edwrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 2200px; }
+#ed { position: absolute; left: 370px; top: 200px; width: 1180px; height: 700px; border-radius: 18px; background-color: #15181b;
+      box-shadow: 0 40px 90px rgba(5,10,8,0.55), 0 0 0 1px rgba(255,255,255,0.08); transform-origin: 50% 50%; overflow: hidden; }
+#ed .bar { position: absolute; left: 0; top: 0; width: 1180px; height: 46px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+#ed .bar .d { position: absolute; top: 16px; width: 14px; height: 14px; border-radius: 50%; }
+#ed .bar .m { position: absolute; left: 110px; top: 12px; font-family: "Body"; font-size: 17px; color: #8a9096; white-space: nowrap; word-spacing: 18px; }
+#ed .bar .fn { position: absolute; left: 640px; top: 12px; font-family: "Mono"; font-size: 17px; color: #c9ced3; white-space: nowrap; }
+#ed .code { position: absolute; left: 0; top: 64px; width: 760px; height: 586px; overflow: hidden; }
+#ed .lines { position: absolute; left: 0; top: 0; width: 760px; }
+.ln { position: relative; height: 36px; font-family: "Mono"; font-size: 21px; line-height: 36px; white-space: pre; color: #e7e9e3; }
+.ln .hl { position: absolute; left: 66px; top: 2px; width: 694px; height: 32px; opacity: 0; }
+.ln .hl.ok { background-color: rgba(146,193,49,0.17); border-left: 4px solid #92c131; }
+.ln .hl.bad { background-color: rgba(224,80,63,0.28); border-left: 4px solid #e0503f; }
+.ln .no { position: absolute; left: 0; top: 0; width: 52px; text-align: right; color: #848a90; }
+.ln .tx { position: absolute; left: 82px; top: 0; }
+.ln .tx .k { color: #92c131; } .ln .tx .f { color: #c8e08f; } .ln .tx .s { color: #e3c48f; } .ln .tx .p { color: #8a9096; }
+.ln .ck { position: absolute; top: 0; font-family: "Body"; font-weight: 700; font-size: 24px; color: #92c131; opacity: 0; }
+.ln .x { position: absolute; top: 0; font-family: "Body"; font-weight: 700; font-size: 24px; color: #e0503f; opacity: 0; }
+.ln .fx { position: absolute; top: 0; font-family: "Body"; font-size: 19px; color: #a7adb3; opacity: 0; }
+#ed .pane { position: absolute; left: 760px; top: 46px; width: 420px; height: 618px; background-color: #1b1f23;
+            border-left: 1px solid rgba(255,255,255,0.06);
+            background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 30px 30px; }
+#ed .pane .pt { position: absolute; left: 22px; top: 16px; font-family: "Body"; font-size: 17px; color: #8a9096; white-space: nowrap; }
+#ed .st { position: absolute; left: 0; top: 664px; width: 1180px; height: 36px; border-top: 1px solid rgba(255,255,255,0.06);
+          font-family: "Body"; font-size: 16px; line-height: 36px; color: #7c838a; white-space: nowrap; padding-left: 24px; word-spacing: 14px; }
+#gl2 { position: absolute; left: 0; top: 0; }
+#s7-dim { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background-color: #0a0d0c; opacity: 0; }
+
+/* ---------- 14: the web ---------- */
+#s8 { background-color: #f3efe6; background-image: radial-gradient(110% 90% at 60% 45%, #f8f5ee 0%, #f1ece2 65%, #e7e0d2 100%); }
+#webcam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 1100px 480px; }
+#web { position: absolute; left: 0; top: 0; overflow: visible; }
+#web path { fill: none; stroke: #5a5e64; stroke-linecap: round; }
+#web .sp { stroke: rgba(90,94,100,0.55); }
+#web circle.hub { fill: #141618; }
+#web path.wsw { fill: #ffffff; stroke: none; }
+#web circle.wsd { fill: #92c131; }
+.chip { position: absolute; left: 0; top: 0; white-space: nowrap; transform-origin: 0 50%; }
+.chip .dt { position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; background-color: #5a5e64; }
+.chip .dg { position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; background-color: #92c131; opacity: 0; }
+.chip .lb { position: absolute; left: 18px; top: -22px; font-family: "UI"; font-weight: 500; font-size: 30px; color: #2b2f33; }
+.chip .vl { position: absolute; left: 20px; top: 16px; font-family: "Body"; font-size: 19px; color: #5a5e64; padding: 1px 8px;
+            border-radius: 8px; background-color: rgba(90,94,100,0.1); }
+.mote { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background-color: #92c131; }
+#s8-cap { position: absolute; left: 120px; top: 880px; font-family: "Display"; font-weight: 600; font-size: 60px; color: #141618;
+          white-space: nowrap; line-height: 1.1; }
+.capline { position: absolute; left: 0; top: 0; white-space: nowrap; }
+.capline .stk .t { color: #141618; }
+
+/* ---------- 15: tagline + end card ---------- */
+#s9 { background-color: #4f8fd6; }
+#s9-scrim { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+            background: radial-gradient(60% 46% at 50% 40%, rgba(12,30,52,0.34) 0%, rgba(12,30,52,0.16) 55%, rgba(12,30,52,0) 100%); }
+#tag, #tag2 { position: absolute; left: 0; top: 0; width: 1920px; text-align: center; font-family: "Display"; font-weight: 600; font-size: 84px;
+              color: #ffffff; white-space: nowrap; line-height: 1.1; text-shadow: 0 2px 24px rgba(10,24,40,0.35); }
+#tag2-box { position: absolute; left: 0; top: 0; width: 1920px; height: 70px; background-color: #92c131; opacity: 0; }
+#tag2 .wi.on { color: #141618; text-shadow: none; }
+#url { position: absolute; left: 0; top: 742px; width: 1920px; text-align: center; font-family: "Body"; font-size: 32px; color: #ffffff;
+       white-space: nowrap; text-shadow: 0 1px 14px rgba(10,24,40,0.45); }
+
+/* ---------- platform marks (real logos on white tiles) ---------- */
+.tile { display: inline-block; background-color: #ffffff; background-repeat: no-repeat; background-position: center; vertical-align: middle;
+        box-shadow: 0 4px 14px rgba(10,14,16,0.22); }
+.sh.tab .tile.fav { margin-right: 12px; vertical-align: -8px; box-shadow: none; }
+.node .ic .tile { position: absolute; left: 0; top: -4px; }
+.card .mks { position: absolute; right: 16px; top: 16px; display: flex; gap: 6px; }
+.chip .mk { position: absolute; top: -20px; left: -20px; display: flex; gap: 4px; }
+.chip.has-mk .dt { display: none; }
+.cap .tile { margin: 0 10px 0 2px; vertical-align: -10px; }
+
+/* ---------- global ---------- */
+#flash { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background-color: #f2f3ef; opacity: 0; display: none; }
+#grain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: 0.22; mix-blend-mode: overlay;
+         background-image: url("assets/tex/grain.png"); background-size: 256px 256px; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" class="f16x9" data-composition-id="main" data-start="0" data-duration="35" data-fps="30" data-width="1920" data-height="1080">
+<!-- WSS "Get found" — 15 shots on the reference's measured cut frames (BREAKDOWN.md), 35 s with the VO.
+     render(t) in film.js drives everything (pure function of time); hero3d.js draws the 3D ring (#gl1) and the bars (#gl2).
+     Layer order: scenes → #gl1 → front layers (type over the ring) → flash → grain. -->
+
+<!-- ===== 1–3: dark opener, the platform network ===== -->
+<div id="s1" class="scene">
+  <div id="s1-glow" data-layout-allow-overflow></div>
+  <div id="s1-hair" data-layout-allow-overflow></div>
+  <div id="shards" data-layout-allow-overflow><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="-0.1306" data-r0="229.6" data-r1="648.5" data-z="1.709" data-spin="-10.82" data-dl="0.103">Agency #1 · Ads</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="0.3793" data-r0="126.4" data-r1="365.8" data-z="1.780" data-spin="11.35" data-dl="0.064">Agency #2 · SEO</div><div class="sh mono" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="0.8735" data-r0="185.7" data-r1="644.6" data-z="1.522" data-spin="6.72" data-dl="0.050">invoice_0042.pdf</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="1.3335" data-r0="222.3" data-r1="518.5" data-z="1.152" data-spin="-9.79" data-dl="0.090"><i></i>Monthly report v7</div><div class="sh badge" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="1.9623" data-r0="163.0" data-r1="423.0" data-z="1.777" data-spin="-9.07" data-dl="0.055">3</div><div class="sh mono" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="2.2222" data-r0="133.0" data-r1="389.3" data-z="1.327" data-spin="6.55" data-dl="0.010">₹18,400 / month</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="2.7456" data-r0="231.2" data-r1="468.2" data-z="1.288" data-spin="-3.53" data-dl="0.038">Kick-off call · 4 pm</div><div class="sh mono" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="3.1478" data-r0="205.4" data-r1="491.1" data-z="0.748" data-spin="8.98" data-dl="0.075">brief_final_v3.docx</div><div class="sh stars" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="3.5300" data-r0="239.6" data-r1="582.0" data-z="0.773" data-spin="-5.91" data-dl="0.110">★★★☆☆</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="4.0832" data-r0="179.1" data-r1="420.9" data-z="1.092" data-spin="-7.71" data-dl="0.000">/</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="4.5838" data-r0="211.2" data-r1="405.2" data-z="1.229" data-spin="5.81" data-dl="0.106">+</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="4.8725" data-r0="168.8" data-r1="662.0" data-z="1.586" data-spin="0.09" data-dl="0.058">Retainer renewal</div><div class="sh mono" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="5.5284" data-r0="234.9" data-r1="498.7" data-z="1.656" data-spin="-7.03" data-dl="0.033">password: ••••••</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="A" data-a="6.0592" data-r0="205.8" data-r1="438.6" data-z="0.615" data-spin="-4.95" data-dl="0.099">×</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="0.1300" data-r0="145.3" data-r1="594.8" data-z="1.495" data-spin="-1.98" data-dl="0.040"><span class="tile fav" role="img" aria-label="google-ads" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/google-ads.svg);background-size:21px 21px"></span>Campaigns</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="0.3749" data-r0="144.7" data-r1="782.8" data-z="0.806" data-spin="4.29" data-dl="0.084"><span class="tile fav" role="img" aria-label="google-analytics" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/google-analytics.svg);background-size:21px 21px"></span>Reports</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="0.8678" data-r0="152.2" data-r1="602.4" data-z="0.971" data-spin="-9.59" data-dl="0.046"><span class="tile fav" role="img" aria-label="meta" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/meta.svg);background-size:21px 21px"></span>Ads Manager</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="1.3293" data-r0="210.1" data-r1="778.0" data-z="1.517" data-spin="-6.44" data-dl="0.082"><i></i>Inbox (99+)</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="1.8377" data-r0="129.1" data-r1="716.1" data-z="1.578" data-spin="1.51" data-dl="0.102"><span class="tile fav" role="img" aria-label="google" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/google.svg);background-size:21px 21px"></span>Reviews</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="2.0224" data-r0="209.6" data-r1="556.6" data-z="1.794" data-spin="9.87" data-dl="0.024"><i></i>Leads sheet</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="2.5837" data-r0="221.7" data-r1="752.2" data-z="1.781" data-spin="10.85" data-dl="0.004"><span class="tile fav" role="img" aria-label="wordpress" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/wordpress.svg);background-size:21px 21px"></span>Dashboard</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="3.3334" data-r0="148.6" data-r1="839.9" data-z="0.851" data-spin="10.19" data-dl="0.100"><span class="tile fav" role="img" aria-label="whatsapp" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/whatsapp.svg);background-size:21px 21px"></span>Messages</div><div class="sh badge" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="3.6643" data-r0="187.5" data-r1="523.4" data-z="0.782" data-spin="-11.35" data-dl="0.001">12</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="3.8567" data-r0="211.7" data-r1="375.5" data-z="1.008" data-spin="-0.21" data-dl="0.119">‹</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="4.3325" data-r0="186.4" data-r1="593.5" data-z="1.060" data-spin="0.92" data-dl="0.007">›</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="5.0253" data-r0="148.2" data-r1="559.8" data-z="0.775" data-spin="5.94" data-dl="0.090"><span class="tile fav" role="img" aria-label="google-search-console" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/google-search-console.svg);background-size:21px 21px"></span>Coverage</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="5.3513" data-r0="134.0" data-r1="804.3" data-z="0.656" data-spin="2.08" data-dl="0.018">/</div><div class="sh badge" data-layout-allow-occlusion data-layout-allow-overlap data-set="B" data-a="6.0069" data-r0="164.8" data-r1="662.5" data-z="1.128" data-spin="-5.54" data-dl="0.041">7</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="0.0910" data-r0="156.4" data-r1="337.1" data-z="1.534" data-spin="1.49" data-dl="0.072"><span class="tile fav" role="img" aria-label="youtube" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/youtube.svg);background-size:21px 21px"></span>Studio</div><div class="sh tab" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="0.6552" data-r0="183.9" data-r1="479.9" data-z="0.806" data-spin="10.91" data-dl="0.095"><span class="tile fav" role="img" aria-label="instagram" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/instagram.svg);background-size:21px 21px"></span>Insights</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="0.8113" data-r0="159.0" data-r1="599.5" data-z="0.624" data-spin="0.58" data-dl="0.109">Scheduler</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="1.5344" data-r0="230.4" data-r1="334.0" data-z="1.787" data-spin="-6.12" data-dl="0.052">CRM</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="2.3126" data-r0="149.6" data-r1="400.7" data-z="1.731" data-spin="-8.70" data-dl="0.040">Heatmaps</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="2.3846" data-r0="185.0" data-r1="423.6" data-z="1.402" data-spin="10.20" data-dl="0.052">Link checker</div><div class="sh mono" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="2.9211" data-r0="224.5" data-r1="565.8" data-z="0.571" data-spin="0.35" data-dl="0.089">api_key=••••</div><div class="sh pill" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="3.5599" data-r0="167.5" data-r1="626.0" data-z="1.627" data-spin="11.40" data-dl="0.075">Call tracking</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="3.9930" data-r0="121.3" data-r1="432.7" data-z="1.725" data-spin="1.98" data-dl="0.097">{ }</div><div class="sh badge" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="4.8085" data-r0="208.0" data-r1="413.0" data-z="1.371" data-spin="-6.59" data-dl="0.007">5</div><div class="sh mono" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="5.4395" data-r0="186.6" data-r1="521.3" data-z="1.635" data-spin="7.85" data-dl="0.068">export_final(2).csv</div><div class="sh glyph" data-layout-allow-occlusion data-layout-allow-overlap data-set="C" data-a="5.5116" data-r0="169.1" data-r1="762.6" data-z="1.689" data-spin="6.85" data-dl="0.034">*</div></div>
+  <div id="world" data-layout-allow-overflow>
+    <div id="net-glow" data-layout-allow-overflow></div>
+    <svg id="net" width="4000" height="1400" viewBox="0 0 4000 1400" data-layout-allow-overflow><path id="net-wave" d="M1500 540"/><path id="th-d0" class="thin" d="M2100 540 C2320 520 2420 640 2700 610 S3150 560 3500 600"/><path id="th-d1" class="thin" d="M2100 540 C2300 560 2380 420 2640 460 S3000 520 3450 470"/><path id="th0" d="M2100 540 C2259.6 535.2 2309.0 304.8 2480 300"/><path id="th1" d="M2100 540 C2419.2 537.8 2518.0 432.2 2860 430"/><path id="th2" d="M2100 540 C2276.4 545.0 2331.0 785.0 2520 790"/><path id="th3" d="M2100 540 C2436.0 547.2 2540.0 892.8 2900 900"/><path id="th4" d="M2100 540 C2587.2 534.4 2738.0 265.6 3260 260"/><path id="th5" d="M2100 540 C2612.4 542.8 2771.0 677.2 3320 680"/><circle id="nd0" class="nd" cx="2480" cy="300" r="7"/><circle id="nd1" class="nd" cx="2860" cy="430" r="7"/><circle id="nd2" class="nd" cx="2520" cy="790" r="7"/><circle id="nd3" class="nd" cx="2900" cy="900" r="7"/><circle id="nd4" class="nd" cx="3260" cy="260" r="7"/><circle id="nd5" class="nd" cx="3320" cy="680" r="7"/><circle id="nd-j" class="nd" cx="2100" cy="540" r="8"/><circle id="nd-b" class="bz" cx="1500" cy="540" r="11"/></svg><div class="node" id="node0" style="left:2498px;top:236px"><div class="ic"><span class="tile " role="img" aria-label="google-ads" style="width:60px;height:60px;border-radius:14px;background-image:url(assets/logos/google-ads.svg);background-size:40px 40px"></span></div><div class="lb" data-layout-allow-occlusion>Google Ads</div><div class="sb" data-layout-allow-occlusion>agency #1 · no call tracking</div></div><div class="node" id="node1" style="left:2878px;top:366px"><div class="ic"><span class="tile " role="img" aria-label="meta" style="width:60px;height:60px;border-radius:14px;background-image:url(assets/logos/meta.svg);background-size:40px 40px"></span></div><div class="lb" data-layout-allow-occlusion>Meta Ads</div><div class="sb" data-layout-allow-occlusion>agency #2 · separate report</div></div><div class="node" id="node2" style="left:2538px;top:726px"><div class="ic"><span class="tile " role="img" aria-label="google-search-console" style="width:60px;height:60px;border-radius:14px;background-image:url(assets/logos/google-search-console.svg);background-size:40px 40px"></span></div><div class="lb" data-layout-allow-occlusion>Search Console</div><div class="sb" data-layout-allow-occlusion>214 pages not indexed</div></div><div class="node" id="node3" style="left:2918px;top:836px"><div class="ic"><span class="tile " role="img" aria-label="google" style="width:60px;height:60px;border-radius:14px;background-image:url(assets/logos/google.svg);background-size:40px 40px"></span></div><div class="lb" data-layout-allow-occlusion>Google Business Profile</div><div class="sb" data-layout-allow-occlusion>9 reviews unanswered</div></div><div class="node" id="node4" style="left:3278px;top:196px"><div class="ic"><span class="tile " role="img" aria-label="instagram" style="width:60px;height:60px;border-radius:14px;background-image:url(assets/logos/instagram.svg);background-size:40px 40px"></span></div><div class="lb" data-layout-allow-occlusion>Instagram</div><div class="sb" data-layout-allow-occlusion>last post 41 days ago</div></div><div class="node" id="node5" style="left:3338px;top:616px"><div class="ic"><span class="tile " role="img" aria-label="wordpress" style="width:60px;height:60px;border-radius:14px;background-image:url(assets/logos/wordpress.svg);background-size:40px 40px"></span></div><div class="lb" data-layout-allow-occlusion>Website</div><div class="sb" data-layout-allow-occlusion>loads in 6.2 s</div></div>
+  </div>
+  <svg id="s1-box" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow><rect id="s1-boxr" x="0" y="0" width="10" height="10" rx="22"/></svg>
+  <div id="s1-phrase"><span class="w"><span class="wi lead" id="p-too">Too many</span></span> <span class="slot" id="p-slot"><span class="w"><span class="wi" id="p-w0">agencies,</span></span><span class="alt"><span class="w"><span class="wi" id="p-w1">tabs,</span></span></span><span class="alt"><span class="w"><span class="wi stk" id="p-w2"><span class="box" id="p-box"></span><span class="t0">tools.</span><span class="t" id="p-w2t">tools.</span></span></span></span></span></div>
+  <div id="s1-caret" data-layout-allow-overflow></div>
+  <div id="s1-head"><span class="w"><span class="wi">Scattered</span></span> <span class="w"><span class="wi">across</span></span> <span class="w"><span class="wi">countless</span></span> <span class="w"><span class="wi">platforms.</span></span></div>
+  <div id="s1-q" style="top:468px"><div><span class="w"><span class="wi">What</span></span> <span class="w"><span class="wi">if</span></span> <span class="w"><span class="wi">it</span></span> <span class="w"><span class="wi">all</span></span></div></div>
+  <svg id="s1-dots" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow>
+    <rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/>
+  </svg>
+</div>
+
+<!-- ===== 4: the 3D ring (canvas #gl1 above), 5: brand on cream ===== -->
+<div id="s2" class="scene">
+  <img id="s2-rays" src="assets/tex/rays.jpg" alt="" data-layout-allow-overflow />
+  <div id="s2-disc" data-layout-allow-overflow></div>
+</div>
+<div id="s3" class="scene"></div>
+
+<!-- ===== 6: brief over the sea ===== -->
+<div id="s4" class="scene">
+  <img class="plate" id="s4-plate" src="assets/photos/p1-sea.jpg" alt="" data-layout-allow-overflow />
+  <img class="plate" id="s4-blur" src="assets/photos/p1-sea-blur.jpg" alt="" data-layout-allow-overflow />
+  <div id="s4-ui" data-layout-allow-overflow>
+    <div id="s4-head"><span class="w"><span class="wi">Tell</span></span> <span class="w"><span class="wi">us</span></span> <span class="w"><span class="wi">your</span></span> <span class="w"><span class="wi">goal</span></span></div>
+    <div id="brief">
+      <div class="plus">+</div>
+      <div class="txt"><span id="brief-typed"></span><span class="cur" id="brief-cur"></span></div>
+      <div class="chip">Growth plan ▾</div>
+      <div class="mic"><svg viewBox="0 0 44 44"><rect x="15" y="6" width="14" height="22" rx="7"/><path d="M9 21a13 13 0 0 0 26 0M22 34v5"/></svg></div>
+      <div id="send"><svg viewBox="0 0 68 68"><g id="send-ar"><path d="M34 46V22M23 33l11-11 11 11"/></g></svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 7–8: growth-path fan ===== -->
+<div id="s5" class="scene">
+  <img class="plate" id="s5-plate" src="assets/photos/p1-sea-blur.jpg" alt="" data-layout-allow-overflow />
+  <svg id="s5-rings" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow>
+    <circle class="rg"/><circle class="rg"/><circle class="rg"/><circle class="rg"/><circle class="rg"/><circle class="rg"/>
+  </svg>
+  <div id="cards" data-layout-allow-overflow><div class="card" id="card0" style="background-color:#141618;color:#f2f3ef"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><g opacity=".85"><rect x="22" y="104" width="200" height="16" rx="8" fill="#f2f3ef" opacity=".9"/><rect x="22" y="132" width="150" height="12" rx="6" fill="#f2f3ef" opacity=".4"/><rect x="22" y="156" width="170" height="12" rx="6" fill="#f2f3ef" opacity=".3"/><circle cx="270" cy="134" r="26" fill="none" stroke="#f2f3ef" stroke-width="5"/><text data-layout-allow-overlap data-layout-allow-occlusion x="270" y="143" text-anchor="middle" font-family="Display" font-weight="600" font-size="26" fill="#f2f3ef">1</text></g></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Local SEO</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>dentist near me · #1</div><div class="mks"><span class="tile " role="img" aria-label="google" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/google.svg);background-size:25px 25px"></span></div></div><div class="card" id="card1" style="background-color:#92c131;color:#141618"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="30" y="146.5" width="34" height="31.499999999999996" rx="6" fill="#141618" opacity="0.35"/><rect x="84" y="133" width="34" height="45" rx="6" fill="#141618" opacity="0.5"/><rect x="138" y="140.2" width="34" height="37.8" rx="6" fill="#141618" opacity="0.6499999999999999"/><rect x="192" y="116.8" width="34" height="61.2" rx="6" fill="#141618" opacity="0.7999999999999999"/><rect x="246" y="97" width="34" height="81" rx="6" fill="#141618" opacity="0.95"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Google Ads</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>calls tracked</div><div class="mks"><span class="tile " role="img" aria-label="google-ads" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/google-ads.svg);background-size:25px 25px"></span></div></div><div class="card" id="card2" style="background-color:#f8f6f0;color:#2b2f33"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="24" y="96" width="60" height="78" rx="8" fill="#92c131"/><rect x="94" y="96" width="60" height="78" rx="8" fill="#5a5e64"/><rect x="164" y="96" width="60" height="78" rx="8" fill="#c8674a"/><rect x="234" y="96" width="60" height="78" rx="8" fill="#d9a441"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Meta Ads</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>4 creatives · A/B</div><div class="mks"><span class="tile " role="img" aria-label="meta" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/meta.svg);background-size:25px 25px"></span></div></div><div class="card" id="card3" style="background-color:#2f5d52;color:#f2f3ef"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="22" y="96" width="210" height="34" rx="17" fill="#f2f3ef" opacity=".22"/><rect x="88" y="140" width="210" height="34" rx="17" fill="#92c131"/><circle cx="110" cy="157" r="4" fill="#141618"/><circle cx="124" cy="157" r="4" fill="#141618"/><circle cx="138" cy="157" r="4" fill="#141618"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>AI search</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>“best dentist in Noida?”</div><div class="mks"><span class="tile " role="img" aria-label="chatgpt" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/chatgpt.svg);background-size:25px 25px"></span><span class="tile " role="img" aria-label="gemini" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/gemini.svg);background-size:25px 25px"></span><span class="tile " role="img" aria-label="perplexity" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/perplexity.svg);background-size:25px 25px"></span></div></div><div class="card" id="card4" style="background-color:#ffffff;color:#2b2f33"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><path d="M60 178s-28-26-28-46a28 28 0 0 1 56 0c0 20-28 46-28 46z" fill="#92c131"/><circle cx="60" cy="132" r="10" fill="#ffffff"/><rect x="120" y="112" width="170" height="14" rx="7" fill="#2b2f33" opacity=".3"/><rect x="120" y="138" width="120" height="14" rx="7" fill="#2b2f33" opacity=".2"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Business Profile</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>★★★★★ 4.9</div><div class="mks"><span class="tile " role="img" aria-label="google" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/google.svg);background-size:25px 25px"></span></div></div><div class="card" id="card5" style="background-color:#5a5e64;color:#f2f3ef"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="22" y="92" width="276" height="86" rx="10" fill="none" stroke="#f2f3ef" stroke-opacity=".5" stroke-width="2"/><rect x="38" y="106" width="130" height="14" rx="7" fill="#f2f3ef" opacity=".85"/><rect x="38" y="128" width="100" height="10" rx="5" fill="#f2f3ef" opacity=".4"/><rect x="38" y="148" width="64" height="20" rx="10" fill="#92c131"/><rect x="190" y="104" width="94" height="62" rx="8" fill="#f2f3ef" opacity=".18"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Website revamp</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>mobile-first</div><div class="mks"><span class="tile " role="img" aria-label="wordpress" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/wordpress.svg);background-size:25px 25px"></span></div></div><div class="card" id="card6" style="background-color:#a9503a;color:#fff7ef"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="30" y="88" width="78" height="96" rx="10" fill="#fff7ef" opacity="0.25"/><path d="M62 124l18 12-18 12z" fill="#fff7ef"/><rect x="122" y="88" width="78" height="96" rx="10" fill="#fff7ef" opacity="0.45"/><path d="M154 124l18 12-18 12z" fill="#fff7ef"/><rect x="214" y="88" width="78" height="96" rx="10" fill="#fff7ef" opacity="0.65"/><path d="M246 124l18 12-18 12z" fill="#fff7ef"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Reels plan</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>12 shorts / month</div><div class="mks"><span class="tile " role="img" aria-label="instagram" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/instagram.svg);background-size:25px 25px"></span></div></div><div class="card" id="card7" style="background-color:#eef1e6;color:#2b2f33"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><text data-layout-allow-overlap data-layout-allow-occlusion x="24" y="150" font-size="44" fill="#d9a441" letter-spacing="6">★★★★★</text><rect x="24" y="164" width="150" height="12" rx="6" fill="#2b2f33" opacity=".25"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Review engine</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>ask · reply · repeat</div><div class="mks"><span class="tile " role="img" aria-label="google" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/google.svg);background-size:25px 25px"></span></div></div><div class="card" id="card8" style="background-color:#d9a441;color:#1f1a10"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="22" y="92" width="276" height="86" rx="10" fill="none" stroke="#1f1a10" stroke-opacity=".5" stroke-width="2"/><rect x="38" y="106" width="130" height="14" rx="7" fill="#1f1a10" opacity=".85"/><rect x="38" y="128" width="100" height="10" rx="5" fill="#1f1a10" opacity=".4"/><rect x="38" y="148" width="64" height="20" rx="10" fill="#92c131"/><rect x="190" y="104" width="94" height="62" rx="8" fill="#1f1a10" opacity=".18"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Landing pages</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>one offer per page</div></div><div class="card" id="card9" style="background-color:#1f2a24;color:#e7e9e3"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="22" y="96" width="210" height="34" rx="17" fill="#e7e9e3" opacity=".22"/><rect x="88" y="140" width="210" height="34" rx="17" fill="#92c131"/><circle cx="110" cy="157" r="4" fill="#141618"/><circle cx="124" cy="157" r="4" fill="#141618"/><circle cx="138" cy="157" r="4" fill="#141618"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>WhatsApp follow-ups</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>reply in 5 minutes</div><div class="mks"><span class="tile " role="img" aria-label="whatsapp" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/whatsapp.svg);background-size:25px 25px"></span></div></div><div class="card" id="card10" style="background-color:#f2f3ef;color:#2b2f33"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="24" y="96" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="64" y="96" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="104" y="96" width="32" height="34" rx="6" fill="#92c131" opacity="1"/><rect x="144" y="96" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="184" y="96" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="224" y="96" width="32" height="34" rx="6" fill="#92c131" opacity="1"/><rect x="264" y="96" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="24" y="138" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="64" y="138" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="104" y="138" width="32" height="34" rx="6" fill="#92c131" opacity="1"/><rect x="144" y="138" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="184" y="138" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/><rect x="224" y="138" width="32" height="34" rx="6" fill="#92c131" opacity="1"/><rect x="264" y="138" width="32" height="34" rx="6" fill="#2b2f33" opacity="0.14"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>YouTube Shorts</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>3 uploads / week</div><div class="mks"><span class="tile " role="img" aria-label="youtube" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/youtube.svg);background-size:25px 25px"></span></div></div><div class="card" id="card11" style="background-color:#6b4a6e;color:#f6eef6"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><rect x="30" y="146.5" width="34" height="31.499999999999996" rx="6" fill="#f6eef6" opacity="0.35"/><rect x="84" y="133" width="34" height="45" rx="6" fill="#f6eef6" opacity="0.5"/><rect x="138" y="140.2" width="34" height="37.8" rx="6" fill="#f6eef6" opacity="0.6499999999999999"/><rect x="192" y="116.8" width="34" height="61.2" rx="6" fill="#f6eef6" opacity="0.7999999999999999"/><rect x="246" y="97" width="34" height="81" rx="6" fill="#f6eef6" opacity="0.95"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Amazon Ads</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>sponsored products</div></div><div class="card" id="card12" style="background-color:#15181b;color:#c8e08f"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><text data-layout-allow-overlap data-layout-allow-occlusion x="24" y="118" font-family="Mono" font-size="17" fill="#c8e08f">"@type": "FAQPage",</text><text data-layout-allow-overlap data-layout-allow-occlusion x="24" y="146" font-family="Mono" font-size="17" fill="#e3c48f">"name": "Root canal cost?"</text><text data-layout-allow-overlap data-layout-allow-occlusion x="24" y="174" font-family="Mono" font-size="17" fill="#c8e08f" opacity=".6">"acceptedAnswer": …</text></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Schema markup</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>FAQ · LocalBusiness</div><div class="mks"><span class="tile " role="img" aria-label="google-search-console" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/google-search-console.svg);background-size:25px 25px"></span></div></div><div class="card" id="card13" style="background-color:#7fa042;color:#141618"><svg viewBox="0 0 320 196" data-layout-allow-overlap data-layout-allow-occlusion><path d="M24 170 L84 150 L134 158 L190 120 L240 126 L296 92" fill="none" stroke="#141618" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="296" cy="92" r="8" fill="#f2f3ef"/></svg><div class="hd" data-layout-allow-occlusion data-layout-allow-overlap>Monthly report</div><div class="sb" data-layout-allow-occlusion data-layout-allow-overlap>one page, plain words</div><div class="mks"><span class="tile " role="img" aria-label="google-analytics" style="width:38px;height:38px;border-radius:9px;background-image:url(assets/logos/google-analytics.svg);background-size:25px 25px"></span></div></div></div>
+  <div id="hub" data-layout-allow-overflow></div>
+  <div id="hub-btn" data-layout-allow-overflow><svg viewBox="0 0 96 96"><g id="hub-ar"><path d="M48 66V30M32 46l16-16 16 16"/></g></svg></div>
+  <div class="cap" id="s5-cap"><span class="w"><span class="wi">See</span></span> <span class="w"><span class="wi">multiple</span></span> <span class="w"><span class="wi acc">growth</span></span> <span class="w"><span class="wi acc">paths</span></span></div>
+</div>
+
+<!-- ===== 9: in seconds ===== -->
+<div id="s6" class="scene">
+  <div id="selbox" data-layout-allow-overflow></div>
+  <div id="sec"></div>
+</div>
+
+<!-- ===== 10–13: editor over the forest ===== -->
+<div id="s7" class="scene">
+  <img class="plate" id="s7-plate" src="assets/photos/p2-forest.jpg" alt="" data-layout-allow-overflow />
+  <img class="plate" id="s7-red" src="assets/photos/p2-forest-red.jpg" alt="" data-layout-allow-overflow />
+  <div id="edwrap" data-layout-allow-overflow>
+    <div id="ed" data-layout-allow-overflow>
+      <div class="bar"><div class="d" style="left:22px;background-color:#e0634f"></div><div class="d" style="left:46px;background-color:#e2b34a"></div><div class="d" style="left:70px;background-color:#7fa042"></div>
+        <div class="m">File Edit View Go Run Terminal Help</div><div class="fn">grow.js</div></div>
+      <div class="code"><div class="lines" id="lines"><div class="ln" id="ln0"><div class="hl ok"></div><span class="no">1</span><span class="tx" data-layout-allow-occlusion><span class="k">async function</span> <span class="f">growClinic</span>(goal) {</span><span class="ck" style="left:516px">✓</span></div><div class="ln" id="ln1"><div class="hl ok"></div><span class="no">2</span><span class="tx" data-layout-allow-occlusion>  <span class="k">const</span> site    = <span class="k">await</span> <span class="f">audit</span>(goal.website);</span><span class="ck" style="left:654px">✓</span></div><div class="ln" id="ln2"><div class="hl ok"></div><span class="no">3</span><span class="tx" data-layout-allow-occlusion>  <span class="k">const</span> pages   = <span class="k">await</span> <span class="f">optimise</span>(site.pages);</span><span class="ck" style="left:667px">✓</span></div><div class="ln" id="ln3"><div class="hl ok"></div><span class="no">4</span><span class="tx" data-layout-allow-occlusion>  <span class="k">const</span> profile = <span class="k">await</span> <span class="f">syncProfile</span>(goal.location);</span><span class="ck" style="left:743px">✓</span></div><div class="ln" id="ln4"><div class="hl ok"></div><span class="no">5</span><span class="tx" data-layout-allow-occlusion> </span></div><div class="ln" id="ln5"><div class="hl bad"></div><span class="no">6</span><span class="tx" data-layout-allow-occlusion>  <span class="k">const</span> aiSearch = <span class="s" id="errv">"not cited"</span>;</span><span class="ck" style="left:491px">✓</span><span class="x" style="left:491px">✕</span><span class="fx" style="left:535px">fixing…</span></div><div class="ln" id="ln6"><div class="hl ok"></div><span class="no">7</span><span class="tx" data-layout-allow-occlusion> </span></div><div class="ln" id="ln7"><div class="hl ok"></div><span class="no">8</span><span class="tx" data-layout-allow-occlusion>  <span class="k">for</span> (<span class="k">const</span> keyword <span class="k">of</span> goal.keywords) {</span><span class="ck" style="left:604px">✓</span></div><div class="ln" id="ln8"><div class="hl ok"></div><span class="no">9</span><span class="tx" data-layout-allow-occlusion>    <span class="k">const</span> page = pages.<span class="f">match</span>(keyword);</span><span class="ck" style="left:579px">✓</span></div><div class="ln" id="ln9"><div class="hl ok"></div><span class="no">10</span><span class="tx" data-layout-allow-occlusion>    page.schema = <span class="f">addFAQSchema</span>(page);</span><span class="ck" style="left:566px">✓</span></div><div class="ln" id="ln10"><div class="hl ok"></div><span class="no">11</span><span class="tx" data-layout-allow-occlusion>    page.rank   = <span class="k">await</span> <span class="f">track</span>(keyword);</span><span class="ck" style="left:591px">✓</span></div><div class="ln" id="ln11"><div class="hl ok"></div><span class="no">12</span><span class="tx" data-layout-allow-occlusion>    <span class="k">if</span> (page.rank &gt; 3) <span class="f">improve</span>(page);</span><span class="ck" style="left:566px">✓</span></div><div class="ln" id="ln12"><div class="hl ok"></div><span class="no">13</span><span class="tx" data-layout-allow-occlusion>  }</span><span class="ck" style="left:138px">✓</span></div><div class="ln" id="ln13"><div class="hl ok"></div><span class="no">14</span><span class="tx" data-layout-allow-occlusion>  <span class="k">return</span> <span class="f">report</span>(site, profile);</span><span class="ck" style="left:491px">✓</span></div><div class="ln" id="ln14"><div class="hl ok"></div><span class="no">15</span><span class="tx" data-layout-allow-occlusion>}</span><span class="ck" style="left:113px">✓</span></div></div></div>
+      <div class="pane"><div class="pt">preview · growth</div><canvas id="gl2" width="420" height="560" style="top:46px"></canvas></div>
+      <div class="st">main · JavaScript · UTF-8 · Ln 6, Col 18</div>
+    </div>
+  </div>
+  <div id="s7-dim" data-layout-allow-overflow></div>
+  <div class="cap" id="s7-cap0"><span class="w"><span class="wi">Rank</span></span> <span class="w"><span class="wi">on</span></span> <span class="w"><span class="wi acc"><span class="tile" role="img" aria-label="Google" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/google.svg);background-size:30px 30px"></span>Google,</span></span></div>
+  <div class="cap" id="s7-cap1"><span class="w"><span class="wi">show</span></span> <span class="w"><span class="wi">up</span></span> <span class="w"><span class="wi">in</span></span> <span class="w"><span class="wi acc">AI</span></span> <span class="w"><span class="wi acc">search,</span></span> <span class="w"><span class="wi"><span class="tile" role="img" aria-label="ChatGPT" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/chatgpt.svg);background-size:30px 30px"></span><span class="tile" role="img" aria-label="Gemini" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/gemini.svg);background-size:30px 30px"></span><span class="tile" role="img" aria-label="Perplexity" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/perplexity.svg);background-size:30px 30px"></span></span></span></div>
+  <div class="cap" id="s7-cap2"><span class="w"><span class="wi">and</span></span> <span class="w"><span class="wi">let</span></span> <span class="w"><span class="wi">WebSpider</span></span> <span class="w"><span class="wi acc">make</span></span> <span class="w"><span class="wi acc">it</span></span> <span class="w"><span class="wi acc">work.</span></span></div>
+</div>
+
+<!-- ===== 14: ads, SEO and social woven into one web ===== -->
+<div id="s8" class="scene">
+  <div id="webcam" data-layout-allow-overflow>
+    <svg id="web" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow></svg>
+    <div id="chips" data-layout-allow-overflow><div class="chip has-mk" id="chip0" data-x="1310.7" data-y="464.1" data-ang="-0.1400" data-ring="190" data-fx="294.9" data-fy="128.3" data-fz="1.116"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="google-ads" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/google-ads.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">Google Ads</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">CTR ↑</div></div><div class="chip has-mk" id="chip1" data-x="979.8" data-y="574.1" data-ang="2.1708" data-ring="190" data-fx="817.5" data-fy="383.8" data-fz="1.442"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="meta" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/meta.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">Meta Ads</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">3 audiences</div></div><div class="chip has-mk" id="chip2" data-x="924.4" data-y="415.6" data-ang="3.7416" data-ring="190" data-fx="688.3" data-fy="1033.0" data-fz="1.096"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="google" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/google.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">SEO</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">28 keywords</div></div><div class="chip has-mk" id="chip3" data-x="1162.9" data-y="371.1" data-ang="5.0124" data-ring="190" data-fx="1709.4" data-fy="312.5" data-fz="0.908"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="instagram" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/instagram.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">Instagram</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">3 posts / wk</div></div><div class="chip has-mk" id="chip4" data-x="1464.9" data-y="538.3" data-ang="0.2900" data-ring="340" data-fx="-7.4" data-fy="1025.3" data-fz="2.684"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="google" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/google.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">Reviews</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">4.9 ★</div></div><div class="chip" id="chip5" data-x="1220.9" data-y="673.4" data-ang="1.2476" data-ring="340" data-fx="447.2" data-fy="1091.2" data-fz="2.240"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Calls</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">tracked</div></div><div class="chip" id="chip6" data-x="912.6" data-y="657.6" data-ang="2.0852" data-ring="340" data-fx="1361.1" data-fy="237.2" data-fz="0.698"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Leads</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">one sheet</div></div><div class="chip" id="chip7" data-x="743.4" data-y="551.6" data-ang="2.7828" data-ring="340" data-fx="598.9" data-fy="507.8" data-fz="2.558"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Bookings</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">online</div></div><div class="chip" id="chip8" data-x="834.4" data-y="333.8" data-ang="3.9404" data-ring="340" data-fx="902.2" data-fy="596.5" data-fz="2.081"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Keywords</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">top 3</div></div><div class="chip" id="chip9" data-x="1147.7" data-y="277.6" data-ang="4.8380" data-ring="340" data-fx="1534.1" data-fy="488.0" data-fz="0.853"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Landing pages</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">4 live</div></div><div class="chip has-mk" id="chip10" data-x="1408.2" data-y="360.2" data-ang="5.6556" data-ring="340" data-fx="1435.2" data-fy="253.6" data-fz="2.161"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="youtube" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/youtube.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">YouTube</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">Shorts</div></div><div class="chip has-mk" id="chip11" data-x="1586.8" data-y="615.8" data-ang="0.4800" data-ring="490" data-fx="-51.2" data-fy="326.9" data-fz="0.608"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="wordpress" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/wordpress.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">Website</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">1.1 s load</div></div><div class="chip has-mk" id="chip12" data-x="1475.2" data-y="694.6" data-ang="0.8181" data-ring="490" data-fx="1213.8" data-fy="454.7" data-fz="2.794"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="chatgpt" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/chatgpt.svg);background-size:20px 20px"></span><span class="tile " role="img" aria-label="gemini" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/gemini.svg);background-size:20px 20px"></span><span class="tile " role="img" aria-label="perplexity" style="width:30px;height:30px;border-radius:7px;background-image:url(assets/logos/perplexity.svg);background-size:20px 20px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:110px">AI answers</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:112px">cited</div></div><div class="chip has-mk" id="chip13" data-x="1129.9" data-y="773.6" data-ang="1.5163" data-ring="490" data-fx="1328.6" data-fy="680.1" data-fz="2.596"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="google-search-console" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/google-search-console.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">Search Console</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">clean</div></div><div class="chip" id="chip14" data-x="753.4" data-y="707.9" data-ang="2.2544" data-ring="490" data-fx="561.3" data-fy="544.7" data-fz="2.588"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Schema</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">FAQ</div></div><div class="chip" id="chip15" data-x="551.2" data-y="476.8" data-ang="3.1525" data-ring="490" data-fx="38.9" data-fy="451.6" data-fz="0.633"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Retargeting</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">on</div></div><div class="chip" id="chip16" data-x="610.5" data-y="347.1" data-ang="3.6107" data-ring="490" data-fx="1088.6" data-fy="1129.7" data-fz="1.060"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Content</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">weekly</div></div><div class="chip has-mk" id="chip17" data-x="884.5" data-y="209.6" data-ang="4.3088" data-ring="490" data-fx="220.8" data-fy="1137.8" data-fz="2.845"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="google-analytics" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/google-analytics.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">Analytics</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">one view</div></div><div class="chip" id="chip18" data-x="1259.3" data-y="198.7" data-ang="5.0069" data-ring="490" data-fx="1444.6" data-fy="213.5" data-fz="2.387"><div class="dt"></div><div class="dg"></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:18px">Backlinks</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:20px">local</div></div><div class="chip has-mk" id="chip19" data-x="1621.3" data-y="388.0" data-ang="5.9651" data-ring="490" data-fx="537.4" data-fy="482.4" data-fz="0.689"><div class="dt"></div><div class="dg"></div><div class="mk"><span class="tile " role="img" aria-label="whatsapp" style="width:40px;height:40px;border-radius:10px;background-image:url(assets/logos/whatsapp.svg);background-size:26px 26px"></span></div><div class="lb" data-layout-allow-occlusion data-layout-allow-overlap style="left:34px">WhatsApp</div><div class="vl" data-layout-allow-occlusion data-layout-allow-overlap style="left:36px">replies</div></div></div>
+    <div id="motes" data-layout-allow-overflow></div>
+  </div>
+  <div id="s8-cap">
+    <div class="capline" id="c8-0"><span class="w"><span class="wi">Bring</span></span> <span class="w"><span class="wi">ads,</span></span> <span class="w"><span class="wi">SEO</span></span> <span class="w"><span class="wi">and</span></span> <span class="w"><span class="wi">social</span></span> <span class="w"><span class="wi stk"><span class="box"></span><span class="t">together.</span></span></span></div>
+    <div class="capline" id="c8-1"><span class="w"><span class="wi">Connect</span></span> <span class="w"><span class="wi">the</span></span> <span class="w"><span class="wi stk"><span class="box"></span><span class="t">dots,</span></span></span></div>
+    <div class="capline" id="c8-2"><span class="w"><span class="wi">and</span></span> <span class="w"><span class="wi">scale</span></span> <span class="w"><span class="wi">what</span></span> <span class="w"><span class="wi stk"><span class="box"></span><span class="t">matters.</span></span></span></div>
+  </div>
+</div>
+
+<!-- ===== 15: tagline over the mustard field, end card ===== -->
+<div id="s9" class="scene">
+  <img class="plate" id="s9-plate" src="assets/photos/p3-mustard.jpg" alt="" data-layout-allow-overflow />
+  <div id="s9-scrim" data-layout-allow-overflow></div>
+  <div id="tag"><span class="w"><span class="wi">One</span></span> <span class="w"><span class="wi">team</span></span> <span class="w"><span class="wi">to</span></span></div>
+  <div id="tag2"><div id="tag2-box" data-layout-allow-overflow></div><span class="w"><span class="wi" id="tw0">plan,</span></span> <span class="w"><span class="wi" id="tw1">launch,</span></span> <span class="w"><span class="wi" id="tw2">and grow.</span></span></div>
+  <svg class="logo" id="le-logo" viewBox="120 225 785 315" data-layout-allow-overflow><defs><clipPath id="le-cw"><rect x="100" y="395" width="830" height="104"/></clipPath><clipPath id="le-cs"><rect x="100" y="493" width="830" height="52"/></clipPath></defs><g transform="translate(-0.003265,-1.8261)"><g id="le-icon"><path d="m 510.37,238.21 c -0.8715,-0.009 -1.8848,-4.5e-4 -2.2515,0.0192 -0.36675,0.0196 -0.93,0.0571 -1.251,0.083 -0.321,0.0263 -0.903,0.0842 -1.293,0.12885 -0.39,0.0446 -1.074,0.138 -1.521,0.20685 -0.44625,0.0692 -1.1782,0.19972 -1.626,0.2898 -0.44775,0.0905 -1.152,0.24772 -1.5652,0.35025 -0.41283,0.10216 -1.1072,0.28939 -1.5429,0.41575 -0.43576,0.12635 -1.158,0.35403 -1.6054,0.50665 -0.44702,0.15263 -1.2164,0.43785 -1.7097,0.63384 -0.49289,0.19641 -1.206,0.49665 -1.5846,0.66762 -0.37822,0.17139 -1.0725,0.50582 -1.5429,0.74393 -0.46996,0.23811 -1.2114,0.63592 -1.6472,0.88447 -0.43577,0.24895 -1.1113,0.65511 -1.5012,0.90323 -0.3899,0.24811 -0.95288,0.62049 -1.251,0.82777 -0.29816,0.20725 -0.75773,0.53627 -1.0216,0.73142 -0.26354,0.19473 -0.7139,0.5421 -1.0008,0.77145 -0.28648,0.22935 -0.7089,0.57712 -0.93825,0.77272 -0.22935,0.19516 -0.59548,0.515 -0.81315,0.71015 -0.21767,0.19474 -0.7869,0.74018 -1.2647,1.2118 -0.47788,0.47121 -1.1075,1.1197 -1.399,1.4408 -0.29148,0.32109 -0.69013,0.77145 -0.88567,1.0008 -0.19599,0.22935 -0.50624,0.60465 -0.69014,0.834 -0.18431,0.22935 -0.53125,0.67971 -0.77145,1.0008 -0.2406,0.32109 -0.6059,0.82777 -0.81232,1.1259 -0.20642,0.29815 -0.57338,0.85155 -0.81525,1.2302 -0.24144,0.37822 -0.61799,0.9975 -0.8361,1.3761 -0.21767,0.37822 -0.54461,0.96952 -0.72641,1.3136 -0.1814,0.34402 -0.49164,0.9633 -0.68889,1.3761 -0.19765,0.41283 -0.4758,1.0225 -0.61841,1.3552 -0.14261,0.33235 -0.39031,0.94245 -0.55002,1.3552 -0.15971,0.41283 -0.42784,1.1634 -0.59631,1.668 -0.16805,0.50457 -0.41866,1.3244 -0.55669,1.8219 -0.13803,0.49748 -0.26397,0.97162 -0.27939,1.0542 -0.0213,0.11259 -0.045,0.1447 -0.0963,0.12927 -0.0375,-0.0113 -0.33986,-0.0575 -0.67263,-0.103 -0.33234,-0.0459 -0.84607,-0.1055 -1.1414,-0.13302 -0.35236,-0.0325 -0.94702,-0.0413 -1.7306,-0.0254 -0.65677,0.0129 -1.4657,0.0538 -1.7985,0.0905 -0.33234,0.0367 -0.85777,0.10508 -1.1676,0.15178 -0.30941,0.0467 -0.83482,0.14053 -1.1676,0.20893 -0.33234,0.068 -0.88987,0.19849 -1.2389,0.28939 -0.34903,0.0905 -0.93075,0.26062 -1.2927,0.3778 -0.36196,0.11676 -0.95865,0.33027 -1.3256,0.47455 -0.36696,0.14429 -0.90157,0.36863 -1.1884,0.49832 -0.28647,0.1301 -0.79312,0.37863 -1.1259,0.5521 -0.33234,0.17348 -0.88612,0.48414 -1.2302,0.69056 -0.34402,0.20641 -0.85987,0.53584 -1.1468,0.73183 -0.28647,0.19599 -0.74059,0.52167 -1.0088,0.72392 -0.26813,0.20224 -0.73141,0.5742 -1.03,0.8265 -0.29816,0.25228 -0.82568,0.73434 -1.1722,1.0708 -0.34653,0.33693 -0.84112,0.84817 -1.0992,1.1368 -0.25812,0.28856 -0.60048,0.68388 -0.76102,0.879 -0.16055,0.19516 -0.43285,0.5421 -0.60548,0.77145 -0.17223,0.22935 -0.45537,0.62342 -0.62884,0.8757 -0.17389,0.25229 -0.46496,0.70265 -0.64718,1.0008 -0.18223,0.29816 -0.48372,0.82358 -0.67054,1.168 -0.1864,0.34403 -0.4637,0.89738 -0.61591,1.2302 -0.1522,0.33235 -0.37947,0.85733 -0.50499,1.1672 -0.1251,0.30983 -0.34653,0.9195 -0.49164,1.3552 -0.14512,0.43577 -0.34903,1.1301 -0.45286,1.5429 -0.10425,0.41283 -0.24561,1.0412 -0.31401,1.397 -0.0684,0.35528 -0.15387,0.85275 -0.18973,1.105 -0.0354,0.25229 -0.0942,0.73058 -0.13052,1.0634 -0.0359,0.33235 -0.0763,1.1676 -0.0892,1.8556 -0.0146,0.7773 -0.005,1.5037 0.0246,1.9182 0.0267,0.36696 0.0767,0.92033 0.11217,1.2302 0.035,0.30983 0.11927,0.89115 0.18765,1.2927 0.068,0.40115 0.20808,1.0759 0.31109,1.4987 0.10299,0.42325 0.26229,1.0142 0.35403,1.3136 0.0917,0.2994 0.24311,0.76057 0.33693,1.0241 0.0934,0.26354 0.27356,0.73267 0.40032,1.0425 0.12636,0.30941 0.40449,0.9195 0.61758,1.3552 0.21309,0.43577 0.53251,1.0454 0.70932,1.3552 0.17681,0.30941 0.49957,0.83483 0.71724,1.1676 0.21768,0.33235 0.60716,0.88613 0.86573,1.2302 0.25896,0.34403 0.62008,0.80355 0.80272,1.0216 0.18265,0.21767 0.57921,0.66303 0.8811,0.9891 0.30233,0.32651 0.82568,0.84525 1.1634,1.1534 0.33735,0.30816 0.7944,0.70932 1.0154,0.89152 0.22059,0.18223 0.61465,0.49123 0.8757,0.68722 0.26062,0.19557 0.72766,0.52417 1.0371,0.73017 0.30983,0.20558 0.7506,0.48664 0.97995,0.62467 0.22935,0.13761 0.6868,0.39573 1.0171,0.57337 0.32985,0.17764 0.85988,0.44243 1.1772,0.58838 0.31776,0.14595 0.88283,0.38615 1.2556,0.53335 0.37321,0.1472 1.007,0.37447 1.4082,0.50415 0.40157,0.1301 1.0583,0.31859 1.4595,0.41951 0.40157,0.10049 0.97372,0.22976 1.2718,0.28731 0.29815,0.0575 0.80482,0.14303 1.1259,0.18973 0.32109,0.0471 0.87487,0.11718 1.2302,0.15596 l 0.64635,0.0709 13.02,0.0134 13.021,0.0134 0.0125,-14.378 0.0125,-14.377 0.093,-0.64635 c 0.0517,-0.3557 0.15095,-0.92783 0.22143,-1.2718 0.0701,-0.34403 0.20933,-0.90698 0.309,-1.251 0.0997,-0.34403 0.26939,-0.86025 0.37739,-1.1468 0.10758,-0.2869 0.27855,-0.7089 0.37989,-0.93825 0.10133,-0.22935 0.324,-0.68555 0.49497,-1.0142 0.17097,-0.32818 0.46579,-0.84113 0.65469,-1.1396 0.18932,-0.29815 0.52751,-0.78772 0.75188,-1.0875 0.22435,-0.29982 0.56795,-0.73017 0.76395,-0.95662 0.19557,-0.22601 0.57504,-0.62925 0.84315,-0.89655 0.26771,-0.26688 0.71224,-0.67637 0.98745,-0.9099 0.27522,-0.23394 0.66011,-0.54293 0.85485,-0.68722 0.19516,-0.14386 0.56378,-0.40032 0.81937,-0.5692 0.25563,-0.16889 0.74935,-0.46496 1.0963,-0.65803 0.34736,-0.19307 0.89115,-0.46579 1.2085,-0.6059 0.31776,-0.14012 0.8094,-0.34028 1.093,-0.44453 0.28356,-0.10425 0.80437,-0.27271 1.1576,-0.37405 0.35279,-0.10133 0.9249,-0.23977 1.2718,-0.30774 0.34653,-0.0684 0.84608,-0.15263 1.1096,-0.18807 0.26396,-0.035 0.85942,-0.0859 1.3235,-0.11259 0.64719,-0.0375 1.0462,-0.0375 1.7097,4.1e-4 0.47622,0.0271 1.0817,0.0772 1.3453,0.11134 0.26396,0.0338 0.73309,0.10925 1.0425,0.16763 0.30983,0.0584 0.84442,0.17889 1.1884,0.26772 0.34402,0.0892 0.88822,0.25395 1.2093,0.36654 0.32109,0.11259 0.7998,0.29565 1.0634,0.4074 0.26396,0.11134 0.70639,0.31734 0.98415,0.45745 0.2773,0.14012 0.75142,0.40366 1.0534,0.58505 0.30233,0.18182 0.78435,0.50124 1.0721,0.71057 0.28732,0.20933 0.70432,0.52876 0.92655,0.71015 0.22185,0.18098 0.69556,0.62008 1.0526,0.97575 0.35653,0.35528 0.8448,0.88283 1.0846,1.1718 0.23977,0.28856 0.59298,0.74518 0.78525,1.0145 0.19182,0.26896 0.50457,0.74685 0.69514,1.0617 0.19057,0.31483 0.48914,0.8586 0.66387,1.208 0.17472,0.34945 0.3999,0.8361 0.49998,1.0817 0.10008,0.24519 0.25062,0.64301 0.33443,0.88402 0.0838,0.24061 0.22601,0.69639 0.31525,1.0125 0.0897,0.31567 0.21851,0.85988 0.28648,1.2093 0.0679,0.34903 0.15346,0.87068 0.18974,1.1593 0.0367,0.28856 0.0846,0.86107 0.10633,1.2718 0.0225,0.42617 0.04,4.63 0.0409,9.78 l 7.5e-4,9.033 0.30232,0.0288 c 0.16638,0.0154 0.54252,0.0646 0.83565,0.10884 0.29357,0.0442 0.79065,0.13886 1.105,0.21016 0.31442,0.0713 0.9003,0.23769 1.3018,0.36988 0.40157,0.13219 0.9645,0.3386 1.251,0.45912 0.28648,0.1201 0.79313,0.35653 1.1254,0.52542 0.33277,0.16888 0.81105,0.43117 1.0634,0.58297 0.25229,0.15178 0.61758,0.38197 0.81233,0.51124 0.19431,0.12885 0.56961,0.39615 0.834,0.59339 0.26396,0.19725 0.67762,0.52417 0.91822,0.72642 0.24103,0.20224 0.54502,0.47163 0.67596,0.59881 l 0.23769,0.23102 0.47121,-0.0897 c 0.25895,-0.0496 0.66803,-0.11134 0.90863,-0.13803 0.24102,-0.0263 1.0383,-0.0488 1.7722,-0.0496 0.75727,-10e-4 1.56,0.02 1.8556,0.0488 0.28689,0.0279 0.71849,0.0788 0.9591,0.11301 0.24102,0.0342 0.63509,0.10049 0.8757,0.1472 0.24102,0.0471 0.66303,0.14178 0.93825,0.21017 0.27522,0.0684 0.75892,0.20892 1.0746,0.31192 0.31566,0.10299 0.80355,0.28147 1.0842,0.39615 0.28064,0.11467 0.78232,0.34527 1.1146,0.51207 0.33276,0.16722 0.78315,0.41199 1.0008,0.54419 0.21809,0.13219 0.57462,0.36279 0.7923,0.51249 0.21809,0.1497 0.61215,0.44452 0.8757,0.65552 0.26396,0.21101 0.63592,0.53084 0.82695,0.71099 l 0.34777,0.32693 0.54878,-0.0746 c 0.3019,-0.0409 0.84945,-0.12927 1.2164,-0.19599 0.36696,-0.0671 1.0479,-0.21558 1.5133,-0.33026 0.46538,-0.11467 1.1596,-0.30358 1.5429,-0.41992 0.38323,-0.11592 1.0246,-0.33318 1.4258,-0.48246 0.40073,-0.14971 0.98243,-0.38031 1.2927,-0.51333 0.30983,-0.13302 0.79853,-0.35279 1.0858,-0.48873 0.28732,-0.13594 0.79395,-0.39448 1.1259,-0.57462 0.33194,-0.18015 0.83858,-0.46788 1.1251,-0.6401 0.28689,-0.1718 0.79357,-0.49414 1.1259,-0.7164 0.33276,-0.22184 0.8394,-0.57838 1.1259,-0.79185 0.28689,-0.2135 0.69972,-0.53293 0.9174,-0.70932 0.21809,-0.17639 0.63175,-0.52793 0.91987,-0.78105 0.28814,-0.25312 0.80438,-0.73934 1.1468,-1.08 0.34277,-0.34111 0.85155,-0.87615 1.1305,-1.1889 0.27939,-0.31317 0.73308,-0.8511 1.0083,-1.196 0.27522,-0.34486 0.68388,-0.8853 0.90825,-1.201 0.22392,-0.31566 0.56961,-0.82815 0.7677,-1.1388 0.19807,-0.31066 0.51082,-0.82732 0.69514,-1.1484 0.18431,-0.32109 0.51666,-0.94657 0.73892,-1.3903 0.22185,-0.44369 0.54085,-1.1288 0.7089,-1.522 0.16847,-0.39365 0.4145,-1.0158 0.54711,-1.3828 0.1326,-0.36696 0.32317,-0.92992 0.42325,-1.251 0.0997,-0.32109 0.2648,-0.90277 0.36613,-1.2927 0.10174,-0.38989 0.24269,-0.99037 0.31358,-1.3344 0.0709,-0.34402 0.17431,-0.90697 0.22935,-1.251 0.0554,-0.34402 0.13803,-0.9633 0.1839,-1.3761 0.0459,-0.41283 0.103,-1.0604 0.12677,-1.4386 0.0242,-0.37821 0.0438,-1.1384 0.0434,-1.6888 0,-0.55044 -0.0187,-1.301 -0.0412,-1.668 -0.023,-0.36696 -0.0705,-0.94867 -0.10551,-1.2927 -0.035,-0.34402 -0.11133,-0.93532 -0.16929,-1.3136 -0.0584,-0.37821 -0.16222,-0.96952 -0.23103,-1.3136 -0.0688,-0.34402 -0.19932,-0.9207 -0.28939,-1.2818 -0.0905,-0.36071 -0.25729,-0.96413 -0.37113,-1.3406 -0.11342,-0.37613 -0.29315,-0.92535 -0.39991,-1.2202 -0.10633,-0.29482 -0.30691,-0.81735 -0.44577,-1.1614 -0.13886,-0.34402 -0.38823,-0.9195 -0.55461,-1.2785 -0.16597,-0.35945 -0.4637,-0.9549 -0.66178,-1.3235 -0.19766,-0.36862 -0.51582,-0.92947 -0.70681,-1.246 -0.19099,-0.31692 -0.52167,-0.83775 -0.73559,-1.158 -0.21392,-0.31984 -0.5763,-0.83355 -0.80565,-1.1414 -0.22935,-0.30733 -0.59548,-0.77648 -0.8136,-1.0425 -0.21768,-0.26563 -0.6255,-0.73643 -0.9057,-1.0458 -0.28064,-0.30983 -0.79815,-0.84525 -1.15,-1.1906 -0.35237,-0.34528 -0.82815,-0.79358 -1.0575,-0.99623 -0.22935,-0.20266 -0.68472,-0.58338 -1.012,-0.84607 -0.32694,-0.26229 -0.8619,-0.66803 -1.1884,-0.90158 -0.3261,-0.2331 -0.87488,-0.60465 -1.2189,-0.82567 -0.34403,-0.22059 -0.85988,-0.53543 -1.1468,-0.69931 -0.28648,-0.16429 -0.88695,-0.4833 -1.3344,-0.70973 -0.44703,-0.22601 -1.085,-0.52793 -1.4178,-0.67012 -0.33235,-0.14261 -0.83903,-0.34903 -1.1259,-0.45912 -0.28648,-0.10967 -0.77438,-0.28439 -1.0842,-0.38864 -0.30942,-0.10383 -0.82568,-0.26438 -1.1468,-0.35696 -0.32109,-0.0926 -0.85568,-0.2331 -1.1884,-0.31233 -0.33235,-0.0792 -0.84863,-0.1914 -1.1468,-0.24894 -0.29816,-0.058 -0.86108,-0.15179 -1.251,-0.20934 -0.3899,-0.0575 -1.0117,-0.13386 -1.3815,-0.17013 -0.3703,-0.0363 -1.1443,-0.0838 -1.7201,-0.10592 -0.67471,-0.0254 -1.3473,-0.0254 -1.8915,8.3e-4 -0.46495,0.0221 -1.04,0.0592 -1.279,0.0821 -0.23853,0.0225 -0.59506,0.0613 -0.7923,0.0851 -0.19683,0.0242 -0.61132,0.0822 -0.92115,0.12927 -0.30984,0.0467 -0.88193,0.15012 -1.2718,0.22935 -0.3899,0.0792 -0.76523,0.15429 -0.834,0.16638 l -0.1251,0.0225 -0.20433,-0.38906 c -0.11217,-0.21392 -0.40199,-0.73642 -0.64344,-1.1605 -0.24144,-0.42451 -0.59756,-1.025 -0.79147,-1.3344 -0.19391,-0.30984 -0.56795,-0.88193 -0.8319,-1.2718 -0.26396,-0.3899 -0.74726,-1.0654 -1.0742,-1.5012 -0.32651,-0.43577 -0.85238,-1.1021 -1.1676,-1.4804 -0.31526,-0.37864 -0.73475,-0.86655 -0.93203,-1.0842 -0.19724,-0.2181 -0.62633,-0.67971 -0.9537,-1.0262 -0.32734,-0.34611 -0.93742,-0.9495 -1.3561,-1.3406 -0.41825,-0.39115 -0.99495,-0.912 -1.2818,-1.158 -0.28647,-0.24561 -0.73767,-0.6205 -1.0021,-0.83318 -0.2648,-0.21267 -0.76185,-0.59714 -1.105,-0.8544 -0.34319,-0.25729 -1.0088,-0.72516 -1.4791,-1.0404 -0.46995,-0.31483 -1.1267,-0.73809 -1.4595,-0.9399 -0.33234,-0.20224 -0.88612,-0.52542 -1.2302,-0.71849 -0.34402,-0.19349 -1.0946,-0.58338 -1.668,-0.86738 -0.57337,-0.28356 -1.3707,-0.65511 -1.7722,-0.82567 -0.40115,-0.17055 -1.0091,-0.417 -1.351,-0.54794 -0.34152,-0.13135 -0.86692,-0.32359 -1.1676,-0.42742 -0.30024,-0.10425 -0.84105,-0.28022 -1.201,-0.39115 -0.36023,-0.11134 -0.972,-0.28732 -1.3594,-0.39157 -0.38739,-0.10383 -1.0312,-0.26271 -1.4303,-0.35278 -0.39907,-0.0897 -1.035,-0.22018 -1.4136,-0.2894 -0.37822,-0.0696 -1.007,-0.17305 -1.397,-0.23018 -0.3899,-0.0567 -0.97163,-0.13302 -1.2927,-0.16888 -0.32109,-0.0359 -0.9495,-0.0938 -1.397,-0.12885 -0.44702,-0.035 -1.5262,-0.0709 -2.3978,-0.0796 z m 0.86693,40.222 c -0.31609,0.002 -0.76268,0.03 -0.99203,0.0613 -0.22977,0.0313 -0.63301,0.11133 -0.89655,0.17805 -0.26396,0.0671 -0.6672,0.19182 -0.89655,0.27731 -0.22935,0.0855 -0.60257,0.25062 -0.8298,0.36654 -0.22684,0.11593 -0.57379,0.31734 -0.77145,0.44702 -0.19724,0.1301 -0.50457,0.35279 -0.68263,0.49457 -0.17806,0.1422 -0.50082,0.43659 -0.71724,0.65427 -0.216,0.21726 -0.53292,0.58129 -0.70389,0.80812 -0.17098,0.22685 -0.41742,0.59089 -0.54753,0.80895 -0.1301,0.21851 -0.32817,0.60173 -0.43951,0.85193 -0.11176,0.2502 -0.27105,0.67845 -0.35403,0.95197 -0.0826,0.27314 -0.19099,0.70307 -0.2402,0.95535 l -0.0901,0.4587 -0.0221,27.48 -0.0225,27.48 -0.0967,0.19641 c -0.053,0.10758 -0.16472,0.25604 -0.24812,0.32901 -0.083,0.073 -0.22893,0.16722 -0.32359,0.20933 -0.0947,0.0417 -0.27397,0.088 -0.39824,0.10259 -0.12468,0.0146 -0.30107,0.006 -0.39281,-0.0187 -0.14429,-0.0388 -0.76148,-0.64052 -4.6078,-4.4915 -2.4424,-2.4457 -4.61,-4.5886 -4.8164,-4.7626 -0.20642,-0.17431 -0.57212,-0.44495 -0.81315,-0.60215 -0.24103,-0.15721 -0.64427,-0.38781 -0.89655,-0.51249 -0.25229,-0.1251 -0.63718,-0.29107 -0.85485,-0.36905 -0.21767,-0.078 -0.59297,-0.19057 -0.834,-0.24937 -0.24103,-0.0592 -0.63718,-0.13635 -0.8811,-0.1718 -0.26105,-0.0375 -0.73601,-0.0638 -1.1555,-0.0638 -0.4195,0 -0.90532,0.0267 -1.1805,0.065 -0.25728,0.0358 -0.67553,0.11926 -0.9291,0.18473 -0.25395,0.0659 -0.63175,0.18473 -0.8394,0.26396 -0.20807,0.0796 -0.55419,0.23311 -0.76935,0.34111 -0.21517,0.10842 -0.51416,0.27355 -0.66469,0.36696 -0.15012,0.0938 -0.45161,0.30607 -0.66929,0.47163 -0.21767,0.16554 -0.62216,0.5325 -0.8982,0.81562 -0.27605,0.28273 -0.58797,0.62675 -0.69264,0.7644 -0.10508,0.13761 -0.2944,0.40949 -0.42075,0.60465 -0.12676,0.19474 -0.324,0.5421 -0.43868,0.77145 -0.11425,0.22935 -0.27605,0.59882 -0.35904,0.82148 -0.083,0.22226 -0.19765,0.58839 -0.25395,0.81315 -0.0567,0.22476 -0.13386,0.64301 -0.17139,0.92992 -0.0521,0.39573 -0.0634,0.71724 -0.0471,1.3344 0.0146,0.55544 0.0488,0.96495 0.10759,1.2927 0.0475,0.26354 0.14261,0.67929 0.211,0.92325 0.0688,0.24395 0.18348,0.5909 0.25479,0.77145 0.0717,0.18015 0.23102,0.52459 0.35445,0.7656 0.12302,0.24061 0.34194,0.61007 0.48623,0.8202 0.14428,0.21017 5.0474,6.2337 10.896,13.386 5.848,7.152 10.762,13.154 10.919,13.337 0.1572,0.18348 0.55795,0.62884 0.8907,0.9891 0.33318,0.36071 0.927,0.95535 1.3198,1.321 0.39323,0.36613 0.97748,0.88485 1.2986,1.153 0.32109,0.26771 0.87945,0.71015 1.241,0.98242 0.36153,0.2723 0.96202,0.69848 1.3344,0.94703 0.37238,0.24853 0.9024,0.58922 1.1776,0.75727 0.27522,0.16806 0.77228,0.45495 1.1042,0.63718 0.33193,0.18264 0.82567,0.44285 1.0971,0.57879 0.27105,0.13595 0.76852,0.37113 1.1059,0.52209 0.33693,0.15095 0.88485,0.3828 1.2172,0.51541 0.33277,0.13218 0.87323,0.33652 1.2014,0.45412 0.32818,0.11759 0.96615,0.324 1.4178,0.4587 0.45161,0.13427 1.1309,0.32109 1.5092,0.41407 0.37864,0.093 1.0184,0.23561 1.4224,0.31651 0.40365,0.0805 1.1259,0.20307 1.6054,0.27146 0.47913,0.0688 1.1714,0.15346 1.5383,0.18849 0.36696,0.035 1.0238,0.0826 1.4595,0.1055 0.46787,0.0246 3.7805,0.0417 8.0895,0.0412 4.2805,-4.2e-4 7.599,-0.0175 8.0272,-0.0417 0.40158,-0.0225 1.0112,-0.0696 1.3552,-0.10467 0.34403,-0.035 0.88823,-0.10217 1.2093,-0.14887 0.32109,-0.0471 0.90533,-0.14887 1.2986,-0.22643 0.39324,-0.078 0.98453,-0.2085 1.3136,-0.29065 0.32943,-0.0826 0.9174,-0.24478 1.3069,-0.36071 0.38947,-0.11592 1.0329,-0.33068 1.4299,-0.47704 0.39699,-0.14595 0.99788,-0.3824 1.3352,-0.52459 0.33735,-0.1422 1.0638,-0.48622 1.6142,-0.76395 0.55044,-0.27772 1.3027,-0.68596 1.6713,-0.90697 0.36863,-0.22101 0.94118,-0.58297 1.2718,-0.80483 0.33068,-0.22185 0.88275,-0.61507 1.2268,-0.87322 0.34403,-0.25854 0.92573,-0.71974 1.2927,-1.0254 0.36696,-0.30525 1.0996,-0.9879 1.6288,-1.5166 0.52875,-0.52876 1.2014,-1.2502 1.4945,-1.6025 0.29357,-0.35278 0.73142,-0.90615 0.97328,-1.2302 0.24228,-0.32401 0.60507,-0.83565 0.80692,-1.1372 0.20184,-0.30108 0.54044,-0.8361 0.75225,-1.1884 0.21225,-0.35236 0.61382,-1.0909 0.89235,-1.6413 0.27814,-0.55044 0.62884,-1.2919 0.77895,-1.6472 0.15012,-0.3557 0.38614,-0.95617 0.52417,-1.3344 0.13802,-0.37864 0.33902,-0.97785 0.4466,-1.3315 0.10718,-0.35403 0.26772,-0.92738 0.3557,-1.2735 0.0884,-0.34653 0.22686,-0.95783 0.30692,-1.3582 0.0805,-0.40032 0.19307,-1.0471 0.2502,-1.437 0.0575,-0.38989 0.13385,-1.012 0.17014,-1.3823 0.0363,-0.3703 0.0838,-1.1397 0.10591,-1.7097 0.0233,-0.59798 0.0404,-5.8342 0.0404,-12.379 0,-6.9902 -0.0158,-11.572 -0.0409,-11.942 -0.0225,-0.32985 -0.0867,-0.8211 -0.14261,-1.0917 -0.0563,-0.27064 -0.16972,-0.69514 -0.25229,-0.94328 -0.0826,-0.2477 -0.26103,-0.68138 -0.39698,-0.9633 -0.13594,-0.28147 -0.35361,-0.67554 -0.48372,-0.8757 -0.1301,-0.19975 -0.32275,-0.4758 -0.42742,-0.61341 -0.10509,-0.13761 -0.38865,-0.45411 -0.63051,-0.70306 -0.24144,-0.24895 -0.57754,-0.5642 -0.74685,-0.70098 -0.16929,-0.13635 -0.44619,-0.3411 -0.61465,-0.45495 -0.16889,-0.11425 -0.49957,-0.30899 -0.73475,-0.43326 -0.2352,-0.12468 -0.62175,-0.30315 -0.8586,-0.39698 -0.23686,-0.0938 -0.64176,-0.22477 -0.89948,-0.29107 -0.2577,-0.0668 -0.67888,-0.15054 -0.93615,-0.18639 -0.26271,-0.0363 -0.756,-0.065 -1.1242,-0.065 -0.36111,0 -0.81562,0.0196 -1.01,0.0438 -0.19431,0.0242 -0.53834,0.0822 -0.7644,0.12885 -0.22642,0.0463 -0.6109,0.15012 -0.85485,0.22977 -0.24394,0.0801 -0.65718,0.24728 -0.91785,0.37196 -0.26104,0.12469 -0.61758,0.31317 -0.79185,0.41909 -0.17472,0.10633 -0.4587,0.29815 -0.63091,0.42701 -0.17223,0.12843 -0.50791,0.422 -0.7456,0.65135 -0.23811,0.22977 -0.53918,0.54919 -0.6697,0.70974 -0.13094,0.16054 -0.33027,0.42283 -0.44328,0.58296 l -0.20599,0.29148 -0.0267,-0.62508 c -0.0146,-0.34361 -0.0575,-0.79935 -0.0955,-1.0133 -0.038,-0.2135 -0.13219,-0.60757 -0.20933,-0.8757 -0.0771,-0.26771 -0.22018,-0.67304 -0.31775,-0.90075 -0.0976,-0.22769 -0.26063,-0.56546 -0.36279,-0.7506 -0.10176,-0.18515 -0.28482,-0.48706 -0.40658,-0.67054 -0.12135,-0.18348 -0.3728,-0.51457 -0.55795,-0.736 -0.18514,-0.22143 -0.48247,-0.53751 -0.66052,-0.70223 -0.17807,-0.16513 -0.49248,-0.42659 -0.6989,-0.58171 -0.20641,-0.15513 -0.53626,-0.37823 -0.73266,-0.49582 -0.19641,-0.11759 -0.53502,-0.29816 -0.75225,-0.40073 -0.21726,-0.10301 -0.61925,-0.26188 -0.89363,-0.35321 -0.27439,-0.0913 -0.68638,-0.20349 -0.91575,-0.24978 -0.22935,-0.0459 -0.62342,-0.1055 -0.8757,-0.13261 -0.27522,-0.0296 -0.7089,-0.0396 -1.0842,-0.0246 -0.34402,0.0134 -0.8415,0.0621 -1.105,0.108 -0.26354,0.0459 -0.67721,0.13929 -0.91905,0.20767 -0.24145,0.0679 -0.66387,0.21893 -0.93825,0.33485 -0.27439,0.11593 -0.69598,0.32818 -0.93698,0.47163 -0.2406,0.14345 -0.58796,0.3728 -0.77145,0.50958 -0.18306,0.13677 -0.56044,0.47454 -0.83775,0.7506 -0.27772,0.27605 -0.64343,0.69263 -0.81314,0.9249 -0.16972,0.23268 -0.3311,0.45786 -0.35821,0.5004 -0.0409,0.0638 -0.05,0.0163 -0.0521,-0.26438 -10e-4,-0.18807 -0.0309,-0.55669 -0.065,-0.819 -0.0346,-0.26271 -0.11676,-0.69055 -0.18264,-0.95115 -0.0659,-0.2602 -0.19015,-0.66094 -0.27563,-0.89032 -0.0855,-0.22935 -0.25063,-0.60257 -0.36655,-0.8298 -0.11593,-0.22685 -0.31734,-0.5738 -0.44703,-0.77145 -0.1301,-0.19725 -0.35611,-0.50874 -0.50206,-0.69222 -0.14595,-0.18348 -0.44119,-0.50708 -0.65636,-0.71891 -0.21476,-0.21184 -0.57504,-0.52417 -0.80063,-0.6943 -0.22601,-0.17014 -0.5888,-0.41576 -0.80692,-0.54586 -0.21851,-0.1301 -0.60174,-0.32818 -0.85193,-0.43952 -0.2502,-0.11175 -0.67846,-0.27105 -0.95197,-0.35403 -0.27314,-0.0826 -0.71266,-0.18765 -0.9762,-0.23268 -0.26355,-0.0455 -0.74226,-0.0938 -1.0634,-0.10759 -0.34194,-0.0146 -0.79148,-0.005 -1.0842,0.0238 -0.27522,0.0271 -0.68055,0.0855 -0.9003,0.13011 -0.22018,0.0451 -0.56712,0.12969 -0.77145,0.1889 -0.20433,0.0593 -0.56838,0.19057 -0.8094,0.2919 -0.24061,0.10174 -0.61174,0.28356 -0.8244,0.40407 -0.21226,0.12052 -0.55837,0.34111 -0.76898,0.49039 -0.21058,0.14887 -0.59297,0.4733 -0.84982,0.72016 -0.2573,0.24686 -0.57088,0.57546 -0.69681,0.72975 -0.12594,0.15429 -0.32484,0.41992 -0.44202,0.59048 l -0.21267,0.30983 v -15.442 c 0,-10.361 -0.0142,-15.572 -0.0434,-15.843 -0.0238,-0.22268 -0.0817,-0.60215 -0.12886,-0.84278 -0.0471,-0.24102 -0.16972,-0.69096 -0.2723,-1.0008 -0.10258,-0.30983 -0.29482,-0.77895 -0.42743,-1.0425 -0.13219,-0.26354 -0.31233,-0.59214 -0.40032,-0.72975 -0.088,-0.13761 -0.26312,-0.39114 -0.38947,-0.56295 -0.12677,-0.17222 -0.42826,-0.51708 -0.67054,-0.76642 -0.24269,-0.24978 -0.60674,-0.58297 -0.80985,-0.74018 -0.20308,-0.15762 -0.54085,-0.39281 -0.7506,-0.52291 -0.20975,-0.1301 -0.57212,-0.32609 -0.80482,-0.43535 -0.23269,-0.10884 -0.61717,-0.26396 -0.85486,-0.34402 -0.23727,-0.0805 -0.64718,-0.19307 -0.91117,-0.25103 -0.26354,-0.0576 -0.66178,-0.12427 -0.88448,-0.14846 -0.22267,-0.0246 -0.66386,-0.0421 -0.97995,-0.04 z" fill="#ffffff"/></g><g clip-path="url(#le-cw)"><g class="gl gw" id="le-W"><path d="m 220.24,412.53 32.911,74.375 h -22.575 l -24.356,-55.009 -24.356,55.009 h -11.88 l -36.832,-83.167 h 12.95 c 5.4656,0 11.287,3.8019 13.545,8.792 l 25.425,57.623 19.01,-43.01 -10.337,-23.406 h 12.95 c 5.4656,0 11.287,3.8019 13.545,8.792 z" fill="#ffffff"/></g><g class="gl gw" id="le-dot"><path d="m 275.603,413.23999 a 10.693,10.693 0 0 1 -10.693,10.693 10.693,10.693 0 0 1 -10.693,-10.693 10.693,10.693 0 0 1 10.693,-10.693 10.693,10.693 0 0 1 10.693,10.693 z" fill="#ffffff"/></g><g class="gl gw" id="le-E"><path d="m 348.83,403.74 v 3.5645 h -40.99 v 36.712 h 27.92 v 3.5643 h -27.92 v 35.762 h 40.99 v 3.5643 h -52.752 c -5.4654,0 -9.6237,-4.1584 -9.6237,-9.6237 v -73.544 h 62.375 z" fill="#ffffff"/></g><g class="gl gw" id="le-B"><path d="m 378.14,403.74 v 83.167 h -11.762 c -5.4653,0 -9.6236,-4.1584 -9.6236,-9.6237 v -73.55 z" fill="#ffffff"/><path d="m 402.62,423.94 c 0,-11.049 -3.9207,-20.198 -14.97,-20.198 21.861,0 34.217,7.0099 34.217,20.198 0,8.792 -5.7029,14.97 -16.158,17.94 14.97,2.8514 23.287,10.336 23.287,21.861 0,15.089 -14.376,23.168 -39.564,23.168 13.069,0 17.822,-10.099 17.822,-23.168 0,-13.069 -4.7524,-21.505 -17.822,-21.505 h -1.7821 c 11.049,0 14.97,-7.2476 14.97,-18.297 z" fill="#ffffff"/></g><g class="gl gw" id="le-S"><path d="m 528.55,463.38 c 0,16.633 -18.89,24.713 -36.712,24.713 -16.396,0 -34.217,-7.7227 -34.217,-22.218 0,-8.3168 6.8908,-14.851 14.495,-14.851 7.4846,0 13.901,4.0396 13.901,13.307 -6.8908,-1.7821 -10.812,2.7326 -10.812,7.9603 0,8.6732 9.7429,12.237 16.634,12.237 9.8613,0 18.653,-5.5841 18.653,-13.782 0,-17.703 -50.97,-21.386 -50.97,-47.999 0,-13.901 16.634,-20.198 33.267,-20.198 15.802,0 29.228,5.9405 29.228,18.059 0,7.7227 -4.3965,12.356 -10.693,12.356 -6.0594,0 -11.407,-3.3267 -11.407,-10.931 5.7033,1.4257 7.9608,-2.2574 7.9608,-6.5345 0,-7.1286 -7.0101,-9.386 -15.801,-9.386 -7.4854,0 -16.753,2.1386 -16.753,8.6731 -2e-5,15.921 53.227,23.049 53.227,48.593 z" fill="#ffffff"/></g><g class="gl gw" id="le-P"><path d="m 612.1,429.88 c 0,17.109 -15.564,26.138 -40.752,26.138 h -11.287 v 30.891 h -11.762 c -5.4652,0 -9.6237,-4.1584 -9.6237,-9.6236 v -73.55 h 32.672 c 25.188,0 40.752,9.0296 40.752,26.138 z m -40.752,22.574 c 13.069,0 19.01,-7.485 19.01,-22.574 0,-14.97 -5.9402,-22.574 -19.01,-22.574 h -11.287 v 45.148 z" fill="#ffffff"/></g><g class="gl gw" id="le-I"><path d="m 642.66,413.36 v 73.544 H 630.9 c -5.4652,0 -9.6236,-4.1584 -9.6236,-9.6236 v -73.54 h 11.762 c 5.4652,0 9.6237,4.1584 9.6237,9.6236 z" fill="#ffffff"/></g><g class="gl gw" id="le-D"><path d="m 732.58,445.32 c 0,27.208 -17.94,41.584 -44.316,41.584 h -21.861 c -5.4652,0 -9.6236,-4.1584 -9.6236,-9.6236 v -73.54 h 31.485 c 26.376,0 44.316,14.376 44.316,41.584 z m -44.316,38.019 c 14.257,0 22.574,-12.713 22.574,-38.019 0,-25.307 -8.3168,-38.019 -22.574,-38.019 h -10.099 v 76.039 z" fill="#ffffff"/></g><g class="gl gw" id="le-E2"><path d="m 805.7,407.3 h -40.99 v 36.712 h 27.92 v 3.5643 h -27.92 v 35.762 h 40.99 v 3.5643 h -52.752 c -5.4654,0 -9.6237,-4.1584 -9.6237,-9.6236 v -73.53 h 62.375 v 3.5643 z" fill="#ffffff"/></g><g class="gl gw" id="le-R"><path d="m 887.05,429.88 c 0,13.663 -9.9798,22.218 -26.851,25.069 h 1.4256 c 5.4652,0 11.762,3.5643 14.614,8.1979 l 14.614,23.762 h -14.138 c -5.4652,0 -11.762,-3.5643 -14.614,-8.1979 l -13.66,-22.69 h -13.426 v 30.891 h -11.762 c -5.4652,0 -9.6237,-4.1584 -9.6237,-9.6236 v -73.55 h 32.673 c 25.188,0 40.752,9.0296 40.752,26.138 z m -40.752,22.574 c 13.069,0 19.01,-7.485 19.01,-22.574 0,-14.97 -5.9406,-22.574 -19.01,-22.574 h -11.287 v 45.148 z" fill="#ffffff"/></g></g><g clip-path="url(#le-cs)"><g class="gl gs" id="le-s0"><path d="m 380.75,503.83 c 0,-2.64 3.744,-3.504 6.768,-3.504 3.552,0 6.384,0.912 6.384,3.792 0,1.728 -0.91199,3.216 -3.216,2.64 0,3.072 2.16,4.416 4.608,4.416 2.544,0 4.32,-1.872 4.32,-4.992 0,-4.896 -5.424,-7.296 -11.808,-7.296 -6.72,0 -13.44,2.544 -13.44,8.16 0,10.752 20.592,12.24 20.592,19.392 0,3.312 -3.552,5.568 -7.536,5.568 -2.784,0 -6.72,-1.44 -6.72,-4.944 0,-2.112 1.584,-3.936 4.368,-3.216 0,-3.744 -2.592,-5.376 -5.616,-5.376 -3.072,0 -5.856,2.64 -5.856,6 0,5.856 7.2,8.976 13.824,8.976 7.2,0 14.832,-3.264 14.832,-9.984 0,-10.32 -21.504,-13.2 -21.504,-19.632 z" fill="#ffffff"/></g><g class="gl gs" id="le-s1"><path d="m 422.9,533.45 c 10.656,0 17.904,-6.288 17.904,-17.28 0,-10.992 -7.248,-17.28 -17.904,-17.28 -10.656,0 -17.904,6.288 -17.904,17.28 0,10.992 7.248,17.28 17.904,17.28 z m -9.12,-17.28 c 0,-10.224 3.36,-15.84 9.12,-15.84 5.76,0 9.12,5.616 9.12,15.84 0,10.224 -3.36,15.84 -9.12,15.84 -5.76,0 -9.12,-5.616 -9.12,-15.84 z" fill="#ffffff"/></g><g class="gl gs" id="le-s2"><path d="m 453.79,503.26 c 0,-2.208 -1.68,-3.888 -3.888,-3.888 h -4.752 v 29.712 c 0,2.208 1.68,3.888 3.888,3.888 h 21.312 v -1.44 h -16.56 z" fill="#ffffff"/></g><g class="gl gs" id="le-s3"><path d="m 488.09,530.62 c -5.712,0 -9.6,-3.36 -9.6,-9.216 V 503.26 c 0,-2.208 -1.68,-3.888 -3.888,-3.888 h -4.752 v 19.92 c 0,8.976 5.904,14.16 14.64,14.16 8.784,0 14.64,-3.504 14.64,-12.144 v -21.936 h -1.44 v 22.03 c 0,6.816 -3.84,9.216 -9.6,9.216 z" fill="#ffffff"/></g><g class="gl gs" id="le-s4"><path d="m 531.67,500.81 v -1.44 h -30.192 v 1.44 h 10.848 v 28.272 c 0,2.208 1.68,3.888 3.888,3.888 h 4.752 v -32.16 z" fill="#ffffff"/></g><g class="gl gs" id="le-s5"><path d="m 539.06,499.37 h -4.752 v 29.712 c 0,2.208 1.68,3.888 3.888,3.888 h 4.752 v -29.712 c 0,-2.208 -1.68,-3.888 -3.888,-3.888 z" fill="#ffffff"/></g><g class="gl gs" id="le-s6"><path d="m 565.21,533.45 c 10.656,0 17.904,-6.288 17.904,-17.28 0,-10.992 -7.248,-17.28 -17.904,-17.28 -10.656,0 -17.904,6.288 -17.904,17.28 0,10.992 7.248,17.28 17.904,17.28 z m -9.12,-17.28 c 0,-10.224 3.36,-15.84 9.12,-15.84 5.76,0 9.12,5.616 9.12,15.84 0,10.224 -3.36,15.84 -9.12,15.84 -5.76,0 -9.12,-5.616 -9.12,-15.84 z" fill="#ffffff"/></g><g class="gl gs" id="le-s7"><path d="m 589.77,499.37 h -2.256 v 33.6 h 1.44 v -25.01 l 21.6,22.464 c 1.536,1.632 3.168,2.544 5.28,2.544 h 1.44 v -33.6 h -1.44 v 23.52 l -20.16,-20.976 c -1.68,-1.776 -3.456,-2.544 -5.904,-2.544 z" fill="#ffffff"/></g><g class="gl gs" id="le-s8"><path d="m 628.9,503.83 c 0,-2.64 3.744,-3.504 6.768,-3.504 3.552,0 6.384,0.912 6.384,3.792 0,1.728 -0.912,3.216 -3.216,2.64 0,3.072 2.16,4.416 4.608,4.416 2.544,0 4.32,-1.872 4.32,-4.992 0,-4.896 -5.424,-7.296 -11.808,-7.296 -6.72,0 -13.44,2.544 -13.44,8.16 0,10.752 20.592,12.24 20.592,19.392 0,3.312 -3.552,5.568 -7.536,5.568 -2.784,0 -6.72,-1.44 -6.72,-4.944 0,-2.112 1.584,-3.936 4.368,-3.216 0,-3.744 -2.592,-5.376 -5.616,-5.376 -3.072,0 -5.856,2.64 -5.856,6 0,5.856 7.2,8.976 13.824,8.976 7.2,0 14.832,-3.264 14.832,-9.984 0,-10.32 -21.504,-13.2 -21.504,-19.632 z" fill="#ffffff"/></g></g></g></svg>
+  <div id="url"><span class="w"><span class="wi">webspidersolutions.com</span></span></div>
+</div>
+
+<!-- ===== WebGL ring, then type that sits over it ===== -->
+<canvas class="gl" id="gl1" width="1920" height="1080" data-layout-allow-overflow></canvas>
+<div id="f2" class="front">
+  <div id="f2-q" style="top:468px"><div><span class="w"><span class="wi">What</span></span> <span class="w"><span class="wi">if</span></span> <span class="w"><span class="wi">it</span></span> <span class="w"><span class="wi">all</span></span></div><div><span class="w"><span class="wi acc">connected?</span></span></div></div>
+</div>
+<div id="f3" class="front">
+  <div id="f3-meet"><span class="w"><span class="wi">Meet</span></span></div>
+  <svg id="f3-guides" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow>
+    <line class="gd" x1="0" y1="574" x2="1920" y2="574"/><line class="gd" x1="0" y1="679" x2="1920" y2="679"/><line class="gd" x1="0" y1="738" x2="1920" y2="738"/>
+    <line class="gd" x1="490" y1="300" x2="490" y2="900"/><line class="gd" x1="1427" y1="300" x2="1427" y2="900"/>
+    <circle class="gd" cx="959" cy="454" r="96"/><circle class="gd" cx="959" cy="454" r="140"/><rect class="gd" x="865" y="368" width="188" height="172"/>
+  </svg>
+  <svg class="logo" id="lb-logo" viewBox="120 225 785 315" data-layout-allow-overflow><defs><clipPath id="lb-cw"><rect x="100" y="395" width="830" height="104"/></clipPath><clipPath id="lb-cs"><rect x="100" y="493" width="830" height="52"/></clipPath></defs><g transform="translate(-0.003265,-1.8261)"><g id="lb-icon"><path d="m 510.37,238.21 c -0.8715,-0.009 -1.8848,-4.5e-4 -2.2515,0.0192 -0.36675,0.0196 -0.93,0.0571 -1.251,0.083 -0.321,0.0263 -0.903,0.0842 -1.293,0.12885 -0.39,0.0446 -1.074,0.138 -1.521,0.20685 -0.44625,0.0692 -1.1782,0.19972 -1.626,0.2898 -0.44775,0.0905 -1.152,0.24772 -1.5652,0.35025 -0.41283,0.10216 -1.1072,0.28939 -1.5429,0.41575 -0.43576,0.12635 -1.158,0.35403 -1.6054,0.50665 -0.44702,0.15263 -1.2164,0.43785 -1.7097,0.63384 -0.49289,0.19641 -1.206,0.49665 -1.5846,0.66762 -0.37822,0.17139 -1.0725,0.50582 -1.5429,0.74393 -0.46996,0.23811 -1.2114,0.63592 -1.6472,0.88447 -0.43577,0.24895 -1.1113,0.65511 -1.5012,0.90323 -0.3899,0.24811 -0.95288,0.62049 -1.251,0.82777 -0.29816,0.20725 -0.75773,0.53627 -1.0216,0.73142 -0.26354,0.19473 -0.7139,0.5421 -1.0008,0.77145 -0.28648,0.22935 -0.7089,0.57712 -0.93825,0.77272 -0.22935,0.19516 -0.59548,0.515 -0.81315,0.71015 -0.21767,0.19474 -0.7869,0.74018 -1.2647,1.2118 -0.47788,0.47121 -1.1075,1.1197 -1.399,1.4408 -0.29148,0.32109 -0.69013,0.77145 -0.88567,1.0008 -0.19599,0.22935 -0.50624,0.60465 -0.69014,0.834 -0.18431,0.22935 -0.53125,0.67971 -0.77145,1.0008 -0.2406,0.32109 -0.6059,0.82777 -0.81232,1.1259 -0.20642,0.29815 -0.57338,0.85155 -0.81525,1.2302 -0.24144,0.37822 -0.61799,0.9975 -0.8361,1.3761 -0.21767,0.37822 -0.54461,0.96952 -0.72641,1.3136 -0.1814,0.34402 -0.49164,0.9633 -0.68889,1.3761 -0.19765,0.41283 -0.4758,1.0225 -0.61841,1.3552 -0.14261,0.33235 -0.39031,0.94245 -0.55002,1.3552 -0.15971,0.41283 -0.42784,1.1634 -0.59631,1.668 -0.16805,0.50457 -0.41866,1.3244 -0.55669,1.8219 -0.13803,0.49748 -0.26397,0.97162 -0.27939,1.0542 -0.0213,0.11259 -0.045,0.1447 -0.0963,0.12927 -0.0375,-0.0113 -0.33986,-0.0575 -0.67263,-0.103 -0.33234,-0.0459 -0.84607,-0.1055 -1.1414,-0.13302 -0.35236,-0.0325 -0.94702,-0.0413 -1.7306,-0.0254 -0.65677,0.0129 -1.4657,0.0538 -1.7985,0.0905 -0.33234,0.0367 -0.85777,0.10508 -1.1676,0.15178 -0.30941,0.0467 -0.83482,0.14053 -1.1676,0.20893 -0.33234,0.068 -0.88987,0.19849 -1.2389,0.28939 -0.34903,0.0905 -0.93075,0.26062 -1.2927,0.3778 -0.36196,0.11676 -0.95865,0.33027 -1.3256,0.47455 -0.36696,0.14429 -0.90157,0.36863 -1.1884,0.49832 -0.28647,0.1301 -0.79312,0.37863 -1.1259,0.5521 -0.33234,0.17348 -0.88612,0.48414 -1.2302,0.69056 -0.34402,0.20641 -0.85987,0.53584 -1.1468,0.73183 -0.28647,0.19599 -0.74059,0.52167 -1.0088,0.72392 -0.26813,0.20224 -0.73141,0.5742 -1.03,0.8265 -0.29816,0.25228 -0.82568,0.73434 -1.1722,1.0708 -0.34653,0.33693 -0.84112,0.84817 -1.0992,1.1368 -0.25812,0.28856 -0.60048,0.68388 -0.76102,0.879 -0.16055,0.19516 -0.43285,0.5421 -0.60548,0.77145 -0.17223,0.22935 -0.45537,0.62342 -0.62884,0.8757 -0.17389,0.25229 -0.46496,0.70265 -0.64718,1.0008 -0.18223,0.29816 -0.48372,0.82358 -0.67054,1.168 -0.1864,0.34403 -0.4637,0.89738 -0.61591,1.2302 -0.1522,0.33235 -0.37947,0.85733 -0.50499,1.1672 -0.1251,0.30983 -0.34653,0.9195 -0.49164,1.3552 -0.14512,0.43577 -0.34903,1.1301 -0.45286,1.5429 -0.10425,0.41283 -0.24561,1.0412 -0.31401,1.397 -0.0684,0.35528 -0.15387,0.85275 -0.18973,1.105 -0.0354,0.25229 -0.0942,0.73058 -0.13052,1.0634 -0.0359,0.33235 -0.0763,1.1676 -0.0892,1.8556 -0.0146,0.7773 -0.005,1.5037 0.0246,1.9182 0.0267,0.36696 0.0767,0.92033 0.11217,1.2302 0.035,0.30983 0.11927,0.89115 0.18765,1.2927 0.068,0.40115 0.20808,1.0759 0.31109,1.4987 0.10299,0.42325 0.26229,1.0142 0.35403,1.3136 0.0917,0.2994 0.24311,0.76057 0.33693,1.0241 0.0934,0.26354 0.27356,0.73267 0.40032,1.0425 0.12636,0.30941 0.40449,0.9195 0.61758,1.3552 0.21309,0.43577 0.53251,1.0454 0.70932,1.3552 0.17681,0.30941 0.49957,0.83483 0.71724,1.1676 0.21768,0.33235 0.60716,0.88613 0.86573,1.2302 0.25896,0.34403 0.62008,0.80355 0.80272,1.0216 0.18265,0.21767 0.57921,0.66303 0.8811,0.9891 0.30233,0.32651 0.82568,0.84525 1.1634,1.1534 0.33735,0.30816 0.7944,0.70932 1.0154,0.89152 0.22059,0.18223 0.61465,0.49123 0.8757,0.68722 0.26062,0.19557 0.72766,0.52417 1.0371,0.73017 0.30983,0.20558 0.7506,0.48664 0.97995,0.62467 0.22935,0.13761 0.6868,0.39573 1.0171,0.57337 0.32985,0.17764 0.85988,0.44243 1.1772,0.58838 0.31776,0.14595 0.88283,0.38615 1.2556,0.53335 0.37321,0.1472 1.007,0.37447 1.4082,0.50415 0.40157,0.1301 1.0583,0.31859 1.4595,0.41951 0.40157,0.10049 0.97372,0.22976 1.2718,0.28731 0.29815,0.0575 0.80482,0.14303 1.1259,0.18973 0.32109,0.0471 0.87487,0.11718 1.2302,0.15596 l 0.64635,0.0709 13.02,0.0134 13.021,0.0134 0.0125,-14.378 0.0125,-14.377 0.093,-0.64635 c 0.0517,-0.3557 0.15095,-0.92783 0.22143,-1.2718 0.0701,-0.34403 0.20933,-0.90698 0.309,-1.251 0.0997,-0.34403 0.26939,-0.86025 0.37739,-1.1468 0.10758,-0.2869 0.27855,-0.7089 0.37989,-0.93825 0.10133,-0.22935 0.324,-0.68555 0.49497,-1.0142 0.17097,-0.32818 0.46579,-0.84113 0.65469,-1.1396 0.18932,-0.29815 0.52751,-0.78772 0.75188,-1.0875 0.22435,-0.29982 0.56795,-0.73017 0.76395,-0.95662 0.19557,-0.22601 0.57504,-0.62925 0.84315,-0.89655 0.26771,-0.26688 0.71224,-0.67637 0.98745,-0.9099 0.27522,-0.23394 0.66011,-0.54293 0.85485,-0.68722 0.19516,-0.14386 0.56378,-0.40032 0.81937,-0.5692 0.25563,-0.16889 0.74935,-0.46496 1.0963,-0.65803 0.34736,-0.19307 0.89115,-0.46579 1.2085,-0.6059 0.31776,-0.14012 0.8094,-0.34028 1.093,-0.44453 0.28356,-0.10425 0.80437,-0.27271 1.1576,-0.37405 0.35279,-0.10133 0.9249,-0.23977 1.2718,-0.30774 0.34653,-0.0684 0.84608,-0.15263 1.1096,-0.18807 0.26396,-0.035 0.85942,-0.0859 1.3235,-0.11259 0.64719,-0.0375 1.0462,-0.0375 1.7097,4.1e-4 0.47622,0.0271 1.0817,0.0772 1.3453,0.11134 0.26396,0.0338 0.73309,0.10925 1.0425,0.16763 0.30983,0.0584 0.84442,0.17889 1.1884,0.26772 0.34402,0.0892 0.88822,0.25395 1.2093,0.36654 0.32109,0.11259 0.7998,0.29565 1.0634,0.4074 0.26396,0.11134 0.70639,0.31734 0.98415,0.45745 0.2773,0.14012 0.75142,0.40366 1.0534,0.58505 0.30233,0.18182 0.78435,0.50124 1.0721,0.71057 0.28732,0.20933 0.70432,0.52876 0.92655,0.71015 0.22185,0.18098 0.69556,0.62008 1.0526,0.97575 0.35653,0.35528 0.8448,0.88283 1.0846,1.1718 0.23977,0.28856 0.59298,0.74518 0.78525,1.0145 0.19182,0.26896 0.50457,0.74685 0.69514,1.0617 0.19057,0.31483 0.48914,0.8586 0.66387,1.208 0.17472,0.34945 0.3999,0.8361 0.49998,1.0817 0.10008,0.24519 0.25062,0.64301 0.33443,0.88402 0.0838,0.24061 0.22601,0.69639 0.31525,1.0125 0.0897,0.31567 0.21851,0.85988 0.28648,1.2093 0.0679,0.34903 0.15346,0.87068 0.18974,1.1593 0.0367,0.28856 0.0846,0.86107 0.10633,1.2718 0.0225,0.42617 0.04,4.63 0.0409,9.78 l 7.5e-4,9.033 0.30232,0.0288 c 0.16638,0.0154 0.54252,0.0646 0.83565,0.10884 0.29357,0.0442 0.79065,0.13886 1.105,0.21016 0.31442,0.0713 0.9003,0.23769 1.3018,0.36988 0.40157,0.13219 0.9645,0.3386 1.251,0.45912 0.28648,0.1201 0.79313,0.35653 1.1254,0.52542 0.33277,0.16888 0.81105,0.43117 1.0634,0.58297 0.25229,0.15178 0.61758,0.38197 0.81233,0.51124 0.19431,0.12885 0.56961,0.39615 0.834,0.59339 0.26396,0.19725 0.67762,0.52417 0.91822,0.72642 0.24103,0.20224 0.54502,0.47163 0.67596,0.59881 l 0.23769,0.23102 0.47121,-0.0897 c 0.25895,-0.0496 0.66803,-0.11134 0.90863,-0.13803 0.24102,-0.0263 1.0383,-0.0488 1.7722,-0.0496 0.75727,-10e-4 1.56,0.02 1.8556,0.0488 0.28689,0.0279 0.71849,0.0788 0.9591,0.11301 0.24102,0.0342 0.63509,0.10049 0.8757,0.1472 0.24102,0.0471 0.66303,0.14178 0.93825,0.21017 0.27522,0.0684 0.75892,0.20892 1.0746,0.31192 0.31566,0.10299 0.80355,0.28147 1.0842,0.39615 0.28064,0.11467 0.78232,0.34527 1.1146,0.51207 0.33276,0.16722 0.78315,0.41199 1.0008,0.54419 0.21809,0.13219 0.57462,0.36279 0.7923,0.51249 0.21809,0.1497 0.61215,0.44452 0.8757,0.65552 0.26396,0.21101 0.63592,0.53084 0.82695,0.71099 l 0.34777,0.32693 0.54878,-0.0746 c 0.3019,-0.0409 0.84945,-0.12927 1.2164,-0.19599 0.36696,-0.0671 1.0479,-0.21558 1.5133,-0.33026 0.46538,-0.11467 1.1596,-0.30358 1.5429,-0.41992 0.38323,-0.11592 1.0246,-0.33318 1.4258,-0.48246 0.40073,-0.14971 0.98243,-0.38031 1.2927,-0.51333 0.30983,-0.13302 0.79853,-0.35279 1.0858,-0.48873 0.28732,-0.13594 0.79395,-0.39448 1.1259,-0.57462 0.33194,-0.18015 0.83858,-0.46788 1.1251,-0.6401 0.28689,-0.1718 0.79357,-0.49414 1.1259,-0.7164 0.33276,-0.22184 0.8394,-0.57838 1.1259,-0.79185 0.28689,-0.2135 0.69972,-0.53293 0.9174,-0.70932 0.21809,-0.17639 0.63175,-0.52793 0.91987,-0.78105 0.28814,-0.25312 0.80438,-0.73934 1.1468,-1.08 0.34277,-0.34111 0.85155,-0.87615 1.1305,-1.1889 0.27939,-0.31317 0.73308,-0.8511 1.0083,-1.196 0.27522,-0.34486 0.68388,-0.8853 0.90825,-1.201 0.22392,-0.31566 0.56961,-0.82815 0.7677,-1.1388 0.19807,-0.31066 0.51082,-0.82732 0.69514,-1.1484 0.18431,-0.32109 0.51666,-0.94657 0.73892,-1.3903 0.22185,-0.44369 0.54085,-1.1288 0.7089,-1.522 0.16847,-0.39365 0.4145,-1.0158 0.54711,-1.3828 0.1326,-0.36696 0.32317,-0.92992 0.42325,-1.251 0.0997,-0.32109 0.2648,-0.90277 0.36613,-1.2927 0.10174,-0.38989 0.24269,-0.99037 0.31358,-1.3344 0.0709,-0.34402 0.17431,-0.90697 0.22935,-1.251 0.0554,-0.34402 0.13803,-0.9633 0.1839,-1.3761 0.0459,-0.41283 0.103,-1.0604 0.12677,-1.4386 0.0242,-0.37821 0.0438,-1.1384 0.0434,-1.6888 0,-0.55044 -0.0187,-1.301 -0.0412,-1.668 -0.023,-0.36696 -0.0705,-0.94867 -0.10551,-1.2927 -0.035,-0.34402 -0.11133,-0.93532 -0.16929,-1.3136 -0.0584,-0.37821 -0.16222,-0.96952 -0.23103,-1.3136 -0.0688,-0.34402 -0.19932,-0.9207 -0.28939,-1.2818 -0.0905,-0.36071 -0.25729,-0.96413 -0.37113,-1.3406 -0.11342,-0.37613 -0.29315,-0.92535 -0.39991,-1.2202 -0.10633,-0.29482 -0.30691,-0.81735 -0.44577,-1.1614 -0.13886,-0.34402 -0.38823,-0.9195 -0.55461,-1.2785 -0.16597,-0.35945 -0.4637,-0.9549 -0.66178,-1.3235 -0.19766,-0.36862 -0.51582,-0.92947 -0.70681,-1.246 -0.19099,-0.31692 -0.52167,-0.83775 -0.73559,-1.158 -0.21392,-0.31984 -0.5763,-0.83355 -0.80565,-1.1414 -0.22935,-0.30733 -0.59548,-0.77648 -0.8136,-1.0425 -0.21768,-0.26563 -0.6255,-0.73643 -0.9057,-1.0458 -0.28064,-0.30983 -0.79815,-0.84525 -1.15,-1.1906 -0.35237,-0.34528 -0.82815,-0.79358 -1.0575,-0.99623 -0.22935,-0.20266 -0.68472,-0.58338 -1.012,-0.84607 -0.32694,-0.26229 -0.8619,-0.66803 -1.1884,-0.90158 -0.3261,-0.2331 -0.87488,-0.60465 -1.2189,-0.82567 -0.34403,-0.22059 -0.85988,-0.53543 -1.1468,-0.69931 -0.28648,-0.16429 -0.88695,-0.4833 -1.3344,-0.70973 -0.44703,-0.22601 -1.085,-0.52793 -1.4178,-0.67012 -0.33235,-0.14261 -0.83903,-0.34903 -1.1259,-0.45912 -0.28648,-0.10967 -0.77438,-0.28439 -1.0842,-0.38864 -0.30942,-0.10383 -0.82568,-0.26438 -1.1468,-0.35696 -0.32109,-0.0926 -0.85568,-0.2331 -1.1884,-0.31233 -0.33235,-0.0792 -0.84863,-0.1914 -1.1468,-0.24894 -0.29816,-0.058 -0.86108,-0.15179 -1.251,-0.20934 -0.3899,-0.0575 -1.0117,-0.13386 -1.3815,-0.17013 -0.3703,-0.0363 -1.1443,-0.0838 -1.7201,-0.10592 -0.67471,-0.0254 -1.3473,-0.0254 -1.8915,8.3e-4 -0.46495,0.0221 -1.04,0.0592 -1.279,0.0821 -0.23853,0.0225 -0.59506,0.0613 -0.7923,0.0851 -0.19683,0.0242 -0.61132,0.0822 -0.92115,0.12927 -0.30984,0.0467 -0.88193,0.15012 -1.2718,0.22935 -0.3899,0.0792 -0.76523,0.15429 -0.834,0.16638 l -0.1251,0.0225 -0.20433,-0.38906 c -0.11217,-0.21392 -0.40199,-0.73642 -0.64344,-1.1605 -0.24144,-0.42451 -0.59756,-1.025 -0.79147,-1.3344 -0.19391,-0.30984 -0.56795,-0.88193 -0.8319,-1.2718 -0.26396,-0.3899 -0.74726,-1.0654 -1.0742,-1.5012 -0.32651,-0.43577 -0.85238,-1.1021 -1.1676,-1.4804 -0.31526,-0.37864 -0.73475,-0.86655 -0.93203,-1.0842 -0.19724,-0.2181 -0.62633,-0.67971 -0.9537,-1.0262 -0.32734,-0.34611 -0.93742,-0.9495 -1.3561,-1.3406 -0.41825,-0.39115 -0.99495,-0.912 -1.2818,-1.158 -0.28647,-0.24561 -0.73767,-0.6205 -1.0021,-0.83318 -0.2648,-0.21267 -0.76185,-0.59714 -1.105,-0.8544 -0.34319,-0.25729 -1.0088,-0.72516 -1.4791,-1.0404 -0.46995,-0.31483 -1.1267,-0.73809 -1.4595,-0.9399 -0.33234,-0.20224 -0.88612,-0.52542 -1.2302,-0.71849 -0.34402,-0.19349 -1.0946,-0.58338 -1.668,-0.86738 -0.57337,-0.28356 -1.3707,-0.65511 -1.7722,-0.82567 -0.40115,-0.17055 -1.0091,-0.417 -1.351,-0.54794 -0.34152,-0.13135 -0.86692,-0.32359 -1.1676,-0.42742 -0.30024,-0.10425 -0.84105,-0.28022 -1.201,-0.39115 -0.36023,-0.11134 -0.972,-0.28732 -1.3594,-0.39157 -0.38739,-0.10383 -1.0312,-0.26271 -1.4303,-0.35278 -0.39907,-0.0897 -1.035,-0.22018 -1.4136,-0.2894 -0.37822,-0.0696 -1.007,-0.17305 -1.397,-0.23018 -0.3899,-0.0567 -0.97163,-0.13302 -1.2927,-0.16888 -0.32109,-0.0359 -0.9495,-0.0938 -1.397,-0.12885 -0.44702,-0.035 -1.5262,-0.0709 -2.3978,-0.0796 z m 0.86693,40.222 c -0.31609,0.002 -0.76268,0.03 -0.99203,0.0613 -0.22977,0.0313 -0.63301,0.11133 -0.89655,0.17805 -0.26396,0.0671 -0.6672,0.19182 -0.89655,0.27731 -0.22935,0.0855 -0.60257,0.25062 -0.8298,0.36654 -0.22684,0.11593 -0.57379,0.31734 -0.77145,0.44702 -0.19724,0.1301 -0.50457,0.35279 -0.68263,0.49457 -0.17806,0.1422 -0.50082,0.43659 -0.71724,0.65427 -0.216,0.21726 -0.53292,0.58129 -0.70389,0.80812 -0.17098,0.22685 -0.41742,0.59089 -0.54753,0.80895 -0.1301,0.21851 -0.32817,0.60173 -0.43951,0.85193 -0.11176,0.2502 -0.27105,0.67845 -0.35403,0.95197 -0.0826,0.27314 -0.19099,0.70307 -0.2402,0.95535 l -0.0901,0.4587 -0.0221,27.48 -0.0225,27.48 -0.0967,0.19641 c -0.053,0.10758 -0.16472,0.25604 -0.24812,0.32901 -0.083,0.073 -0.22893,0.16722 -0.32359,0.20933 -0.0947,0.0417 -0.27397,0.088 -0.39824,0.10259 -0.12468,0.0146 -0.30107,0.006 -0.39281,-0.0187 -0.14429,-0.0388 -0.76148,-0.64052 -4.6078,-4.4915 -2.4424,-2.4457 -4.61,-4.5886 -4.8164,-4.7626 -0.20642,-0.17431 -0.57212,-0.44495 -0.81315,-0.60215 -0.24103,-0.15721 -0.64427,-0.38781 -0.89655,-0.51249 -0.25229,-0.1251 -0.63718,-0.29107 -0.85485,-0.36905 -0.21767,-0.078 -0.59297,-0.19057 -0.834,-0.24937 -0.24103,-0.0592 -0.63718,-0.13635 -0.8811,-0.1718 -0.26105,-0.0375 -0.73601,-0.0638 -1.1555,-0.0638 -0.4195,0 -0.90532,0.0267 -1.1805,0.065 -0.25728,0.0358 -0.67553,0.11926 -0.9291,0.18473 -0.25395,0.0659 -0.63175,0.18473 -0.8394,0.26396 -0.20807,0.0796 -0.55419,0.23311 -0.76935,0.34111 -0.21517,0.10842 -0.51416,0.27355 -0.66469,0.36696 -0.15012,0.0938 -0.45161,0.30607 -0.66929,0.47163 -0.21767,0.16554 -0.62216,0.5325 -0.8982,0.81562 -0.27605,0.28273 -0.58797,0.62675 -0.69264,0.7644 -0.10508,0.13761 -0.2944,0.40949 -0.42075,0.60465 -0.12676,0.19474 -0.324,0.5421 -0.43868,0.77145 -0.11425,0.22935 -0.27605,0.59882 -0.35904,0.82148 -0.083,0.22226 -0.19765,0.58839 -0.25395,0.81315 -0.0567,0.22476 -0.13386,0.64301 -0.17139,0.92992 -0.0521,0.39573 -0.0634,0.71724 -0.0471,1.3344 0.0146,0.55544 0.0488,0.96495 0.10759,1.2927 0.0475,0.26354 0.14261,0.67929 0.211,0.92325 0.0688,0.24395 0.18348,0.5909 0.25479,0.77145 0.0717,0.18015 0.23102,0.52459 0.35445,0.7656 0.12302,0.24061 0.34194,0.61007 0.48623,0.8202 0.14428,0.21017 5.0474,6.2337 10.896,13.386 5.848,7.152 10.762,13.154 10.919,13.337 0.1572,0.18348 0.55795,0.62884 0.8907,0.9891 0.33318,0.36071 0.927,0.95535 1.3198,1.321 0.39323,0.36613 0.97748,0.88485 1.2986,1.153 0.32109,0.26771 0.87945,0.71015 1.241,0.98242 0.36153,0.2723 0.96202,0.69848 1.3344,0.94703 0.37238,0.24853 0.9024,0.58922 1.1776,0.75727 0.27522,0.16806 0.77228,0.45495 1.1042,0.63718 0.33193,0.18264 0.82567,0.44285 1.0971,0.57879 0.27105,0.13595 0.76852,0.37113 1.1059,0.52209 0.33693,0.15095 0.88485,0.3828 1.2172,0.51541 0.33277,0.13218 0.87323,0.33652 1.2014,0.45412 0.32818,0.11759 0.96615,0.324 1.4178,0.4587 0.45161,0.13427 1.1309,0.32109 1.5092,0.41407 0.37864,0.093 1.0184,0.23561 1.4224,0.31651 0.40365,0.0805 1.1259,0.20307 1.6054,0.27146 0.47913,0.0688 1.1714,0.15346 1.5383,0.18849 0.36696,0.035 1.0238,0.0826 1.4595,0.1055 0.46787,0.0246 3.7805,0.0417 8.0895,0.0412 4.2805,-4.2e-4 7.599,-0.0175 8.0272,-0.0417 0.40158,-0.0225 1.0112,-0.0696 1.3552,-0.10467 0.34403,-0.035 0.88823,-0.10217 1.2093,-0.14887 0.32109,-0.0471 0.90533,-0.14887 1.2986,-0.22643 0.39324,-0.078 0.98453,-0.2085 1.3136,-0.29065 0.32943,-0.0826 0.9174,-0.24478 1.3069,-0.36071 0.38947,-0.11592 1.0329,-0.33068 1.4299,-0.47704 0.39699,-0.14595 0.99788,-0.3824 1.3352,-0.52459 0.33735,-0.1422 1.0638,-0.48622 1.6142,-0.76395 0.55044,-0.27772 1.3027,-0.68596 1.6713,-0.90697 0.36863,-0.22101 0.94118,-0.58297 1.2718,-0.80483 0.33068,-0.22185 0.88275,-0.61507 1.2268,-0.87322 0.34403,-0.25854 0.92573,-0.71974 1.2927,-1.0254 0.36696,-0.30525 1.0996,-0.9879 1.6288,-1.5166 0.52875,-0.52876 1.2014,-1.2502 1.4945,-1.6025 0.29357,-0.35278 0.73142,-0.90615 0.97328,-1.2302 0.24228,-0.32401 0.60507,-0.83565 0.80692,-1.1372 0.20184,-0.30108 0.54044,-0.8361 0.75225,-1.1884 0.21225,-0.35236 0.61382,-1.0909 0.89235,-1.6413 0.27814,-0.55044 0.62884,-1.2919 0.77895,-1.6472 0.15012,-0.3557 0.38614,-0.95617 0.52417,-1.3344 0.13802,-0.37864 0.33902,-0.97785 0.4466,-1.3315 0.10718,-0.35403 0.26772,-0.92738 0.3557,-1.2735 0.0884,-0.34653 0.22686,-0.95783 0.30692,-1.3582 0.0805,-0.40032 0.19307,-1.0471 0.2502,-1.437 0.0575,-0.38989 0.13385,-1.012 0.17014,-1.3823 0.0363,-0.3703 0.0838,-1.1397 0.10591,-1.7097 0.0233,-0.59798 0.0404,-5.8342 0.0404,-12.379 0,-6.9902 -0.0158,-11.572 -0.0409,-11.942 -0.0225,-0.32985 -0.0867,-0.8211 -0.14261,-1.0917 -0.0563,-0.27064 -0.16972,-0.69514 -0.25229,-0.94328 -0.0826,-0.2477 -0.26103,-0.68138 -0.39698,-0.9633 -0.13594,-0.28147 -0.35361,-0.67554 -0.48372,-0.8757 -0.1301,-0.19975 -0.32275,-0.4758 -0.42742,-0.61341 -0.10509,-0.13761 -0.38865,-0.45411 -0.63051,-0.70306 -0.24144,-0.24895 -0.57754,-0.5642 -0.74685,-0.70098 -0.16929,-0.13635 -0.44619,-0.3411 -0.61465,-0.45495 -0.16889,-0.11425 -0.49957,-0.30899 -0.73475,-0.43326 -0.2352,-0.12468 -0.62175,-0.30315 -0.8586,-0.39698 -0.23686,-0.0938 -0.64176,-0.22477 -0.89948,-0.29107 -0.2577,-0.0668 -0.67888,-0.15054 -0.93615,-0.18639 -0.26271,-0.0363 -0.756,-0.065 -1.1242,-0.065 -0.36111,0 -0.81562,0.0196 -1.01,0.0438 -0.19431,0.0242 -0.53834,0.0822 -0.7644,0.12885 -0.22642,0.0463 -0.6109,0.15012 -0.85485,0.22977 -0.24394,0.0801 -0.65718,0.24728 -0.91785,0.37196 -0.26104,0.12469 -0.61758,0.31317 -0.79185,0.41909 -0.17472,0.10633 -0.4587,0.29815 -0.63091,0.42701 -0.17223,0.12843 -0.50791,0.422 -0.7456,0.65135 -0.23811,0.22977 -0.53918,0.54919 -0.6697,0.70974 -0.13094,0.16054 -0.33027,0.42283 -0.44328,0.58296 l -0.20599,0.29148 -0.0267,-0.62508 c -0.0146,-0.34361 -0.0575,-0.79935 -0.0955,-1.0133 -0.038,-0.2135 -0.13219,-0.60757 -0.20933,-0.8757 -0.0771,-0.26771 -0.22018,-0.67304 -0.31775,-0.90075 -0.0976,-0.22769 -0.26063,-0.56546 -0.36279,-0.7506 -0.10176,-0.18515 -0.28482,-0.48706 -0.40658,-0.67054 -0.12135,-0.18348 -0.3728,-0.51457 -0.55795,-0.736 -0.18514,-0.22143 -0.48247,-0.53751 -0.66052,-0.70223 -0.17807,-0.16513 -0.49248,-0.42659 -0.6989,-0.58171 -0.20641,-0.15513 -0.53626,-0.37823 -0.73266,-0.49582 -0.19641,-0.11759 -0.53502,-0.29816 -0.75225,-0.40073 -0.21726,-0.10301 -0.61925,-0.26188 -0.89363,-0.35321 -0.27439,-0.0913 -0.68638,-0.20349 -0.91575,-0.24978 -0.22935,-0.0459 -0.62342,-0.1055 -0.8757,-0.13261 -0.27522,-0.0296 -0.7089,-0.0396 -1.0842,-0.0246 -0.34402,0.0134 -0.8415,0.0621 -1.105,0.108 -0.26354,0.0459 -0.67721,0.13929 -0.91905,0.20767 -0.24145,0.0679 -0.66387,0.21893 -0.93825,0.33485 -0.27439,0.11593 -0.69598,0.32818 -0.93698,0.47163 -0.2406,0.14345 -0.58796,0.3728 -0.77145,0.50958 -0.18306,0.13677 -0.56044,0.47454 -0.83775,0.7506 -0.27772,0.27605 -0.64343,0.69263 -0.81314,0.9249 -0.16972,0.23268 -0.3311,0.45786 -0.35821,0.5004 -0.0409,0.0638 -0.05,0.0163 -0.0521,-0.26438 -10e-4,-0.18807 -0.0309,-0.55669 -0.065,-0.819 -0.0346,-0.26271 -0.11676,-0.69055 -0.18264,-0.95115 -0.0659,-0.2602 -0.19015,-0.66094 -0.27563,-0.89032 -0.0855,-0.22935 -0.25063,-0.60257 -0.36655,-0.8298 -0.11593,-0.22685 -0.31734,-0.5738 -0.44703,-0.77145 -0.1301,-0.19725 -0.35611,-0.50874 -0.50206,-0.69222 -0.14595,-0.18348 -0.44119,-0.50708 -0.65636,-0.71891 -0.21476,-0.21184 -0.57504,-0.52417 -0.80063,-0.6943 -0.22601,-0.17014 -0.5888,-0.41576 -0.80692,-0.54586 -0.21851,-0.1301 -0.60174,-0.32818 -0.85193,-0.43952 -0.2502,-0.11175 -0.67846,-0.27105 -0.95197,-0.35403 -0.27314,-0.0826 -0.71266,-0.18765 -0.9762,-0.23268 -0.26355,-0.0455 -0.74226,-0.0938 -1.0634,-0.10759 -0.34194,-0.0146 -0.79148,-0.005 -1.0842,0.0238 -0.27522,0.0271 -0.68055,0.0855 -0.9003,0.13011 -0.22018,0.0451 -0.56712,0.12969 -0.77145,0.1889 -0.20433,0.0593 -0.56838,0.19057 -0.8094,0.2919 -0.24061,0.10174 -0.61174,0.28356 -0.8244,0.40407 -0.21226,0.12052 -0.55837,0.34111 -0.76898,0.49039 -0.21058,0.14887 -0.59297,0.4733 -0.84982,0.72016 -0.2573,0.24686 -0.57088,0.57546 -0.69681,0.72975 -0.12594,0.15429 -0.32484,0.41992 -0.44202,0.59048 l -0.21267,0.30983 v -15.442 c 0,-10.361 -0.0142,-15.572 -0.0434,-15.843 -0.0238,-0.22268 -0.0817,-0.60215 -0.12886,-0.84278 -0.0471,-0.24102 -0.16972,-0.69096 -0.2723,-1.0008 -0.10258,-0.30983 -0.29482,-0.77895 -0.42743,-1.0425 -0.13219,-0.26354 -0.31233,-0.59214 -0.40032,-0.72975 -0.088,-0.13761 -0.26312,-0.39114 -0.38947,-0.56295 -0.12677,-0.17222 -0.42826,-0.51708 -0.67054,-0.76642 -0.24269,-0.24978 -0.60674,-0.58297 -0.80985,-0.74018 -0.20308,-0.15762 -0.54085,-0.39281 -0.7506,-0.52291 -0.20975,-0.1301 -0.57212,-0.32609 -0.80482,-0.43535 -0.23269,-0.10884 -0.61717,-0.26396 -0.85486,-0.34402 -0.23727,-0.0805 -0.64718,-0.19307 -0.91117,-0.25103 -0.26354,-0.0576 -0.66178,-0.12427 -0.88448,-0.14846 -0.22267,-0.0246 -0.66386,-0.0421 -0.97995,-0.04 z" fill="#92c131"/></g><g clip-path="url(#lb-cw)"><g class="gl gw" id="lb-W"><path d="m 220.24,412.53 32.911,74.375 h -22.575 l -24.356,-55.009 -24.356,55.009 h -11.88 l -36.832,-83.167 h 12.95 c 5.4656,0 11.287,3.8019 13.545,8.792 l 25.425,57.623 19.01,-43.01 -10.337,-23.406 h 12.95 c 5.4656,0 11.287,3.8019 13.545,8.792 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-dot"><path d="m 275.603,413.23999 a 10.693,10.693 0 0 1 -10.693,10.693 10.693,10.693 0 0 1 -10.693,-10.693 10.693,10.693 0 0 1 10.693,-10.693 10.693,10.693 0 0 1 10.693,10.693 z" fill="#92c131"/></g><g class="gl gw" id="lb-E"><path d="m 348.83,403.74 v 3.5645 h -40.99 v 36.712 h 27.92 v 3.5643 h -27.92 v 35.762 h 40.99 v 3.5643 h -52.752 c -5.4654,0 -9.6237,-4.1584 -9.6237,-9.6237 v -73.544 h 62.375 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-B"><path d="m 378.14,403.74 v 83.167 h -11.762 c -5.4653,0 -9.6236,-4.1584 -9.6236,-9.6237 v -73.55 z" fill="#5a5e64"/><path d="m 402.62,423.94 c 0,-11.049 -3.9207,-20.198 -14.97,-20.198 21.861,0 34.217,7.0099 34.217,20.198 0,8.792 -5.7029,14.97 -16.158,17.94 14.97,2.8514 23.287,10.336 23.287,21.861 0,15.089 -14.376,23.168 -39.564,23.168 13.069,0 17.822,-10.099 17.822,-23.168 0,-13.069 -4.7524,-21.505 -17.822,-21.505 h -1.7821 c 11.049,0 14.97,-7.2476 14.97,-18.297 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-S"><path d="m 528.55,463.38 c 0,16.633 -18.89,24.713 -36.712,24.713 -16.396,0 -34.217,-7.7227 -34.217,-22.218 0,-8.3168 6.8908,-14.851 14.495,-14.851 7.4846,0 13.901,4.0396 13.901,13.307 -6.8908,-1.7821 -10.812,2.7326 -10.812,7.9603 0,8.6732 9.7429,12.237 16.634,12.237 9.8613,0 18.653,-5.5841 18.653,-13.782 0,-17.703 -50.97,-21.386 -50.97,-47.999 0,-13.901 16.634,-20.198 33.267,-20.198 15.802,0 29.228,5.9405 29.228,18.059 0,7.7227 -4.3965,12.356 -10.693,12.356 -6.0594,0 -11.407,-3.3267 -11.407,-10.931 5.7033,1.4257 7.9608,-2.2574 7.9608,-6.5345 0,-7.1286 -7.0101,-9.386 -15.801,-9.386 -7.4854,0 -16.753,2.1386 -16.753,8.6731 -2e-5,15.921 53.227,23.049 53.227,48.593 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-P"><path d="m 612.1,429.88 c 0,17.109 -15.564,26.138 -40.752,26.138 h -11.287 v 30.891 h -11.762 c -5.4652,0 -9.6237,-4.1584 -9.6237,-9.6236 v -73.55 h 32.672 c 25.188,0 40.752,9.0296 40.752,26.138 z m -40.752,22.574 c 13.069,0 19.01,-7.485 19.01,-22.574 0,-14.97 -5.9402,-22.574 -19.01,-22.574 h -11.287 v 45.148 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-I"><path d="m 642.66,413.36 v 73.544 H 630.9 c -5.4652,0 -9.6236,-4.1584 -9.6236,-9.6236 v -73.54 h 11.762 c 5.4652,0 9.6237,4.1584 9.6237,9.6236 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-D"><path d="m 732.58,445.32 c 0,27.208 -17.94,41.584 -44.316,41.584 h -21.861 c -5.4652,0 -9.6236,-4.1584 -9.6236,-9.6236 v -73.54 h 31.485 c 26.376,0 44.316,14.376 44.316,41.584 z m -44.316,38.019 c 14.257,0 22.574,-12.713 22.574,-38.019 0,-25.307 -8.3168,-38.019 -22.574,-38.019 h -10.099 v 76.039 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-E2"><path d="m 805.7,407.3 h -40.99 v 36.712 h 27.92 v 3.5643 h -27.92 v 35.762 h 40.99 v 3.5643 h -52.752 c -5.4654,0 -9.6237,-4.1584 -9.6237,-9.6236 v -73.53 h 62.375 v 3.5643 z" fill="#5a5e64"/></g><g class="gl gw" id="lb-R"><path d="m 887.05,429.88 c 0,13.663 -9.9798,22.218 -26.851,25.069 h 1.4256 c 5.4652,0 11.762,3.5643 14.614,8.1979 l 14.614,23.762 h -14.138 c -5.4652,0 -11.762,-3.5643 -14.614,-8.1979 l -13.66,-22.69 h -13.426 v 30.891 h -11.762 c -5.4652,0 -9.6237,-4.1584 -9.6237,-9.6236 v -73.55 h 32.673 c 25.188,0 40.752,9.0296 40.752,26.138 z m -40.752,22.574 c 13.069,0 19.01,-7.485 19.01,-22.574 0,-14.97 -5.9406,-22.574 -19.01,-22.574 h -11.287 v 45.148 z" fill="#5a5e64"/></g></g><g clip-path="url(#lb-cs)"><g class="gl gs" id="lb-s0"><path d="m 380.75,503.83 c 0,-2.64 3.744,-3.504 6.768,-3.504 3.552,0 6.384,0.912 6.384,3.792 0,1.728 -0.91199,3.216 -3.216,2.64 0,3.072 2.16,4.416 4.608,4.416 2.544,0 4.32,-1.872 4.32,-4.992 0,-4.896 -5.424,-7.296 -11.808,-7.296 -6.72,0 -13.44,2.544 -13.44,8.16 0,10.752 20.592,12.24 20.592,19.392 0,3.312 -3.552,5.568 -7.536,5.568 -2.784,0 -6.72,-1.44 -6.72,-4.944 0,-2.112 1.584,-3.936 4.368,-3.216 0,-3.744 -2.592,-5.376 -5.616,-5.376 -3.072,0 -5.856,2.64 -5.856,6 0,5.856 7.2,8.976 13.824,8.976 7.2,0 14.832,-3.264 14.832,-9.984 0,-10.32 -21.504,-13.2 -21.504,-19.632 z" fill="#92c131"/></g><g class="gl gs" id="lb-s1"><path d="m 422.9,533.45 c 10.656,0 17.904,-6.288 17.904,-17.28 0,-10.992 -7.248,-17.28 -17.904,-17.28 -10.656,0 -17.904,6.288 -17.904,17.28 0,10.992 7.248,17.28 17.904,17.28 z m -9.12,-17.28 c 0,-10.224 3.36,-15.84 9.12,-15.84 5.76,0 9.12,5.616 9.12,15.84 0,10.224 -3.36,15.84 -9.12,15.84 -5.76,0 -9.12,-5.616 -9.12,-15.84 z" fill="#92c131"/></g><g class="gl gs" id="lb-s2"><path d="m 453.79,503.26 c 0,-2.208 -1.68,-3.888 -3.888,-3.888 h -4.752 v 29.712 c 0,2.208 1.68,3.888 3.888,3.888 h 21.312 v -1.44 h -16.56 z" fill="#92c131"/></g><g class="gl gs" id="lb-s3"><path d="m 488.09,530.62 c -5.712,0 -9.6,-3.36 -9.6,-9.216 V 503.26 c 0,-2.208 -1.68,-3.888 -3.888,-3.888 h -4.752 v 19.92 c 0,8.976 5.904,14.16 14.64,14.16 8.784,0 14.64,-3.504 14.64,-12.144 v -21.936 h -1.44 v 22.03 c 0,6.816 -3.84,9.216 -9.6,9.216 z" fill="#92c131"/></g><g class="gl gs" id="lb-s4"><path d="m 531.67,500.81 v -1.44 h -30.192 v 1.44 h 10.848 v 28.272 c 0,2.208 1.68,3.888 3.888,3.888 h 4.752 v -32.16 z" fill="#92c131"/></g><g class="gl gs" id="lb-s5"><path d="m 539.06,499.37 h -4.752 v 29.712 c 0,2.208 1.68,3.888 3.888,3.888 h 4.752 v -29.712 c 0,-2.208 -1.68,-3.888 -3.888,-3.888 z" fill="#92c131"/></g><g class="gl gs" id="lb-s6"><path d="m 565.21,533.45 c 10.656,0 17.904,-6.288 17.904,-17.28 0,-10.992 -7.248,-17.28 -17.904,-17.28 -10.656,0 -17.904,6.288 -17.904,17.28 0,10.992 7.248,17.28 17.904,17.28 z m -9.12,-17.28 c 0,-10.224 3.36,-15.84 9.12,-15.84 5.76,0 9.12,5.616 9.12,15.84 0,10.224 -3.36,15.84 -9.12,15.84 -5.76,0 -9.12,-5.616 -9.12,-15.84 z" fill="#92c131"/></g><g class="gl gs" id="lb-s7"><path d="m 589.77,499.37 h -2.256 v 33.6 h 1.44 v -25.01 l 21.6,22.464 c 1.536,1.632 3.168,2.544 5.28,2.544 h 1.44 v -33.6 h -1.44 v 23.52 l -20.16,-20.976 c -1.68,-1.776 -3.456,-2.544 -5.904,-2.544 z" fill="#92c131"/></g><g class="gl gs" id="lb-s8"><path d="m 628.9,503.83 c 0,-2.64 3.744,-3.504 6.768,-3.504 3.552,0 6.384,0.912 6.384,3.792 0,1.728 -0.912,3.216 -3.216,2.64 0,3.072 2.16,4.416 4.608,4.416 2.544,0 4.32,-1.872 4.32,-4.992 0,-4.896 -5.424,-7.296 -11.808,-7.296 -6.72,0 -13.44,2.544 -13.44,8.16 0,10.752 20.592,12.24 20.592,19.392 0,3.312 -3.552,5.568 -7.536,5.568 -2.784,0 -6.72,-1.44 -6.72,-4.944 0,-2.112 1.584,-3.936 4.368,-3.216 0,-3.744 -2.592,-5.376 -5.616,-5.376 -3.072,0 -5.856,2.64 -5.856,6 0,5.856 7.2,8.976 13.824,8.976 7.2,0 14.832,-3.264 14.832,-9.984 0,-10.32 -21.504,-13.2 -21.504,-19.632 z" fill="#92c131"/></g></g></g></svg>
+</div>
+
+<div id="flash" data-layout-allow-overflow></div>
+<div id="grain" data-layout-allow-overflow></div>
+
+      <audio id="bgm" src="assets/audio/mix.wav" data-start="0" data-duration="35" data-track-index="10" data-volume="1"></audio>
+    </div>
+    <script>
+window.TL = {"title":"Web Spider Solutions — Get found","duration":35,"fps":30,"bpm":148,"formats":["16x9"],"marks":{"hook":0,"ring":7.7667,"brand":8.9333,"prompt":11.3,"burst":13.3333,"seconds":14.6,"code":15.6,"web":21.0667,"tagline":28,"logo":32.45,"end":35},"music":{"style":"modern","key":"G","chords":["Em","Em","Cmaj7","D","Dsus4","G","D","Em","C","G","D","Em","C","Em","C","D","Dsus4","G","C","D","G","G"],"sections":[{"at":0,"kind":"intro"},{"at":5.676,"kind":"build"},{"at":7.45,"kind":"gap"},{"at":7.7667,"kind":"drop","snap":false},{"at":15.405,"kind":"full"},{"at":21.08,"kind":"intro"},{"at":24.73,"kind":"build"},{"at":27.72,"kind":"gap"},{"at":28,"kind":"drop","snap":false},{"at":32.45,"kind":"outro","snap":false}],"accents":[9.85,32.45],"melody":"auto","seed":11},"sfx":[{"at":0,"lib":"cinematic-hit","gain":-15,"maxlen":1.2},{"at":0,"lib":"glitch-3","gain":-26,"maxlen":0.9},{"at":0.4667,"synth":"tick","gain":-20},{"at":0.6,"lib":"mouse-click","gain":-18},{"at":0.6667,"synth":"pop","gain":-15},{"at":0.7,"synth":"shimmer","gain":-24},{"at":0.8,"synth":"tick","gain":-28,"pitch":1.3},{"at":0.9,"synth":"tick","gain":-28,"pitch":1.3},{"at":1.02,"synth":"tick","gain":-28,"pitch":1.3},{"at":1.12,"synth":"tick","gain":-28,"pitch":1.3},{"at":1.2,"synth":"tick","gain":-28,"pitch":1.3},{"at":1.3,"lib":"glitch-1","gain":-18,"maxlen":0.35,"fade":0.08},{"at":1.42,"synth":"tick","gain":-27,"pitch":1.15},{"at":1.5,"synth":"tick","gain":-27,"pitch":1.15},{"at":1.58,"synth":"tick","gain":-27,"pitch":1.15},{"at":1.66,"synth":"tick","gain":-27,"pitch":1.15},{"at":1.76,"synth":"tick","gain":-27,"pitch":1.15},{"at":1.9667,"lib":"glitch-1","gain":-17,"maxlen":0.35,"fade":0.08},{"at":2.1,"lib":"text-pop","gain":-14},{"at":2.2667,"synth":"shimmer","gain":-20},{"at":2.6667,"lib":"swish","gain":-17,"align":"peak"},{"at":2.8667,"synth":"thump","gain":-22,"pitch":1.6},{"at":3.4667,"lib":"fast-swipe","gain":-17,"align":"peak"},{"at":3.5,"synth":"pop","gain":-25,"pitch":0.8},{"at":3.5667,"synth":"pop","gain":-25,"pitch":0.88},{"at":3.6333,"synth":"pop","gain":-25,"pitch":0.9600000000000001},{"at":3.7,"synth":"pop","gain":-25,"pitch":1.04},{"at":3.7667,"synth":"pop","gain":-25,"pitch":1.12},{"at":3.8333,"synth":"pop","gain":-25,"pitch":1.2000000000000002},{"at":4.2667,"synth":"tick","gain":-22},{"at":4.3667,"synth":"tick","gain":-22},{"at":4.6667,"synth":"tick","gain":-22},{"at":4.7667,"synth":"tick","gain":-22},{"at":5.0667,"synth":"tick","gain":-22},{"at":5.1667,"synth":"tick","gain":-22},{"at":5.6667,"synth":"tick","gain":-22},{"at":5.7667,"synth":"tick","gain":-22},{"at":5.8667,"lib":"zoom-in","gain":-18,"maxlen":1},{"at":7.0667,"lib":"reverse-whoosh","gain":-18,"align":"peak"},{"at":7.3,"synth":"pop","gain":-23,"pitch":1},{"at":7.3667,"synth":"pop","gain":-23,"pitch":1.06},{"at":7.4,"synth":"pop","gain":-23,"pitch":1.12},{"at":7.4667,"synth":"pop","gain":-23,"pitch":1.18},{"at":7.5,"synth":"pop","gain":-23,"pitch":1.24},{"at":7.5333,"synth":"pop","gain":-23,"pitch":1.3},{"at":7.5667,"synth":"pop","gain":-23,"pitch":1.3599999999999999},{"at":7.6,"synth":"pop","gain":-23,"pitch":1.42},{"at":7.6667,"synth":"tick","gain":-18,"pitch":0.8},{"at":7.7667,"lib":"sub-drop","gain":-10,"maxlen":1.6},{"at":7.7667,"lib":"cinematic-hit","gain":-13,"maxlen":1.4},{"at":8.0667,"synth":"shimmer","gain":-19},{"at":8.9333,"lib":"swoosh-transition","gain":-15,"align":"peak","maxlen":1.6},{"at":9,"synth":"tick","gain":-24,"pitch":1.2},{"at":9.06,"synth":"tick","gain":-24,"pitch":1.2},{"at":9.12,"synth":"tick","gain":-24,"pitch":1.2},{"at":9.18,"synth":"tick","gain":-24,"pitch":1.2},{"at":9.4,"synth":"tick","gain":-24,"pitch":0.7},{"at":9.5,"synth":"tick","gain":-24,"pitch":0.7},{"at":9.85,"lib":"text-pop","gain":-12},{"at":9.4,"synth":"tick","gain":-27,"pitch":1},{"at":9.465,"synth":"tick","gain":-27,"pitch":1.03},{"at":9.53,"synth":"tick","gain":-27,"pitch":1.06},{"at":9.595,"synth":"tick","gain":-27,"pitch":1.09},{"at":9.66,"synth":"tick","gain":-27,"pitch":1.12},{"at":9.725,"synth":"tick","gain":-27,"pitch":1.15},{"at":9.79,"synth":"tick","gain":-27,"pitch":1.18},{"at":9.855,"synth":"tick","gain":-27,"pitch":1.21},{"at":9.92,"synth":"tick","gain":-27,"pitch":1.24},{"at":11.2667,"lib":"swish","gain":-16,"align":"peak"},{"at":11.3667,"lib":"swoosh-up","gain":-20,"align":"peak","maxlen":1.2},{"at":11.85,"synth":"pop","gain":-23},{"at":12,"to":12.82,"every":0.05,"lib":"key-press","gain":-30,"maxlen":0.12,"fade":0.03},{"at":12.6,"lib":"zoom-in","gain":-18,"maxlen":0.9},{"at":13.2,"lib":"mouse-click","gain":-12},{"at":13.3667,"lib":"fast-swipe","gain":-12,"align":"peak"},{"at":13.4333,"to":14.2667,"every":0.06,"synth":"tick","gain":-23,"pitch":1.35},{"at":13.42,"synth":"pop","gain":-22},{"at":14.5667,"lib":"swish","gain":-14,"align":"peak"},{"at":14.65,"synth":"pop","gain":-25,"pitch":1.1},{"at":14.685,"synth":"pop","gain":-25,"pitch":1.12},{"at":14.72,"synth":"pop","gain":-25,"pitch":1.1400000000000001},{"at":14.755,"synth":"pop","gain":-25,"pitch":1.1600000000000001},{"at":14.79,"synth":"pop","gain":-25,"pitch":1.1800000000000002},{"at":14.825,"synth":"pop","gain":-25,"pitch":1.2000000000000002},{"at":14.86,"synth":"pop","gain":-25,"pitch":1.2200000000000002},{"at":14.895,"synth":"pop","gain":-25,"pitch":1.2400000000000002},{"at":14.93,"synth":"pop","gain":-25,"pitch":1.26},{"at":14.965,"synth":"pop","gain":-25,"pitch":1.28},{"at":15,"synth":"pop","gain":-25,"pitch":1.3},{"at":15.4,"lib":"click-soft","gain":-15},{"at":15.5667,"lib":"swish","gain":-19,"align":"peak"},{"at":15.6,"synth":"thump","gain":-21,"pitch":1.3},{"at":15.8,"synth":"pop","gain":-23},{"at":15.8,"to":16.6667,"every":0.045,"lib":"key-press","gain":-32,"maxlen":0.1,"fade":0.03},{"at":17.4,"lib":"swish","gain":-16,"align":"peak"},{"at":17.4667,"synth":"tick","gain":-19,"pitch":1.45},{"at":17.5333,"synth":"tick","gain":-19,"pitch":1.45},{"at":17.6,"synth":"tick","gain":-19,"pitch":1.45},{"at":17.6667,"synth":"tick","gain":-19,"pitch":1.45},{"at":17.7333,"synth":"tick","gain":-19,"pitch":1.45},{"at":17.12,"synth":"pop","gain":-23},{"at":18.1,"lib":"error","gain":-17,"maxlen":0.9},{"at":18.7,"lib":"glitch-3","gain":-21,"maxlen":0.8,"fade":0.2},{"at":18.7,"to":19.4,"every":0.05,"synth":"tick","gain":-29,"pitch":2},{"at":19.4333,"lib":"correct-answer","gain":-15,"maxlen":1.2},{"at":19.6667,"lib":"swish","gain":-19,"align":"peak"},{"at":18.865,"synth":"pop","gain":-23},{"at":19.7667,"lib":"swoosh-up","gain":-17,"align":"peak","maxlen":1},{"at":19.9333,"lib":"drum-hit","gain":-22,"maxlen":0.5,"fade":0.1},{"at":20.0333,"lib":"drum-hit","gain":-22,"maxlen":0.5,"fade":0.1},{"at":20.1333,"lib":"drum-hit","gain":-22,"maxlen":0.5,"fade":0.1},{"at":20.2333,"lib":"drum-hit","gain":-22,"maxlen":0.5,"fade":0.1},{"at":20.3667,"lib":"drum-hit","gain":-19,"maxlen":0.5,"fade":0.1},{"at":20.4,"synth":"shimmer","gain":-20},{"at":21.0333,"lib":"reverse-whoosh","gain":-15,"align":"peak"},{"at":21.13,"synth":"pop","gain":-27,"pitch":0.9},{"at":21.2,"synth":"pop","gain":-27,"pitch":0.9500000000000001},{"at":21.28,"synth":"pop","gain":-27,"pitch":1},{"at":21.37,"synth":"pop","gain":-27,"pitch":1.05},{"at":21.47,"synth":"pop","gain":-27,"pitch":1.1},{"at":21.62,"synth":"pop","gain":-21,"pitch":1.1},{"at":22.3,"synth":"pop","gain":-21,"pitch":1.1},{"at":23.32,"synth":"pop","gain":-21,"pitch":1.1},{"at":23.75,"lib":"paper-swipe","gain":-20,"align":"peak"},{"at":23.85,"to":24.6,"every":0.07,"synth":"pop","gain":-28,"pitch":1.3},{"at":24.73,"lib":"reverse-cymbal","gain":-21,"align":"peak","maxlen":1.2},{"at":24.82,"to":25.85,"every":0.055,"synth":"tick","gain":-25,"pitch":0.95},{"at":25.95,"lib":"sparkle","gain":-18,"maxlen":1.4},{"at":26.3,"to":27.3,"every":0.09,"synth":"pop","gain":-26,"pitch":1.4},{"at":27.95,"lib":"swish","gain":-17,"align":"peak"},{"at":28,"lib":"sub-drop","gain":-15,"maxlen":1.6},{"at":28.21,"synth":"pop","gain":-25},{"at":28.65,"synth":"pop","gain":-25},{"at":29.05,"synth":"pop","gain":-25},{"at":29.15,"lib":"text-pop","gain":-15},{"at":30.095,"lib":"text-pop","gain":-15},{"at":31.195,"lib":"text-pop","gain":-15},{"at":31.25,"synth":"shimmer","gain":-21},{"at":32.1,"lib":"swish","gain":-18,"align":"peak"},{"at":32.45,"lib":"cinematic-hit","gain":-12,"maxlen":1.8},{"at":32.47,"lib":"sparkle","gain":-17,"maxlen":1.6},{"at":33,"synth":"pop","gain":-24}],"mix":{"music":-3,"sfx":-1,"vo":0,"lufs":-14,"ceiling_db":-1.9},"cuts":[1.3,1.9667,7.7667,8.9333,11.3,13.3333,13.6,14.6,15.6,17.4333,17.8,19.7,21.0667,28],"vo":{"src":"assets/audio/vo_take3.mp3","take":"ElevenLabs Brian, take 3 (12:06:50)","units":[{"src":[0.06,1.33],"at":0,"text":"Too many agencies,"},{"src":[1.48,2.12],"at":1.355,"text":"tabs,"},{"src":[2.26,2.84],"at":2.055,"text":"tools."},{"src":[3.41,5.65],"at":3.075,"text":"Scattered across countless platforms."},{"src":[6.99,8.26],"at":7.155,"text":"What if it all connected?"},{"src":[8.94,11.11],"at":8.96,"text":"Meet WebSpider Solutions."},{"src":[11.8,15.44],"at":11.87,"text":"Tell us your goal and see multiple growth paths in seconds."},{"src":[16.09,17.1],"at":15.775,"text":"Rank on Google,"},{"src":[17.32,18.89],"at":17.1,"text":"show up in AI search,"},{"src":[19.05,20.845],"at":18.84,"text":"and let WebSpider make it work."},{"src":[21.8,25.07],"at":21.225,"text":"Bring ads, SEO, and social together."},{"src":[25.46,28.445],"at":24.775,"text":"Connect the dots and scale what matters."},{"src":[29.35,33.085],"at":28.18,"text":"One team to plan, launch, and grow."},{"src":[34.055,35.825],"at":32.53,"text":"WebSpider Solutions."}]},"cues":{"tabs":1.38,"tools":2.08,"scattered":3.1,"what":7.18,"connected":7.8,"meet":8.985,"webspider":9.335,"solutions":9.89,"tell":11.895,"andsee":13.015,"in_seconds":14.65,"rank":15.8,"show":17.12,"andlet":18.865,"make_it_work":20,"bring":21.25,"seo":22.295,"social":23.315,"connect":24.8,"scale":26.265,"one":28.21,"plan":29.15,"launch":30.095,"grow":31.195,"name":32.55}};
+
+    </script>
+    <script>
+// WSS "Get found" film. render(t) owns everything: which scene is on, every word, the network camera, the fan, the editor,
+// the web. Pure function of film time (seeded noise only, no layout reads after setup). Cut frames follow BREAKDOWN.md;
+// word cues come from timeline.json → cues (the VO, placed by tools/vo.py).
+(() => {
+  const W = 1920, H = 1080;
+  const TL = window.TL || {}, C = TL.cues || {}, D = TL.duration || 35;
+  const F = (f) => f / 30;
+  const $ = (id) => document.getElementById(id);
+  const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const seg = (t, a, b) => clamp((t - a) / (b - a));
+  const oC = (x) => 1 - Math.pow(1 - clamp(x), 3);
+  const oE = (x) => { x = clamp(x); return x >= 1 ? 1 : 1 - Math.pow(2, -10 * x); };
+  const iC = (x) => Math.pow(clamp(x), 3);
+  const ioC = (x) => { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const f1 = (v) => v.toFixed(1), f2 = (v) => v.toFixed(2), f3 = (v) => v.toFixed(3);
+  const PRE = { snappy: [0.22, 0.8], default: [0.4, 0.86], heavy: [0.5, 1.0], soft: [0.75, 1.0] };
+  function step(tau, p = 'default') {          // closed-form spring, 0 → 1
+    if (!(tau > 0)) return 0;
+    const [resp, z] = PRE[p], w = (2 * Math.PI) / resp;
+    if (z < 1) { const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * tau) * (Math.cos(wd * tau) + ((z * w) / wd) * Math.sin(wd * tau)); }
+    return 1 - Math.exp(-w * tau) * (1 + w * tau);
+  }
+  const hash = (n) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+  const show = (el, on) => { const v = on ? 'block' : 'none'; if (el.style.display !== v) el.style.display = v; };
+  const rgb = (a, b, k) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * clamp(k))).join(',')})`;
+  const GREEN = [146, 193, 49], INK = [20, 22, 24], INK2 = [21, 24, 27];
+
+  // masked word: rise at tin (expo out), lift at tout. Hidden = 150 % below and transparent.
+  function word(el, t, tin, tout = Infinity, din = 0.5, dout = 0.26) {
+    let y, op;
+    if (t < tin) { y = 150; op = 0; }
+    else if (t < tout) { const u = (t - tin) / din; y = 150 * (1 - oE(u)); op = clamp(u * 8); }
+    else { const v = (t - tout) / dout; y = -150 * iC(v); op = 1 - clamp((v - 0.6) / 0.4); }
+    el.style.opacity = f3(op); el.style.transform = `translateY(${f2(y)}%)`;
+  }
+  const words = (els, t, tins, tout = Infinity, stagger = 0.03) => els.forEach((el, k) => word(el, t, tins[Math.min(k, tins.length - 1)] + (k >= tins.length ? (k - tins.length + 1) * 0.06 : 0), tout + k * stagger));
+  const wipe = (el, t, t0, d = 0.14) => { el.style.clipPath = `inset(0 ${f2(100 * (1 - oC((t - t0) / d)))}% 0 0)`; };
+  // a caption pill shows only in its own window and grows with its words: clipped to the right edge of the newest risen word
+  function pill(el, t, tin, tout, x, y, tins = null) {
+    const a = t - tin + 0.02, fade = Number.isFinite(tout) ? 1 - seg(t, tout + 0.12, tout + 0.3) : 1;
+    el.style.opacity = f3(a < 0 ? 0 : clamp(a * 12) * fade);
+    el.style.transform = `translate(${f1(x)}px, ${f1(y)}px)`;
+    const P = M.pills && M.pills.get(el);
+    if (!P || !tins) { el.style.clipPath = 'none'; return; }
+    let w = P.edges[0] * oC((t - tins[0] + 0.02) / 0.2);
+    for (let k = 1; k < P.edges.length; k++) w += (P.edges[k] - P.edges[k - 1]) * step(t - (tins[Math.min(k, tins.length - 1)] - 0.09), 'snappy');
+    el.style.clipPath = `inset(0 ${f1(Math.max(0, P.w - w))}px 0 0 round ${P.r}px)`;
+  }
+
+  // ---------------------------------------------------------------- elements
+  const S = {}; for (const id of ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9']) S[id] = $(id);
+  const FR = { f2: $('f2'), f3: $('f3') };
+  const GL1 = $('gl1'), GL2 = $('gl2'), FLASH = $('flash'), GRAIN = $('grain');
+  const SC = { s1: [0, F(233)], s2: [F(233), F(268)], s3: [F(268), F(339)], s4: [F(339), F(400)], s5: [F(400), F(438)],
+               s6: [F(438), F(468)], s7: [F(468), F(632)], s8: [F(632), 28.0], s9: [28.0, D + 1] };
+
+  // ---- 1–3
+  const PH = $('s1-phrase'), TOO = $('p-too'), PW = [$('p-w0'), $('p-w1'), $('p-w2')], PBOX = $('p-box'), PW2T = $('p-w2t');
+  const CARET = $('s1-caret'), BOXR = $('s1-boxr'), HAIR = $('s1-hair'), GLOW1 = $('s1-glow'), WORLD = $('world'), NGLOW = $('net-glow');
+  const WAVE = $('net-wave'), NDB = $('nd-b'), NDJ = $('nd-j');
+  const TH = [0, 1, 2, 3, 4, 5].map((i) => $('th' + i)), THD = [$('th-d0'), $('th-d1')];
+  const ND = [0, 1, 2, 3, 4, 5].map((i) => $('nd' + i)), NODE = [0, 1, 2, 3, 4, 5].map((i) => $('node' + i));
+  const NODE_PARTS = NODE.map((n) => ({ ic: n.querySelector('.ic'), lb: n.querySelector('.lb'), sb: n.querySelector('.sb') }));
+  const NODE_XY = [[2480, 300], [2860, 430], [2520, 790], [2900, 900], [3260, 260], [3320, 680]];
+  const NODE_T = [F(126), F(130), F(151), F(154), F(167), F(169)];
+  const HEAD1 = $('s1-head'), HEADW = $$('#s1-head .wi'), QW1 = $$('#s1-q .wi'), DOTS = $$('#s1-dots rect');
+  const SHARDS = $$('.sh').map((el) => ({ el, set: el.dataset.set, a: +el.dataset.a, r0: +el.dataset.r0, r1: +el.dataset.r1,
+                                          z: +el.dataset.z, spin: +el.dataset.spin, dl: +el.dataset.dl }));
+  const SET_T = { A: [F(22), F(39)], B: [F(39), F(59)], C: [F(59), F(90)] };
+  // ---- 4–5
+  const DISC = $('s2-disc'), RAYS = $('s2-rays'), QF = $$('#f2-q .wi'), MEET = $$('#f3-meet .wi'), GUIDES = $$('#f3-guides .gd');
+  const LB = $('lb-logo'), LE = $('le-logo');
+  const GLY = (p) => ({ icon: $(`${p}-icon`), dot: $(`${p}-dot`), word: ['W', 'E', 'B', 'S', 'P', 'I', 'D', 'E2', 'R'].map((n) => $(`${p}-${n}`)),
+                        sol: [0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => $(`${p}-s${i}`)) });
+  const LBG = GLY('lb'), LEG = GLY('le');
+  // the ring's screen scale (px per world unit), shared with hero3d.js so the HTML disc rides inside the 3D ring
+  const ringSpx = (t) => 262 * Math.pow(12, Math.pow(seg(t, F(259), F(285)), 2.2));
+  window.__ringSpx = ringSpx;
+  // ---- 6
+  const P4 = $('s4-plate'), P4B = $('s4-blur'), UI4 = $('s4-ui'), HEAD4 = $$('#s4-head .wi'), BRIEF = $('brief'), TYPED = $('brief-typed'),
+        CUR = $('brief-cur'), SEND = $('send'), SENDAR = $('send-ar');
+  const GOAL = 'More patients for my clinic in Noida';
+  const PH4 = document.createElement('span'); PH4.className = 'ph'; PH4.textContent = 'Describe your goal…'; TYPED.parentNode.insertBefore(PH4, TYPED);
+  // ---- 7–8
+  const P5 = $('s5-plate'), RINGS = $$('#s5-rings circle'), CARDS = $$('.card'), HUB = $('hub'), HUBBTN = $('hub-btn'), HUBAR = $('hub-ar'),
+        CAP5 = $('s5-cap'), CAP5W = $$('#s5-cap .wi');
+  // ---- 9
+  const SEC = $('sec'), SELBOX = $('selbox');
+  const SECTXT = 'in seconds.';
+  SEC.innerHTML = SECTXT.split('').map((c) => `<span class="ch">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+  const SECCH = $$('#sec .ch');
+  // ---- 10–13
+  const P7 = $('s7-plate'), P7R = $('s7-red'), ED = $('ed'), EDWRAP = $('edwrap'), LINES = $('lines'), DIM7 = $('s7-dim');
+  const LN = $$('.ln').map((el) => ({ el, tx: el.querySelector('.tx'), no: el.querySelector('.no'), hl: el.querySelector('.hl'),
+                                      ck: el.querySelector('.ck'), x: el.querySelector('.x'), fx: el.querySelector('.fx') }));
+  const ERRV = $('errv'), ERR = 5;
+  const CAP7 = [$('s7-cap0'), $('s7-cap1'), $('s7-cap2')], CAP7W = CAP7.map((c) => $$('.wi', c));
+  // ---- 14
+  const WEBCAM = $('webcam'), WEB = $('web'), CHIPS = $$('#chips .chip'), MOTES = $('motes');
+  const C8 = [$('c8-0'), $('c8-1'), $('c8-2')], C8W = C8.map((c) => $$(':scope > .w > .wi', c)), C8B = C8.map((c) => c.querySelector('.box'));
+  const HUBXY = [1100, 480];
+  const CH = CHIPS.map((el, i) => ({ el, i, x: +el.dataset.x, y: +el.dataset.y, ang: +el.dataset.ang, ring: +el.dataset.ring,
+    fx: +el.dataset.fx, fy: +el.dataset.fy, fz: +el.dataset.fz, dg: el.querySelector('.dg'), vl: el.querySelector('.vl'), mk: el.querySelector('.mk') }));
+  // the chips the VO names fly past the lens on their word: Google/Meta Ads on "ads", SEO on "SEO", Instagram on "social"
+  const FOCUS = { 0: [700, 430, 1.0 + 0.5 * 0.52], 1: [1240, 640, 1.0 + 0.5 * 0.62], 2: [880, 560, 1.0 + 0.5 * 1.27], 3: [1100, 430, 1.0 + 0.5 * 2.45] };
+  for (const k in FOCUS) Object.assign(CH[k], { fx: FOCUS[k][0], fy: FOCUS[k][1], fz: FOCUS[k][2] });
+  const HILITE = [[0, 0.3, 1.1], [1, 0.4, 1.2], [2, 1.05, 1.95], [3, 2.25, 2.7]];
+  const KEY = [5, 6, 7, 4];
+  // ---- 15
+  const P9 = $('s9-plate'), SCRIM = $('s9-scrim'), TAG = $('tag'), TAGW = $$('#tag .wi'), TAG2 = $('tag2'), TW = [$('tw0'), $('tw1'), $('tw2')],
+        TBOX = $('tag2-box'), URLW = $$('#url .wi');
+
+  // ---------------------------------------------------------------- the network camera (world px), springs superposed
+  const CAMK = [[F(71), [1980, 540, 1], 'heavy'], [F(88), [2060, 540, 1], 'soft'], [F(104), [2320, 540, 1], 'default'],
+                [F(119), [2690, 390, 1.38], 'heavy'], [F(150), [2730, 840, 1.38], 'default'], [F(167), [3250, 470, 1.32], 'snappy'],
+                [F(176), [2400, 575, 0.68], 'snappy']];
+  function cam(t) {
+    let cx = 960, cy = 540, ls = 0, prev = [960, 540, 1];
+    for (const [t0, k, p] of CAMK) { const e = step(t - t0, p); cx += (k[0] - prev[0]) * e; cy += (k[1] - prev[1]) * e; ls += (Math.log(k[2]) - Math.log(prev[2])) * e; prev = k; }
+    const h = Math.max(0, t - F(181)); cx += 14 * h; ls += 0.03 * h;
+    return { cx, cy, s: Math.exp(ls) };
+  }
+  const toScreen = (c, x, y) => [960 + (x - c.cx) * c.s, 540 + (y - c.cy) * c.s];
+
+  // ---------------------------------------------------------------- setup measurements (after fonts load)
+  const M = { ready: false };
+  window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {};
+  window.__hf.buildReady['layout'] = new Promise((res) => { M.done = res; });
+  window.__hf.buildReady['hero3d'] = new Promise((res) => { window.__hero3dReady = res; });
+  async function measure() {
+    try { await document.fonts.ready; } catch (e) { /* fall through with fallback metrics */ }
+    for (const k in S) S[k].style.display = 'block';
+    for (const k in FR) FR[k].style.display = 'block';
+    // phrase: keep each variant centred
+    const slot = $('p-slot'), tooW = TOO.parentNode;
+    M.prefix = slot.offsetLeft - tooW.offsetLeft; M.pw = PW.map((el) => el.offsetWidth);
+    M.phraseTop = 540 - PH.offsetHeight / 2;
+    // fan caption, seconds word, tagline line
+    M.cap5 = CAP5.offsetWidth;
+    M.secTop = 540 - SEC.offsetHeight / 2;
+    const a = SECCH[0], b = SECCH[SECCH.length - 1];
+    M.secBox = [a.offsetLeft - 26, M.secTop + SEC.offsetHeight * 0.16, b.offsetLeft + b.offsetWidth - a.offsetLeft + 52, SEC.offsetHeight * 0.74];
+    M.tw = TW.map((el) => [el.parentNode.offsetLeft, el.offsetWidth]); M.tagH = TAG2.offsetHeight;
+    M.cap7 = CAP7.map((c) => c.offsetWidth);
+    M.pills = new Map();
+    for (const [el, r] of [[HEAD1, 22], [CAP5, 40], ...CAP7.map((c) => [c, 40])]) {
+      const ws = $$(':scope > .w', el), pr = parseFloat(getComputedStyle(el).paddingRight) || 30;
+      M.pills.set(el, { w: el.offsetWidth, r, edges: ws.map((w) => w.offsetLeft + w.offsetWidth + pr) });
+    }
+    // svg lengths and glyph centres
+    M.th = TH.map((p) => p.getTotalLength()); M.thd = THD.map((p) => p.getTotalLength());
+    M.gd = GUIDES.map((g) => g.getTotalLength());
+    const cx = (g) => { const bb = g.getBBox(); return bb.x + bb.width / 2; };
+    M.glb = { word: LBG.word.map(cx), sol: LBG.sol.map(cx), icon: cx(LBG.icon), dot: cx(LBG.dot) };
+    M.ckFix = LN[ERR].ck ? parseFloat(LN[ERR].ck.style.left) - 4 * 12.6 : 0;
+    buildWeb();
+    M.ready = true;
+    render(window.__lastT || 0);
+    M.done();
+  }
+
+  // ---------------------------------------------------------------- 14: the web (built once)
+  const NS = 'http://www.w3.org/2000/svg';
+  const WEBP = { radial: [], ring: [], order: [] };
+  function buildWeb() {
+    const order = CH.slice().sort((p, q) => p.ring - q.ring || p.ang - q.ang);
+    order.forEach((c, k) => { WEBP.order[c.i] = k; });
+    let g = '';
+    for (const c of CH) {
+      const mx = (HUBXY[0] + c.x) / 2 + Math.sin(c.ang) * 26, my = (HUBXY[1] + c.y) / 2 - Math.cos(c.ang) * 26;
+      g += `<path class="rd" data-i="${c.i}" d="M${HUBXY[0]} ${HUBXY[1]} Q${f1(mx)} ${f1(my)} ${f1(c.x)} ${f1(c.y)}" stroke-width="2.2"/>`;
+    }
+    const rings = [190, 340, 490];
+    rings.forEach((R, ri) => {
+      const rc = CH.filter((c) => c.ring === R).sort((p, q) => p.ang - q.ang);
+      rc.forEach((c, k) => {
+        const n = rc[(k + 1) % rc.length], mx = (c.x + n.x) / 2, my = (c.y + n.y) / 2, pull = 0.12;
+        const qx = mx + (HUBXY[0] - mx) * pull, qy = my + (HUBXY[1] - my) * pull;
+        g += `<path class="sp" data-r="${ri}" data-k="${k}" d="M${f1(c.x)} ${f1(c.y)} Q${f1(qx)} ${f1(qy)} ${f1(n.x)} ${f1(n.y)}" stroke-width="1.6"/>`;
+      });
+    });
+    // hub: the real WSS icon (W + green dot) on an ink disc
+    g += `<g id="webhub"><circle class="hub" cx="${HUBXY[0]}" cy="${HUBXY[1]}" r="40"/>` +
+         `<g transform="translate(${HUBXY[0] - 44} ${HUBXY[1] - 44}) scale(0.44)"><path class="wsw" d="m 113.36139,72.877385 27.72319,62.652225 H 122.06811 L 101.55109,89.191033 81.034068,135.52961 H 71.02632 L 40.00001,65.471177 h 10.909018 c 4.60413,0 9.508235,3.202668 11.409891,7.406208 L 83.736543,121.41792 99.749884,85.187531 91.042482,65.471177 H 101.9515 c 4.60413,0 9.50824,3.202668 11.40989,7.406208 z"/>` +
+         `<circle class="wsd" cx="150.99" cy="73.48" r="9"/></g></g>`;
+    WEB.innerHTML = g;
+    WEBP.radial = $$('#web path.rd').map((p) => ({ p, i: +p.dataset.i, L: p.getTotalLength() }));
+    WEBP.ring = $$('#web path.sp').map((p) => ({ p, r: +p.dataset.r, k: +p.dataset.k, L: p.getTotalLength() }));
+    WEBP.hub = $('webhub');
+    let m = '';
+    for (let i = 0; i < 26; i++) m += '<div class="mote"></div>';
+    MOTES.innerHTML = m;
+    WEBP.motes = $$('#motes .mote').map((el, i) => ({ el, x: 700 + hash(i + 1) * 1000, y: 260 + hash(i + 40) * 560, v: 30 + hash(i + 80) * 60,
+                                                         ph: hash(i + 120) * 6.28, s: 0.5 + hash(i + 160) * 0.8, t0: 3.9 + hash(i + 200) * 1.6 }));
+  }
+
+  // ---------------------------------------------------------------- shots
+  function shot1to3(t) {
+    const c = cam(t), shiftX = (960 - c.cx) * c.s, shiftY = (540 - c.cy) * c.s;
+    const v = cam(t - 1 / 60), speed = Math.hypot((c.cx - v.cx) * c.s, (c.cy - v.cy) * c.s);
+    const k = t < F(39) ? 0 : t < F(59) ? 1 : 2;
+    // phrase: "Too many" + agencies, / tabs, / tools. (sticker)
+    const dx = M.ready ? (M.pw[0] - M.pw[k]) / 2 : 0;
+    PH.style.top = f1(M.phraseTop || 498) + 'px';
+    PH.style.transformOrigin = '960px 540px';
+    PH.style.transform = `translate(${f1(dx + shiftX)}px, ${f1(shiftY)}px) scale(${f3(c.s)})`;
+    PH.style.filter = speed > 0.4 ? `blur(${f2(Math.min(10, speed * 0.22))}px)` : 'none';
+    PH.style.opacity = f3(1 - seg(t, F(80), F(90)));
+    word(TOO, t, -0.18, Infinity, 0.45);
+    PW.forEach((el, i) => {
+      if (i !== k) { el.style.opacity = '0'; el.style.transform = 'translateY(150%)'; return; }
+      const tin = [0.16, F(39) - 0.12, F(59) - 0.12][i];
+      word(el, t, tin, Infinity, 0.4);
+    });
+    wipe(PBOX, t, F(62), 0.1); wipe(PW2T, t, F(62), 0.1);
+    // search field outline + caret
+    const lineW = (M.prefix || 330) + (M.ready ? M.pw[k] : 300), x0 = 960 - lineW / 2 - 50 + shiftX;
+    const bw = lineW + 112, per = 2 * (bw + 126);
+    BOXR.setAttribute('x', f1(x0)); BOXR.setAttribute('y', f1(540 - 63 + shiftY)); BOXR.setAttribute('width', f1(bw)); BOXR.setAttribute('height', '126');
+    BOXR.setAttribute('rx', '63');
+    BOXR.style.strokeDasharray = `${f1(per)} ${f1(per)}`; BOXR.style.strokeDashoffset = f1(per * (1 - oC(seg(t, 0.12, 0.62))));
+    BOXR.style.opacity = f3(1 - seg(t, F(62), F(70)));
+    const cOn = t < F(62) && Math.floor(t * 30 / 8) % 2 === 0 && t > 0.3;
+    CARET.style.opacity = cOn ? '1' : '0';
+    CARET.style.transform = `translate(${f1(960 + lineW / 2 + 16 + shiftX)}px, ${f1(540 - 39)}px)`;
+    HAIR.style.opacity = f3(1 - seg(t, F(70), F(84)));
+    HAIR.style.transform = `translateX(${f1(shiftX * 0.5)}px)`;
+    // glow behind the word: pop on f20, bloom on the sticker
+    const pop = Math.exp(-Math.pow((t - F(20)) / 0.1, 2)), bloom = Math.exp(-Math.pow((t - F(67)) / 0.12, 2));
+    GLOW1.style.opacity = f3((0.55 + 0.35 * pop + 0.45 * bloom + 0.06 * Math.sin(t * 3.1)) * (1 - seg(t, F(76), F(90))));
+    GLOW1.style.transform = `translate(${f1(960 + shiftX)}px, ${f1(540 + shiftY)}px) scale(${f3(0.62 + 0.3 * pop + 0.4 * bloom)})`;
+    // shards: three sets, one per word
+    for (const s of SHARDS) {
+      const [ta, tb] = SET_T[s.set];
+      if (t < ta || t >= tb) { if (s.el.style.opacity !== '0') s.el.style.opacity = '0'; continue; }
+      const u = (t - ta - s.dl) / 0.7, r = s.r0 + (s.r1 - s.r0) * oC(u) + 40 * (t - ta);
+      let x = 960 + Math.cos(s.a) * r * 1.55, y = 540 + Math.sin(s.a) * r * 0.82;
+      if (Math.abs(y - 540) < 120 && Math.abs(x - 960) < 560) y = 540 + (Math.sin(s.a) >= 0 ? 1 : -1) * (120 + 40 * hash(s.a * 100));
+      const par = 1 / s.z; x += shiftX * par; y += shiftY * par;
+      const sc = 1.05 / s.z, blur = Math.min(7, Math.abs(s.z - 1) * 4.5 + (s.set === 'C' ? speed * 0.18 : 0));
+      const op = clamp(u * 5) * (0.42 + 0.58 * clamp(1.5 - Math.abs(s.z - 1))) * (s.set === 'C' ? 1 - seg(t, F(76), F(88)) : 1);
+      s.el.style.opacity = f3(op);
+      s.el.style.transform = `translate(${f1(x)}px, ${f1(y)}px) translate(-50%, -50%) rotate(${f2(s.spin * (1 + 0.4 * (t - ta)))}deg) scale(${f3(sc)})`;
+      s.el.style.filter = blur > 0.3 ? `blur(${f2(blur)}px)` : 'none';
+    }
+    // the network world
+    WORLD.style.opacity = t < F(74) ? '0' : '1';
+    WORLD.style.transform = `translate(${f1(960 - c.cx * c.s)}px, ${f1(540 - c.cy * c.s)}px) scale(${f3(c.s)})`;
+    const x0w = 1500 + 600 * iC(seg(t, F(206), F(218))), x1w = 1500 + 600 * oC(seg(t, F(82), F(103)));
+    if (t >= F(82) && x1w - x0w > 2) {
+      let d = '';
+      for (let x = x0w; x <= x1w + 0.01; x += 5) {
+        const u = (x - 1500) / 600, A = 34 * Math.pow(Math.sin(Math.PI * clamp(u)), 1.3);
+        d += (d ? 'L' : 'M') + f1(x) + ' ' + f1(540 + A * Math.sin(2 * Math.PI * (x - 1500) / 118 - t * 7.5));
+      }
+      WAVE.setAttribute('d', d); WAVE.style.opacity = '1';
+    } else WAVE.style.opacity = '0';
+    NDB.setAttribute('r', f2(11 * clamp(step(t - F(77), 'snappy'), 0, 1.2) * (t < F(212) ? 1 : 0)));
+    NDJ.setAttribute('r', f2(8 * clamp(step(t - F(102), 'snappy'), 0, 1.2) * (t < F(212) ? 1 : 0)));
+    NGLOW.style.opacity = f3(seg(t, F(76), F(86)) * (1 - seg(t, F(206), F(214))) * (0.75 + 0.15 * Math.sin(t * 2.4)));
+    NGLOW.style.transform = `translate(1500px, 540px) scale(${f3(0.42 + 0.05 * Math.sin(t * 1.7))})`;
+    const thread = (p, L, i, t0, deco) => {
+      const ti = t0 + i * 0.035, grow = oC(seg(t, ti, ti + 0.55)), q = ioC(seg(t, F(206) + i * 0.02, F(219) + i * 0.02));
+      p.style.strokeDasharray = `${f1(L)} ${f1(L)}`;
+      p.style.strokeDashoffset = f1(q > 0 ? -L * q : L * (1 - grow));
+      p.style.opacity = t < ti ? '0' : deco ? '0.6' : '1';
+      return grow;
+    };
+    TH.forEach((p, i) => {
+      const g = thread(p, M.th ? M.th[i] : 600, i, F(104), false);
+      ND[i].setAttribute('r', f2(t < F(212) ? 7 * clamp(step(t - (F(104) + i * 0.035 + 0.5), 'snappy'), 0, 1.25) * (g > 0.9 ? 1 : 0) : 0));
+    });
+    THD.forEach((p, i) => thread(p, M.thd ? M.thd[i] : 1400, i + 6, F(106), true));
+    NODE.forEach((n, i) => {
+      const t0 = NODE_T[i], P = NODE_PARTS[i], out = 1 - seg(t, F(204) + i * 0.01, F(211) + i * 0.01);
+      const e = step(t - t0, 'snappy');
+      P.ic.style.opacity = f3(clamp((t - t0) * 12) * out);
+      P.ic.style.transform = `scale(${f3(0.6 + 0.4 * e)})`;
+      P.lb.style.opacity = f3(t >= t0 + 0.06 ? out : 0); P.lb.style.clipPath = `inset(0 ${f2(100 * (1 - seg(t, t0 + 0.06, t0 + 0.36)))}% 0 0)`;
+      P.sb.style.opacity = f3(t >= t0 + 0.2 ? out : 0); P.sb.style.clipPath = `inset(0 ${f2(100 * (1 - seg(t, t0 + 0.2, t0 + 0.6)))}% 0 0)`;
+    });
+    // headline + question
+    pill(HEAD1, t, 3.06, F(203), 120, 92, [3.06, 3.6, 3.95, 4.55]);
+    words(HEADW, t, [3.06, 3.6, 3.95, 4.55], F(203));
+    words(QW1, t, [7.13, 7.47, 7.54, 7.62]);
+    // dots: the six nodes, the junction and the business fly to a ring around the question, then stretch into dashes
+    const on = t >= F(212);
+    DOTS.forEach((r, i) => {
+      if (!on) { r.style.opacity = '0'; return; }
+      const src = DOT_SRC[i], a0 = DOT_ANG[i] + (10 * seg(t, F(222), F(233)) * Math.PI) / 180;
+      const e = step(t - (F(212) + i * 0.02), 'default');
+      const tx = 960 + Math.cos(a0) * 262, ty = 540 + Math.sin(a0) * 262;
+      const px = lerp(src[0], tx, e), py = lerp(src[1], ty, e);
+      const wdt = 16 + 58 * oC(seg(t, F(227), F(232)));
+      r.setAttribute('x', f1(-wdt / 2)); r.setAttribute('y', '-8'); r.setAttribute('width', f1(wdt)); r.setAttribute('height', '16'); r.setAttribute('rx', '8');
+      r.setAttribute('transform', `translate(${f1(px)} ${f1(py)}) rotate(${f1((a0 * 180) / Math.PI + 90)})`);
+      r.style.opacity = '1';
+    });
+  }
+  // dot sources (screen) at f212 and their ring angles, assigned in angular order so nothing crosses
+  const DOT_SRC = [], DOT_ANG = [];
+  (() => {
+    const c = cam(F(212)), pts = NODE_XY.concat([[2100, 540], [1500, 540]]).map(([x, y]) => toScreen(c, x, y));
+    const order = pts.map((p, i) => [Math.atan2(p[1] - 540, p[0] - 960), i]).sort((a, b) => a[0] - b[0]);
+    order.forEach(([, i], k) => { DOT_SRC[k] = pts[i]; DOT_ANG[k] = -Math.PI + (k + 0.5) * (Math.PI / 4); });
+  })();
+
+  function shot4(t) {
+    const spx = ringSpx(t), r = 0.9 * spx;
+    DISC.style.transform = `translate(960px, 540px) translate(-50%, -50%) scale(${f3((2 * r) / 200)})`;
+    DISC.style.opacity = f3(1 - seg(t, F(259), F(266)));
+    RAYS.style.transform = `scale(${f3(1.02 + 0.03 * seg(t, F(233), F(268)) + 0.3 * iC(seg(t, F(259), F(268))))})`;
+    const qy = 540 - 58;
+    $('f2-q').style.top = qy + 'px';
+    QF.forEach((el, i) => word(el, t, i < 4 ? [7.13, 7.47, 7.54, 7.62][i] : 7.78, F(258) + i * 0.02, 0.4));
+  }
+
+  function shot5(t) {
+    MEET.forEach((el) => word(el, t, 8.94, F(328)));
+    const fade = 1 - seg(t, F(322), F(332));
+    GUIDES.forEach((g, i) => {
+      const L = M.gd ? M.gd[i] : 2000, p = oC(seg(t, 9.22 + i * 0.04, 9.67 + i * 0.04));
+      g.style.strokeDasharray = `${f1(L)} ${f1(L)}`; g.style.strokeDashoffset = f1(L * (1 - p)); g.style.opacity = f3(fade);
+    });
+    // hold drift, then the glyphs spread apart and blur out
+    const v = seg(t, F(330), F(338)), hold = 1 + 0.025 * seg(t, 9.9, 11.1);
+    const spread = (cx) => (M.glb && v > 0 ? (cx - 512) * 0.6 * iC(v) : 0);
+    logoReveal(LBG, t, { icon: 9.24, word: 9.33, wordGap: 0.052, dot: 9.85, sol: 9.9, solGap: 0.035 }, M.glb, spread);
+    LB.style.transformOrigin = '50% 50%';
+    LB.style.transform = `scale(${f3(hold)})`;
+    LB.style.filter = v > 0 ? `blur(${f2(10 * iC(v))}px)` : 'none';
+    LB.style.opacity = f3(1 - iC(v));
+  }
+  // the lockup builds glyph by glyph: icon pops, WEB SPIDER rises through its baseline, the dot pops, SOLUTIONS follows
+  function logoReveal(G, t, T, cx = null, spread = () => 0) {
+    const pop = (el, t0, dx) => {
+      el.style.transformBox = 'fill-box'; el.style.transformOrigin = '50% 50%';
+      const e = step(t - t0, 'snappy');
+      el.style.opacity = t < t0 ? '0' : '1'; el.style.transform = `translate(${f1(dx)}px, 0px) scale(${f3(t < t0 ? 0 : 0.55 + 0.45 * e)})`;
+    };
+    pop(G.icon, T.icon, cx ? spread(cx.icon) : 0);
+    G.word.forEach((g, i) => {
+      const t0 = T.word + i * T.wordGap, dx = cx ? spread(cx.word[i]) : 0;
+      g.style.opacity = t < t0 ? '0' : '1'; g.style.transform = `translate(${f1(dx)}px, ${f1(104 * (1 - oE((t - t0) / 0.42)))}px)`;
+    });
+    pop(G.dot, T.dot, cx ? spread(cx.dot) : 0);
+    G.sol.forEach((g, i) => {
+      const t0 = T.sol + i * T.solGap, dx = cx ? spread(cx.sol[i]) : 0;
+      g.style.opacity = t < t0 ? '0' : '1'; g.style.transform = `translate(${f1(dx)}px, ${f1(52 * (1 - oE((t - t0) / 0.38)))}px)`;
+    });
+  }
+
+  const plate = (el, t, S0, rot = 0, dx = 0, dy = 0) => {
+    el.style.transform = `translate(${f1(960 + dx)}px, ${f1(540 + dy)}px) rotate(${f2(rot)}deg) scale(${f3(S0)}) translate(-1152px, -648px)`;
+  };
+  function shot6(t) {
+    const eSet = step(t - F(339), 'default'), ePush = step(t - F(381), 'default');
+    plate(P4, t, 0.86 * (1.1 - 0.08 * eSet + 0.06 * ePush + 0.01 * (t - F(339))), -3.5 * (1 - eSet));
+    plate(P4B, t, 0.86 * (1.1 - 0.08 * eSet + 0.06 * ePush), -3.5 * (1 - eSet));
+    P4B.style.opacity = f3(1 - ioC(seg(t, F(339), F(354))));
+    const S0 = (1.06 - 0.06 * eSet) * Math.exp(Math.log(2.6) * ePush), rot = -4 * (1 - eSet);
+    const px = lerp(1430, 960, ePush), py = lerp(522, 540, ePush);
+    UI4.style.transform = `translate(${f1(px)}px, ${f1(py)}px) rotate(${f2(rot)}deg) scale(${f3(S0)}) translate(-1430px, -522px)`;
+    UI4.style.filter = eSet < 0.97 ? `blur(${f2(6 * (1 - eSet))}px)` : 'none';
+    const eB = step(t - F(341), 'snappy');
+    BRIEF.style.opacity = f3(clamp((t - F(341)) * 10)); BRIEF.style.transform = `scale(${f3(0.94 + 0.06 * eB)})`;
+    words(HEAD4, t, [11.8, 12.08, 12.22, 12.36]);
+    const n = Math.floor(GOAL.length * seg(t, 11.98, 12.62));
+    PH4.style.display = t < 11.98 ? 'inline' : 'none';
+    TYPED.textContent = GOAL.slice(0, n);
+    CUR.style.opacity = (t > 11.96 && t < 12.66) || Math.floor(t * 2.5) % 2 === 0 ? '1' : '0';
+    const press = Math.exp(-Math.pow((t - 13.2) / 0.06, 2));
+    SEND.style.transform = `scale(${f3(1 - 0.09 * press)})`;
+    SENDAR.setAttribute('transform', `rotate(${f2(90 * step(t - 13.18, 'snappy'))} 34 34)`);
+  }
+
+  function shot78(t) {
+    const t0 = F(400), T = t - t0;
+    plate(P5, t, 0.86 * 1.2, 0); P5.style.opacity = '0.5';
+    RINGS.forEach((c, k) => {
+      const r = 140 + ((k * 130 + T * 320) % 780), fade = 1 - r / 920;
+      c.setAttribute('cx', '960'); c.setAttribute('cy', '540'); c.setAttribute('r', f1(r));
+      c.style.strokeWidth = f1(30 * fade); c.style.opacity = f3(0.9 * fade);
+    });
+    const grow = iC(seg(t, F(426), F(438)));
+    const hs = (0.55 + 0.45 * step(T, 'snappy')) * Math.exp(Math.log(11) * grow);
+    HUB.style.transform = `translate(960px, 540px) translate(-50%, -50%) scale(${f3(hs)})`;
+    HUBBTN.style.transform = `translate(960px, 540px) translate(-50%, -50%) scale(${f3(1 + 0.3 * grow)})`;
+    HUBBTN.style.opacity = f3(1 - seg(t, F(431), F(436)));
+    const spin = 0.9 * (1 - Math.exp(-T / 0.35)) + 0.55 * T;
+    HUBAR.setAttribute('transform', `rotate(${f2(90 + (spin * 180) / Math.PI)} 48 48)`);
+    CARDS.forEach((el, i) => {
+      const th = -Math.PI / 2 + (i * 2 * Math.PI) / CARDS.length + spin, R = i % 2 ? 455 : 330;
+      const u = seg(t, t0 + (i % 5) * 0.012, t0 + 0.24 + (i % 5) * 0.012);
+      const r = R * (0.15 + 0.85 * oC(u)) * (1 + 0.9 * grow), sc = 0.35 + 0.65 * oC(u);
+      const x = 960 + Math.cos(th) * r * 1.25, y = 540 + Math.sin(th) * r * 0.92;
+      el.style.opacity = f3(clamp(u * 6));
+      el.style.transform = `translate(${f1(x)}px, ${f1(y)}px) translate(-50%, -50%) rotate(${f2((th * 180) / Math.PI)}deg) scale(${f3(sc)})`;
+      el.style.filter = grow > 0.05 ? `blur(${f2(4 * grow)}px)` : 'none';
+    });
+    pill(CAP5, t, 13.34, Infinity, 960 - (M.cap5 || 700) / 2, 56, [13.36, 13.42, 13.48, 13.54]);
+    words(CAP5W, t, [13.36, 13.42, 13.48, 13.54]);
+  }
+
+  function shot9(t) {
+    const e = step(t - F(438), 'default');
+    S.s6.style.transformOrigin = '960px 540px';
+    S.s6.style.transform = `scale(${f3(1.18 - 0.18 * e)})`;
+    SEC.style.top = f1(M.secTop || 455) + 'px';
+    const out = 1 - seg(t, F(465), F(467));
+    SECCH.forEach((el, k) => {
+      const t0 = 14.63 + k * 0.034, u = (t - t0) / 0.32;
+      el.style.opacity = f3(clamp(u * 6) * out);
+      el.style.transform = `translateY(${f1(-110 * (1 - oE(u)))}px)`;
+      el.style.filter = u < 1 ? `blur(${f2(6 * (1 - clamp(u)))}px)` : 'none';
+      el.style.color = rgb(GREEN, INK, (t - t0) / 0.35);
+    });
+    // selection box: wipes over the word, then grows into the editor window
+    const B = M.secBox || [600, 470, 720, 110];
+    if (t < F(462)) { SELBOX.style.opacity = '0'; return; }
+    SELBOX.style.opacity = '1';
+    const g = ioC(seg(t, F(464.5), F(468)));
+    const x = lerp(B[0], 370, g), y = lerp(B[1], 200, g), sx = lerp(B[2] / 1180, 1, g), sy = lerp(B[3] / 700, 1, g);
+    SELBOX.style.transform = `translate(${f1(x)}px, ${f1(y)}px) scale(${f3(sx)}, ${f3(sy)})`;
+    SELBOX.style.clipPath = t < F(465) ? `inset(0 ${f2(100 * (1 - oC(seg(t, F(462), F(465)))))}% 0 0)` : 'none';
+    SELBOX.style.backgroundColor = rgb(GREEN, INK2, g);
+  }
+
+  function shot10to13(t) {
+    const T = t - F(468);
+    plate(P7, t, 0.86 * (1.05 + 0.012 * T), 0, -10 * T, 0);
+    plate(P7R, t, 0.86 * (1.08 + 0.01 * T), 0, -10 * T, 0);
+    P7R.style.opacity = t >= F(534) && t < F(591) ? '1' : '0';
+    let tf;
+    if (t < F(523)) {           // 10: window settles, drifts, lifts
+      const sc = 0.985 + 0.015 * step(t - F(468), 'default'), u = seg(t, F(468), F(517));
+      const lift = 760 * iC(seg(t, F(516), F(523)));
+      tf = `translate(${f1(16 - 32 * u)}px, ${f1(6 - 12 * u - lift)}px) scale(${f3(sc)})`;
+    } else if (t < F(534)) {    // 11: tilted close push
+      const e = oC(seg(t, F(523), F(534)));
+      tf = `translate(${f1(440 - 20 * e)}px, ${f1(330 - 30 * e)}px) rotateX(${f2(22 - 6 * e)}deg) rotateY(${f2(-16 + 4 * e)}deg) scale(${f3(2.25 - 0.3 * e)})`;
+    } else if (t < F(591)) {    // 12: close-up on the AI-search line
+      const u = seg(t, F(534), F(591)), e = oC(seg(t, F(534), F(540)));
+      tf = `translate(${f1(274 - 20 * u)}px, ${f1(184 + 10 * (1 - e))}px) rotateX(7deg) rotateY(-9deg) scale(${f3(1.84 - 0.06 * e + 0.04 * u)})`;
+    } else {                    // 13: springs up from below with the preview
+      const e = step(t - F(591), 'default');
+      tf = `translate(${f1(-8 * seg(t, F(591), F(632)))}px, ${f1(760 * (1 - e))}px) rotateX(${f2(10 * (1 - e))}deg) scale(1)`;
+    }
+    ED.style.transform = tf;
+    const smear = iC(seg(t, F(627), F(632)));
+    DIM7.style.opacity = f3(0.86 * smear);
+    EDWRAP.style.filter = smear > 0.01 ? `blur(${f2(10 * smear)}px)` : 'none';
+    LINES.style.transform = `translateY(${f1(-144 * step(t - F(581), 'default'))}px)`;
+    const fixed = t >= F(582);
+    LN.forEach((L, i) => {
+      const ts = 15.66 + i * 0.055;
+      L.tx.style.clipPath = `inset(0 ${f2(100 * (1 - seg(t, ts, ts + 0.14)))}% 0 0)`;
+      L.no.style.opacity = t >= ts ? '1' : '0';
+      let ok = false;
+      if (i <= 3) ok = t >= F(524 + 2 * i);
+      else if (i >= 7) ok = t >= F(583) + (i - 7) * 0.04;
+      if (i === ERR) ok = fixed;
+      if (t >= F(591)) ok = true;
+      const has = CODE_NONEMPTY[i];
+      L.hl.style.opacity = (ok && has && i !== ERR) || (i === ERR && fixed) ? '1' : '0';
+      if (L.ck) { L.ck.style.opacity = ok && has ? '1' : '0'; L.ck.style.transform = `scale(${f3(ok ? 0.6 + 0.4 * step(t - (i <= 3 ? F(524 + 2 * i) : F(583)), 'snappy') : 1)})`; }
+      if (i === ERR) {
+        const bad = t >= F(543) && !fixed;
+        L.hl.className = 'hl ' + (fixed ? 'ok' : 'bad');
+        L.hl.style.opacity = bad || fixed ? '1' : '0';
+        L.x.style.opacity = bad ? '1' : '0';
+        L.fx.style.opacity = bad ? f3(0.55 + 0.45 * Math.sin(t * 9)) : '0';
+        if (L.ck) L.ck.style.left = fixed ? f1(M.ckFix) + 'px' : L.ck.dataset.left || L.ck.style.left;
+      }
+    });
+    if (t >= F(561) && t < F(582)) {
+      const f = Math.floor(t * 30), chars = 'abcdefghijklmnopqrstuvwxyz#$%&/<>*';
+      let s = '';
+      for (let j = 0; j < 9; j++) s += chars[Math.floor(hash(f * 13 + j) * chars.length)];
+      ERRV.textContent = `"${s}"`;
+    } else ERRV.textContent = fixed ? '"cited"' : '"not cited"';
+    // captions: Rank on Google, / show up in AI search, / and let WebSpider make it work.
+    const CAPT = [[15.76, 16.08, 16.2], [17.07, 17.36, 17.52, 17.66, 17.86, 18.05], [18.82, 19.0, 19.16, 19.56, 19.78, 19.9]];
+    [[15.72, 17.0], [17.04, 18.78], [18.8, 20.95]].forEach(([a, b], i) => pill(CAP7[i], t, a, b, 96, 64, CAPT[i]));
+    words(CAP7W[0], t, CAPT[0], 17.0);
+    words(CAP7W[1], t, CAPT[1], 18.78);
+    words(CAP7W[2], t, CAPT[2], 20.95);
+    GL2.style.display = t >= F(591) && t < F(632) ? 'block' : 'none';
+  }
+  const CODE_NONEMPTY = [];
+
+  function shot14(t) {
+    const T = t - F(632);
+    const push = 1 + 0.06 * ioC(seg(T, 5.2, 6.9)), pulse = Math.sin(Math.PI * seg(T, 4.83, 5.05));
+    WEBCAM.style.transform = `scale(${f3(push)})`;
+    WEBCAM.style.filter = pulse > 0.01 ? `blur(${f2(3.5 * pulse)}px)` : 'none';
+    const layout = T >= 2.78;
+    for (const c of CH) {
+      let x, y, sc, op, blur = 0, hi = 0;
+      if (!layout) {
+        const zc = c.fz - 0.5 * T;
+        x = 960 + (c.fx - 960) / zc; y = 540 + (c.fy - 540) / zc; sc = clamp(1.25 / zc, 0.3, 3.0);
+        blur = Math.min(9, Math.abs(zc - 1) * 5.5);
+        op = oC(seg(T, (c.i % 7) * 0.03, 0.35 + (c.i % 7) * 0.03)) * clamp((zc - 0.35) / 0.2) * clamp((3.4 - zc) / 0.8) * (1 - seg(T, 2.6, 2.74));
+        for (const [i, a, b] of HILITE) if (i === c.i && T >= a && T < b) hi = 1;
+        sc *= 1 + 0.12 * hi;
+      } else {
+        const k = WEBP.order[c.i] || 0, ts = 2.8 + k * 0.028, e = step(T - ts, 'snappy');
+        x = c.x; y = c.y; sc = 0.6 + 0.4 * e; op = clamp((T - ts) * 12);
+        const kk = KEY.indexOf(c.i);
+        if (kk >= 0) sc *= 1 + 0.28 * step(T - (5.25 + kk * 0.2), 'default');
+      }
+      c.el.style.opacity = f3(op);
+      c.el.style.transform = `translate(${f1(x)}px, ${f1(y)}px) scale(${f3(sc)})`;
+      c.el.style.filter = blur > 0.35 ? `blur(${f2(blur)}px)` : 'none';
+      // connected: the green dot (or a green ring around the logo tile) lights when its thread arrives
+      const k = WEBP.order[c.i] || 0, arrive = 3.73 + k * 0.03 + 0.33, lit = layout && T >= arrive ? 1 : hi;
+      c.dg.style.opacity = f3(lit); c.dg.style.transform = `scale(${f3(c.mk ? 3.4 : 1)})`;
+      const kk = KEY.indexOf(c.i), keyOn = layout && kk >= 0 && T >= 5.25 + kk * 0.2;
+      c.vl.style.backgroundColor = keyOn ? '#92c131' : 'rgba(90,94,100,0.1)';
+      c.vl.style.color = keyOn ? '#141618' : '#5a5e64';
+    }
+    for (const r of WEBP.radial) {
+      const k = WEBP.order[r.i] || 0, p = oC(seg(T, 3.73 + k * 0.03, 4.06 + k * 0.03));
+      r.p.style.strokeDasharray = `${f1(r.L)} ${f1(r.L)}`; r.p.style.strokeDashoffset = f1(r.L * (1 - p)); r.p.style.opacity = p > 0 ? '1' : '0';
+    }
+    for (const r of WEBP.ring) {
+      const p = oC(seg(T, 4.15 + r.r * 0.12 + r.k * 0.02, 4.45 + r.r * 0.12 + r.k * 0.02));
+      r.p.style.strokeDasharray = `${f1(r.L)} ${f1(r.L)}`; r.p.style.strokeDashoffset = f1(r.L * (1 - p)); r.p.style.opacity = p > 0 ? '1' : '0';
+    }
+    if (WEBP.hub) { const e = step(T - 2.78, 'snappy'); WEBP.hub.style.opacity = T >= 2.78 ? '1' : '0';
+      WEBP.hub.style.transformBox = 'fill-box'; WEBP.hub.style.transformOrigin = '50% 50%'; WEBP.hub.style.transform = `scale(${f3(0.5 + 0.5 * e)})`; }
+    if (WEBP.motes) for (const m of WEBP.motes) {
+      const u = T - m.t0;
+      if (u < 0) { m.el.style.opacity = '0'; continue; }
+      m.el.style.opacity = f3(clamp(u * 2) * (0.25 + 0.4 * m.s) * (1 - seg(T, 6.6, 6.93)));
+      m.el.style.transform = `translate(${f1(m.x + 14 * Math.sin(T * 1.3 + m.ph))}px, ${f1(m.y - m.v * u)}px) scale(${f3(m.s)})`;
+    }
+    // captions bottom-left: together. / dots, / matters.
+    words(C8W[0], t, [21.2, 21.55, 22.25, 23.28, 23.5, 23.85], 24.62);
+    wipe(C8B[0], t, 24.0);
+    words(C8W[1], t, [24.75, 25.08, 25.25], 26.12);
+    wipe(C8B[1], t, 25.35);
+    words(C8W[2], t, [26.2, 26.42, 26.8, 27.0]);
+    wipe(C8B[2], t, 27.12);
+  }
+
+  function shot15(t) {
+    const T = t - 28.0;
+    P9.style.transform = `translate(960px, ${f1(540 + 6 * T)}px) scale(${f3(0.86 * (1.0 + 0.016 * T))}) translate(-1152px, -648px)`;
+    SCRIM.style.opacity = f3(seg(T, 0, 0.5) * (0.6 + 0.4 * seg(t, 32.1, 32.6)));
+    // "One team to" / "plan, launch, and grow." build on the VO; one green sticker hops to the newest word
+    TAG.style.top = '286px'; TAG2.style.top = '392px';
+    words(TAGW, t, [28.17, 28.61, 28.99], 32.05);
+    const tins = [29.11, 30.05, 31.15];
+    TW.forEach((el, i) => { word(el, t, tins[i], 32.11 + i * 0.03, 0.45, 0.24); el.classList.toggle('on', t >= tins[i] + 0.06 && (i === 2 || t < tins[i + 1] + 0.06)); });
+    if (M.ready) {
+      const pad = 14, at = (i) => [M.tw[i][0] - pad, M.tw[i][1] + 2 * pad];
+      let [x, w] = at(0);
+      for (const i of [1, 2]) { const e = step(t - (tins[i] + 0.02), 'snappy'), [x2, w2] = at(i), [x1, w1] = at(i - 1); x += (x2 - x1) * e; w += (w2 - w1) * e; }
+      const grow = oC(seg(t, tins[0] + 0.04, tins[0] + 0.16)), out = 1 - seg(t, 32.05, 32.25);
+      TBOX.style.opacity = t >= tins[0] + 0.04 ? f3(out) : '0';
+      TBOX.style.top = f1(M.tagH * 0.15) + 'px'; TBOX.style.height = f1(M.tagH * 0.8) + 'px';
+      TBOX.style.clipPath = `inset(0 ${f1(1920 - x - w * grow)}px 0 ${f1(x)}px round 14px)`;
+    }
+    // end card: the white lockup + url
+    logoReveal(LEG, t, { icon: 32.3, word: 32.36, wordGap: 0.03, dot: 32.62, sol: 32.66, solGap: 0.022 });
+    LE.style.transformOrigin = '50% 50%'; LE.style.transform = `scale(${f3(1 + 0.02 * seg(t, 32.6, 35))})`;
+    words(URLW, t, [32.95]);
+  }
+
+  // ---------------------------------------------------------------- frame
+  function render(t) {
+    window.__lastT = t;
+    for (const k in SC) show(S[k], t >= SC[k][0] && t < SC[k][1]);
+    show(FR.f2, t >= F(233) && t < F(268)); show(FR.f3, t >= F(268) && t < F(339));
+    show(GL1, t >= F(233) && t < F(286));
+    show(FLASH, (t >= F(39) && t < F(40)) || (t >= F(59) && t < F(60))); FLASH.style.opacity = '1';
+    if (t < F(233)) shot1to3(t);
+    else if (t < F(268)) shot4(t);
+    else if (t < F(339)) shot5(t);
+    else if (t < F(400)) shot6(t);
+    else if (t < F(438)) shot78(t);
+    else if (t < F(468)) shot9(t);
+    else if (t < F(632)) shot10to13(t);
+    else if (t < 28.0) shot14(t);
+    else shot15(t);
+    const f = Math.floor(t * 30); GRAIN.style.backgroundPosition = `${(f * 37) % 256}px ${(f * 91) % 256}px`;
+    if (window.__hero3d) window.__hero3d.render(t);
+  }
+
+  // static layout
+  LB.style.left = '470px'; LB.style.top = '352px'; LB.style.width = '980px'; LB.style.height = '393px';
+  LE.style.left = '540px'; LE.style.top = '286px'; LE.style.width = '840px'; LE.style.height = '337px';
+  $('url').style.top = '690px';
+  SELBOX.style.width = '1180px'; SELBOX.style.height = '700px';
+  $('s1-q').style.top = (540 - 58) + 'px';
+  GL2.style.left = '0px';
+  LN.forEach((L, i) => { CODE_NONEMPTY[i] = L.tx.textContent.trim().length > 0; if (L.ck) L.ck.dataset.left = L.ck.style.left; });
+
+  // ---------------------------------------------------------------- clock
+  const tl = gsap.timeline({ paused: true });
+  const CLK = { t: 0 };
+  tl.fromTo(CLK, { t: 0 }, { t: D, duration: D, ease: 'none', onUpdate: () => render(CLK.t) }, 0);
+  window.addEventListener('hf-seek', (e) => render(e.detail.time));
+  window.__timelines = window.__timelines || {};
+  window.__timelines['main'] = tl;
+  render(0);
+  measure();
+})();
+
+    </script>
+    <script type="module">
+// Two Three.js stages, rendered from film time only (window.__hero3d.render(t), called by film.js's clock and hf-seek):
+//   #gl1 (full frame, shots 4–5): eight green arcs close into a glossy spring-green torus around the question, a light
+//        sweeps round it, then it ripples into concentric rings while the camera dollies through (the brand reveal).
+//   #gl2 (the editor's preview pane, shot 13): five glossy bars rise, the last one spring green.
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+const F = (f) => f / 30;
+const D2R = Math.PI / 180;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const oC = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const PRE = { snappy: [0.22, 0.8], default: [0.4, 0.86], heavy: [0.5, 1.0] };
+function step(tau, p = 'default') {
+  if (!(tau > 0)) return 0;
+  const [resp, z] = PRE[p], w = (2 * Math.PI) / resp;
+  if (z < 1) { const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * tau) * (Math.cos(wd * tau) + ((z * w) / wd) * Math.sin(wd * tau)); }
+  return 1 - Math.exp(-w * tau) * (1 + w * tau);
+}
+function makeRenderer(canvas, w, h) {
+  const r = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
+  r.setPixelRatio(1); r.setSize(w, h, false);
+  r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.NeutralToneMapping; r.setClearColor(0x000000, 0);
+  return r;
+}
+const SPRING = 0x92c131, SLATE = 0x5a5e64;
+
+// ================================================================ stage 1: the ring
+const W = 1920, H = 1080;
+const r1 = makeRenderer(document.getElementById('gl1'), W, H);
+const sc1 = new THREE.Scene();
+sc1.environment = new THREE.PMREMGenerator(r1).fromScene(new RoomEnvironment(), 0.04).texture;
+const cam1 = new THREE.PerspectiveCamera(30, W / H, 0.01, 100);
+sc1.add(new THREE.AmbientLight(0xffffff, 0.35));
+const key1 = new THREE.DirectionalLight(0xfff4e6, 1.7); key1.position.set(-2.4, 3.2, 4.5); sc1.add(key1);
+const rim1 = new THREE.DirectionalLight(0xe6f0ff, 1.1); rim1.position.set(3, 1.5, -2); sc1.add(rim1);
+const sweep = new THREE.PointLight(0xffffff, 0, 6, 1.6); sc1.add(sweep);
+const lacquer = new THREE.MeshPhysicalMaterial({ color: SPRING, roughness: 0.24, metalness: 0.0, clearcoat: 1, clearcoatRoughness: 0.07, envMapIntensity: 0.45 });
+const ringG = new THREE.Group(); sc1.add(ringG);
+const TUBE = 0.115;
+const torus = new THREE.Mesh(new THREE.TorusGeometry(1, TUBE, 48, 256), lacquer); ringG.add(torus);
+// the closing dashes: eight arcs at six pre-built lengths (no geometry rebuilt per frame)
+const ARCS = [16, 24, 32, 39, 44, 46.5].map((deg) => new THREE.TorusGeometry(1, TUBE, 40, 48, deg * D2R));
+const dashes = Array.from({ length: 8 }, () => { const m = new THREE.Mesh(ARCS[0], lacquer); ringG.add(m); return m; });
+// dash centres match the HTML dots' ring in film.js (screen angles −π + (k + ½)·π/4, rotated by 10°), y flipped for 3D
+const DASH_A = Array.from({ length: 8 }, (_, k) => -(-Math.PI + (k + 0.5) * (Math.PI / 4) + 10 * D2R));
+// ripples
+const rippleMat = Array.from({ length: 5 }, () => lacquer.clone());
+rippleMat.forEach((m) => { m.transparent = true; });
+const ripples = rippleMat.map((m, k) => { const r = new THREE.Mesh(new THREE.TorusGeometry(1, TUBE * (0.75 - k * 0.08), 32, 200), m); ringG.add(r); return r; });
+
+function applyCam(cam, s, w, h) {   // world target T at screen (sx, sy), spx pixels per world unit
+  cam.fov = s.fov;
+  const d = h / (2 * Math.tan((s.fov * D2R) / 2) * s.spx), p = s.pitch * D2R, y = s.yaw * D2R;
+  cam.position.set(s.T[0] + d * Math.sin(y) * Math.cos(p), s.T[1] + d * Math.sin(p), s.T[2] + d * Math.cos(y) * Math.cos(p));
+  cam.up.set(0, 1, 0); cam.lookAt(s.T[0], s.T[1], s.T[2]);
+  cam.setViewOffset(w, h, w / 2 - s.sx, h / 2 - s.sy, w, h);
+  cam.near = Math.max(0.005, d * 0.02); cam.far = d * 10 + 10; cam.updateProjectionMatrix();
+}
+
+function renderRing(t) {
+  const spx = window.__ringSpx ? window.__ringSpx(t) : 262;
+  applyCam(cam1, { T: [0, 0, 0], sx: 960, sy: 540, spx, pitch: 2.5 * Math.sin(t * 1.3), yaw: 3.5 * Math.sin(t * 0.9), fov: 30 }, W, H);
+  ringG.rotation.set(0.05 * Math.sin(t * 1.7), 0.06 * Math.sin(t * 1.1), 0);
+  // dashes close into the ring over f233–f236, then the whole torus takes over
+  const closing = t < F(237);
+  torus.visible = !closing;
+  const lvl = Math.round(5 * oC(seg(t, F(233), F(236.5))));
+  dashes.forEach((m, k) => {
+    m.visible = closing;
+    if (!closing) return;
+    m.geometry = ARCS[lvl];
+    const arc = [16, 24, 32, 39, 44, 46.5][lvl] * D2R;
+    m.rotation.set(0, 0, DASH_A[k] - arc / 2);
+  });
+  // a light orbits the ring: the specular sweep
+  const a = (t - F(238)) * 5.2;
+  sweep.position.set(Math.cos(a) * 1.45, Math.sin(a) * 1.45, 0.9);
+  sweep.intensity = 9 * seg(t, F(238), F(242)) * (1 - seg(t, F(258), F(264)));
+  // ripples: concentric copies swell outward while the camera dollies through
+  ripples.forEach((r, k) => {
+    const t0 = F(259) + k * 0.045, u = seg(t, t0, t0 + 0.6);
+    r.visible = t >= t0;
+    const s = 1 + (1.2 + k * 0.55) * oC(u);
+    r.scale.set(s, s, 1);
+    r.position.z = -0.12 * k * oC(u);
+    rippleMat[k].opacity = 1 - Math.pow(u, 2.2) * 0.5;
+  });
+  torus.scale.setScalar(1 + 0.12 * oC(seg(t, F(259), F(275))));
+  r1.render(sc1, cam1);
+}
+
+// ================================================================ stage 2: growth bars in the editor's preview pane
+const W2 = 420, H2 = 560;
+const r2 = makeRenderer(document.getElementById('gl2'), W2, H2);
+const sc2 = new THREE.Scene();
+sc2.environment = new THREE.PMREMGenerator(r2).fromScene(new RoomEnvironment(), 0.04).texture;
+const cam2 = new THREE.PerspectiveCamera(30, W2 / H2, 0.05, 50);
+sc2.add(new THREE.AmbientLight(0xffffff, 0.4));
+const key2 = new THREE.DirectionalLight(0xfff4e6, 1.8); key2.position.set(-2, 4, 3); sc2.add(key2);
+const rim2 = new THREE.DirectionalLight(0xdfe9ff, 1.0); rim2.position.set(3, 2, -3); sc2.add(rim2);
+const slateMat = new THREE.MeshPhysicalMaterial({ color: SLATE, roughness: 0.42, clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 0.6 });
+const greenMat = new THREE.MeshPhysicalMaterial({ color: SPRING, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.06, envMapIntensity: 0.5 });
+const baseMat = new THREE.MeshPhysicalMaterial({ color: 0x24292e, roughness: 0.6, clearcoat: 0.3, envMapIntensity: 0.4 });
+const barsG = new THREE.Group(); sc2.add(barsG);
+const base = new THREE.Mesh(new RoundedBoxGeometry(3.3, 0.08, 1.15, 4, 0.03), baseMat); base.position.y = -0.04; barsG.add(base);
+const HEIGHTS = [0.8, 1.25, 1.7, 2.2, 3.0];
+const bars = HEIGHTS.map((h, k) => {
+  const g = new RoundedBoxGeometry(0.46, h, 0.46, 5, 0.06); g.translate(0, h / 2, 0);
+  const m = new THREE.Mesh(g, k === 4 ? greenMat : slateMat); m.position.x = -1.28 + k * 0.64; barsG.add(m); return m;
+});
+
+function renderBars(t) {
+  const yaw = (30 + 5 * Math.sin((t - F(591)) * 0.8)) * D2R, pitch = 22 * D2R, dist = 8.2;
+  cam2.position.set(Math.sin(yaw) * Math.cos(pitch) * dist, 1.35 + Math.sin(pitch) * dist, Math.cos(yaw) * Math.cos(pitch) * dist);
+  cam2.lookAt(0.1, 1.25, 0);
+  bars.forEach((b, k) => {
+    const e = step(t - (F(597) + k * 0.09), 'default');
+    b.scale.y = Math.max(0.02, e);
+  });
+  r2.render(sc2, cam2);
+}
+
+// ================================================================ frame
+function render(t) {
+  if (t >= F(233) && t < F(286)) renderRing(t);
+  if (t >= F(591) && t < F(632)) renderBars(t);
+}
+window.__hero3d = { render };
+render(window.__lastT || 0);
+if (window.__hero3dReady) window.__hero3dReady();
+
+    </script>
+  </body>
+</html>

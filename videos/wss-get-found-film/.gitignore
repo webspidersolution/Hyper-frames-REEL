@@ -1,0 +1,7 @@
+renders/
+snapshots/
+# regenerable by tools/score.py, sfx.py, vo.py, mix.py (mix.wav stays: the render needs it)
+assets/audio/music.wav
+assets/audio/sfx.wav
+assets/audio/vo.wav
+assets/audio/mix_raw.wav

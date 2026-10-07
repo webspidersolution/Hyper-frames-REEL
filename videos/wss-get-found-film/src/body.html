@@ -1,0 +1,124 @@
+<!-- WSS "Get found" — 15 shots on the reference's measured cut frames (BREAKDOWN.md), 35 s with the VO.
+     render(t) in film.js drives everything (pure function of time); hero3d.js draws the 3D ring (#gl1) and the bars (#gl2).
+     Layer order: scenes → #gl1 → front layers (type over the ring) → flash → grain. -->
+
+<!-- ===== 1–3: dark opener, the platform network ===== -->
+<div id="s1" class="scene">
+  <div id="s1-glow" data-layout-allow-overflow></div>
+  <div id="s1-hair" data-layout-allow-overflow></div>
+  <div id="shards" data-layout-allow-overflow>{{props:shards}}</div>
+  <div id="world" data-layout-allow-overflow>
+    <div id="net-glow" data-layout-allow-overflow></div>
+    {{props:net}}
+  </div>
+  <svg id="s1-box" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow><rect id="s1-boxr" x="0" y="0" width="10" height="10" rx="22"/></svg>
+  <div id="s1-phrase"><span class="w"><span class="wi lead" id="p-too">Too many</span></span> <span class="slot" id="p-slot"><span class="w"><span class="wi" id="p-w0">agencies,</span></span><span class="alt"><span class="w"><span class="wi" id="p-w1">tabs,</span></span></span><span class="alt"><span class="w"><span class="wi stk" id="p-w2"><span class="box" id="p-box"></span><span class="t0">tools.</span><span class="t" id="p-w2t">tools.</span></span></span></span></span></div>
+  <div id="s1-caret" data-layout-allow-overflow></div>
+  <div id="s1-head"><span class="w"><span class="wi">Scattered</span></span> <span class="w"><span class="wi">across</span></span> <span class="w"><span class="wi">countless</span></span> <span class="w"><span class="wi">platforms.</span></span></div>
+  <div id="s1-q" style="top:468px"><div><span class="w"><span class="wi">What</span></span> <span class="w"><span class="wi">if</span></span> <span class="w"><span class="wi">it</span></span> <span class="w"><span class="wi">all</span></span></div></div>
+  <svg id="s1-dots" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow>
+    <rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/><rect class="dash"/>
+  </svg>
+</div>
+
+<!-- ===== 4: the 3D ring (canvas #gl1 above), 5: brand on cream ===== -->
+<div id="s2" class="scene">
+  <img id="s2-rays" src="assets/tex/rays.jpg" alt="" data-layout-allow-overflow />
+  <div id="s2-disc" data-layout-allow-overflow></div>
+</div>
+<div id="s3" class="scene"></div>
+
+<!-- ===== 6: brief over the sea ===== -->
+<div id="s4" class="scene">
+  <img class="plate" id="s4-plate" src="assets/photos/p1-sea.jpg" alt="" data-layout-allow-overflow />
+  <img class="plate" id="s4-blur" src="assets/photos/p1-sea-blur.jpg" alt="" data-layout-allow-overflow />
+  <div id="s4-ui" data-layout-allow-overflow>
+    <div id="s4-head"><span class="w"><span class="wi">Tell</span></span> <span class="w"><span class="wi">us</span></span> <span class="w"><span class="wi">your</span></span> <span class="w"><span class="wi">goal</span></span></div>
+    <div id="brief">
+      <div class="plus">+</div>
+      <div class="txt"><span id="brief-typed"></span><span class="cur" id="brief-cur"></span></div>
+      <div class="chip">Growth plan ▾</div>
+      <div class="mic"><svg viewBox="0 0 44 44"><rect x="15" y="6" width="14" height="22" rx="7"/><path d="M9 21a13 13 0 0 0 26 0M22 34v5"/></svg></div>
+      <div id="send"><svg viewBox="0 0 68 68"><g id="send-ar"><path d="M34 46V22M23 33l11-11 11 11"/></g></svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 7–8: growth-path fan ===== -->
+<div id="s5" class="scene">
+  <img class="plate" id="s5-plate" src="assets/photos/p1-sea-blur.jpg" alt="" data-layout-allow-overflow />
+  <svg id="s5-rings" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow>
+    <circle class="rg"/><circle class="rg"/><circle class="rg"/><circle class="rg"/><circle class="rg"/><circle class="rg"/>
+  </svg>
+  <div id="cards" data-layout-allow-overflow>{{props:cards}}</div>
+  <div id="hub" data-layout-allow-overflow></div>
+  <div id="hub-btn" data-layout-allow-overflow><svg viewBox="0 0 96 96"><g id="hub-ar"><path d="M48 66V30M32 46l16-16 16 16"/></g></svg></div>
+  <div class="cap" id="s5-cap"><span class="w"><span class="wi">See</span></span> <span class="w"><span class="wi">multiple</span></span> <span class="w"><span class="wi acc">growth</span></span> <span class="w"><span class="wi acc">paths</span></span></div>
+</div>
+
+<!-- ===== 9: in seconds ===== -->
+<div id="s6" class="scene">
+  <div id="selbox" data-layout-allow-overflow></div>
+  <div id="sec"></div>
+</div>
+
+<!-- ===== 10–13: editor over the forest ===== -->
+<div id="s7" class="scene">
+  <img class="plate" id="s7-plate" src="assets/photos/p2-forest.jpg" alt="" data-layout-allow-overflow />
+  <img class="plate" id="s7-red" src="assets/photos/p2-forest-red.jpg" alt="" data-layout-allow-overflow />
+  <div id="edwrap" data-layout-allow-overflow>
+    <div id="ed" data-layout-allow-overflow>
+      <div class="bar"><div class="d" style="left:22px;background-color:#e0634f"></div><div class="d" style="left:46px;background-color:#e2b34a"></div><div class="d" style="left:70px;background-color:#7fa042"></div>
+        <div class="m">File Edit View Go Run Terminal Help</div><div class="fn">grow.js</div></div>
+      <div class="code"><div class="lines" id="lines">{{props:code}}</div></div>
+      <div class="pane"><div class="pt">preview · growth</div><canvas id="gl2" width="420" height="560" style="top:46px"></canvas></div>
+      <div class="st">main · JavaScript · UTF-8 · Ln 6, Col 18</div>
+    </div>
+  </div>
+  <div id="s7-dim" data-layout-allow-overflow></div>
+  <div class="cap" id="s7-cap0"><span class="w"><span class="wi">Rank</span></span> <span class="w"><span class="wi">on</span></span> <span class="w"><span class="wi acc"><span class="tile" role="img" aria-label="Google" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/google.svg);background-size:30px 30px"></span>Google,</span></span></div>
+  <div class="cap" id="s7-cap1"><span class="w"><span class="wi">show</span></span> <span class="w"><span class="wi">up</span></span> <span class="w"><span class="wi">in</span></span> <span class="w"><span class="wi acc">AI</span></span> <span class="w"><span class="wi acc">search,</span></span> <span class="w"><span class="wi"><span class="tile" role="img" aria-label="ChatGPT" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/chatgpt.svg);background-size:30px 30px"></span><span class="tile" role="img" aria-label="Gemini" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/gemini.svg);background-size:30px 30px"></span><span class="tile" role="img" aria-label="Perplexity" style="width:46px;height:46px;border-radius:11px;background-image:url(assets/logos/perplexity.svg);background-size:30px 30px"></span></span></span></div>
+  <div class="cap" id="s7-cap2"><span class="w"><span class="wi">and</span></span> <span class="w"><span class="wi">let</span></span> <span class="w"><span class="wi">WebSpider</span></span> <span class="w"><span class="wi acc">make</span></span> <span class="w"><span class="wi acc">it</span></span> <span class="w"><span class="wi acc">work.</span></span></div>
+</div>
+
+<!-- ===== 14: ads, SEO and social woven into one web ===== -->
+<div id="s8" class="scene">
+  <div id="webcam" data-layout-allow-overflow>
+    <svg id="web" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow></svg>
+    <div id="chips" data-layout-allow-overflow>{{props:chips}}</div>
+    <div id="motes" data-layout-allow-overflow></div>
+  </div>
+  <div id="s8-cap">
+    <div class="capline" id="c8-0"><span class="w"><span class="wi">Bring</span></span> <span class="w"><span class="wi">ads,</span></span> <span class="w"><span class="wi">SEO</span></span> <span class="w"><span class="wi">and</span></span> <span class="w"><span class="wi">social</span></span> <span class="w"><span class="wi stk"><span class="box"></span><span class="t">together.</span></span></span></div>
+    <div class="capline" id="c8-1"><span class="w"><span class="wi">Connect</span></span> <span class="w"><span class="wi">the</span></span> <span class="w"><span class="wi stk"><span class="box"></span><span class="t">dots,</span></span></span></div>
+    <div class="capline" id="c8-2"><span class="w"><span class="wi">and</span></span> <span class="w"><span class="wi">scale</span></span> <span class="w"><span class="wi">what</span></span> <span class="w"><span class="wi stk"><span class="box"></span><span class="t">matters.</span></span></span></div>
+  </div>
+</div>
+
+<!-- ===== 15: tagline over the mustard field, end card ===== -->
+<div id="s9" class="scene">
+  <img class="plate" id="s9-plate" src="assets/photos/p3-mustard.jpg" alt="" data-layout-allow-overflow />
+  <div id="s9-scrim" data-layout-allow-overflow></div>
+  <div id="tag"><span class="w"><span class="wi">One</span></span> <span class="w"><span class="wi">team</span></span> <span class="w"><span class="wi">to</span></span></div>
+  <div id="tag2"><div id="tag2-box" data-layout-allow-overflow></div><span class="w"><span class="wi" id="tw0">plan,</span></span> <span class="w"><span class="wi" id="tw1">launch,</span></span> <span class="w"><span class="wi" id="tw2">and grow.</span></span></div>
+  {{props:logo-end}}
+  <div id="url"><span class="w"><span class="wi">webspidersolutions.com</span></span></div>
+</div>
+
+<!-- ===== WebGL ring, then type that sits over it ===== -->
+<canvas class="gl" id="gl1" width="1920" height="1080" data-layout-allow-overflow></canvas>
+<div id="f2" class="front">
+  <div id="f2-q" style="top:468px"><div><span class="w"><span class="wi">What</span></span> <span class="w"><span class="wi">if</span></span> <span class="w"><span class="wi">it</span></span> <span class="w"><span class="wi">all</span></span></div><div><span class="w"><span class="wi acc">connected?</span></span></div></div>
+</div>
+<div id="f3" class="front">
+  <div id="f3-meet"><span class="w"><span class="wi">Meet</span></span></div>
+  <svg id="f3-guides" width="1920" height="1080" viewBox="0 0 1920 1080" data-layout-allow-overflow>
+    <line class="gd" x1="0" y1="574" x2="1920" y2="574"/><line class="gd" x1="0" y1="679" x2="1920" y2="679"/><line class="gd" x1="0" y1="738" x2="1920" y2="738"/>
+    <line class="gd" x1="490" y1="300" x2="490" y2="900"/><line class="gd" x1="1427" y1="300" x2="1427" y2="900"/>
+    <circle class="gd" cx="959" cy="454" r="96"/><circle class="gd" cx="959" cy="454" r="140"/><rect class="gd" x="865" y="368" width="188" height="172"/>
+  </svg>
+  {{props:logo-brand}}
+</div>
+
+<div id="flash" data-layout-allow-overflow></div>
+<div id="grain" data-layout-allow-overflow></div>
