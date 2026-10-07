@@ -152,7 +152,7 @@ const CODE = [
   ['<span class="k">async function</span> <span class="f">growClinic</span>(goal) {'],
   ['  <span class="k">const</span> site    = <span class="k">await</span> <span class="f">audit</span>(goal.website);'],
   ['  <span class="k">const</span> pages   = <span class="k">await</span> <span class="f">optimise</span>(site.pages);'],
-  ['  <span class="k">const</span> profile = <span class="k">await</span> <span class="f">syncProfile</span>(goal.location);'],
+  ['  <span class="k">const</span> profile = <span class="k">await</span> <span class="f">syncProfile</span>(goal.city);'],
   [''],
   ['  <span class="k">const</span> aiSearch = <span class="s" id="errv">"not cited"</span>;', 'err'],
   [''],

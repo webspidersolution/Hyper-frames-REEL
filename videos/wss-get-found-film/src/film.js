@@ -39,12 +39,12 @@
   const wipe = (el, t, t0, d = 0.14) => { el.style.clipPath = `inset(0 ${f2(100 * (1 - oC((t - t0) / d)))}% 0 0)`; };
   // a caption pill shows only in its own window and grows with its words: clipped to the right edge of the newest risen word
   function pill(el, t, tin, tout, x, y, tins = null) {
-    const a = t - tin + 0.02, fade = Number.isFinite(tout) ? 1 - seg(t, tout + 0.12, tout + 0.3) : 1;
-    el.style.opacity = f3(a < 0 ? 0 : clamp(a * 12) * fade);
+    const a = t - tin - 0.03, fade = Number.isFinite(tout) ? 1 - seg(t, tout + 0.12, tout + 0.3) : 1;
+    el.style.opacity = f3(a < 0 ? 0 : clamp(a * 14) * fade);
     el.style.transform = `translate(${f1(x)}px, ${f1(y)}px)`;
     const P = M.pills && M.pills.get(el);
     if (!P || !tins) { el.style.clipPath = 'none'; return; }
-    let w = P.edges[0] * oC((t - tins[0] + 0.02) / 0.2);
+    let w = P.edges[0];
     for (let k = 1; k < P.edges.length; k++) w += (P.edges[k] - P.edges[k - 1]) * step(t - (tins[Math.min(k, tins.length - 1)] - 0.09), 'snappy');
     el.style.clipPath = `inset(0 ${f1(Math.max(0, P.w - w))}px 0 0 round ${P.r}px)`;
   }
@@ -70,7 +70,7 @@
                                           z: +el.dataset.z, spin: +el.dataset.spin, dl: +el.dataset.dl }));
   const SET_T = { A: [F(22), F(39)], B: [F(39), F(59)], C: [F(59), F(90)] };
   // ---- 4–5
-  const DISC = $('s2-disc'), RAYS = $('s2-rays'), QF = $$('#f2-q .wi'), MEET = $$('#f3-meet .wi'), GUIDES = $$('#f3-guides .gd');
+  const DISC = $('s2-disc'), IRIS = $('s2-iris'), RAYS = $('s2-rays'), QF = $$('#f2-q .wi'), MEET = $$('#f3-meet .wi'), GUIDES = $$('#f3-guides .gd');
   const LB = $('lb-logo'), LE = $('le-logo');
   const GLY = (p) => ({ icon: $(`${p}-icon`), dot: $(`${p}-dot`), word: ['W', 'E', 'B', 'S', 'P', 'I', 'D', 'E2', 'R'].map((n) => $(`${p}-${n}`)),
                         sol: [0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => $(`${p}-s${i}`)) });
@@ -310,11 +310,14 @@
   function shot4(t) {
     const spx = ringSpx(t), r = 0.9 * spx;
     DISC.style.transform = `translate(960px, 540px) translate(-50%, -50%) scale(${f3((2 * r) / 200)})`;
-    DISC.style.opacity = f3(1 - seg(t, F(259), F(266)));
+    DISC.style.opacity = '1';
+    const io = oC(seg(t, F(259), F(265.5)));
+    IRIS.style.transform = `translate(960px, 540px) translate(-50%, -50%) scale(${f3(((2 * r) / 200) * 1.02 * io)})`;
+    IRIS.style.opacity = io > 0 ? '1' : '0';
     RAYS.style.transform = `scale(${f3(1.02 + 0.03 * seg(t, F(233), F(268)) + 0.3 * iC(seg(t, F(259), F(268))))})`;
     const qy = 540 - 58;
     $('f2-q').style.top = qy + 'px';
-    QF.forEach((el, i) => word(el, t, i < 4 ? [7.13, 7.47, 7.54, 7.62][i] : 7.78, F(258) + i * 0.02, 0.4));
+    QF.forEach((el, i) => word(el, t, i < 4 ? [7.13, 7.47, 7.54, 7.62][i] : 7.78, F(252) + i * 0.02, 0.4, 0.22));
   }
 
   function shot5(t) {
@@ -325,7 +328,7 @@
       g.style.strokeDasharray = `${f1(L)} ${f1(L)}`; g.style.strokeDashoffset = f1(L * (1 - p)); g.style.opacity = f3(fade);
     });
     // hold drift, then the glyphs spread apart and blur out
-    const v = seg(t, F(330), F(338)), hold = 1 + 0.025 * seg(t, 9.9, 11.1);
+    const v = seg(t, F(331), F(340)), hold = 1 + 0.025 * seg(t, 9.9, 11.1);
     const spread = (cx) => (M.glb && v > 0 ? (cx - 512) * 0.6 * iC(v) : 0);
     logoReveal(LBG, t, { icon: 9.24, word: 9.33, wordGap: 0.052, dot: 9.85, sol: 9.9, solGap: 0.035 }, M.glb, spread);
     LB.style.transformOrigin = '50% 50%';
@@ -400,8 +403,8 @@
       el.style.transform = `translate(${f1(x)}px, ${f1(y)}px) translate(-50%, -50%) rotate(${f2((th * 180) / Math.PI)}deg) scale(${f3(sc)})`;
       el.style.filter = grow > 0.05 ? `blur(${f2(4 * grow)}px)` : 'none';
     });
-    pill(CAP5, t, 13.34, Infinity, 960 - (M.cap5 || 700) / 2, 56, [13.36, 13.42, 13.48, 13.54]);
-    words(CAP5W, t, [13.36, 13.42, 13.48, 13.54]);
+    pill(CAP5, t, 13.34, Infinity, 960 - (M.cap5 || 700) / 2, 56, [13.36, 13.41, 13.46, 13.51, 13.56]);
+    words(CAP5W, t, [13.36, 13.41, 13.46, 13.51, 13.56]);
   }
 
   function shot9(t) {
@@ -482,10 +485,10 @@
       ERRV.textContent = `"${s}"`;
     } else ERRV.textContent = fixed ? '"cited"' : '"not cited"';
     // captions: Rank on Google, / show up in AI search, / and let WebSpider make it work.
-    const CAPT = [[15.76, 16.08, 16.2], [17.07, 17.36, 17.52, 17.66, 17.86, 18.05], [18.82, 19.0, 19.16, 19.56, 19.78, 19.9]];
-    [[15.72, 17.0], [17.04, 18.78], [18.8, 20.95]].forEach(([a, b], i) => pill(CAP7[i], t, a, b, 96, 64, CAPT[i]));
-    words(CAP7W[0], t, CAPT[0], 17.0);
-    words(CAP7W[1], t, CAPT[1], 18.78);
+    const CAPT = [[15.76, 16.08, 16.2], [17.1, 17.36, 17.52, 17.66, 17.86, 18.05], [18.86, 19.0, 19.16, 19.56, 19.78, 19.9]];
+    [[15.72, 16.82], [17.08, 18.6], [18.84, 20.95]].forEach(([a, b], i) => pill(CAP7[i], t, a, b, 96, 64, CAPT[i]));
+    words(CAP7W[0], t, CAPT[0], 16.82);
+    words(CAP7W[1], t, CAPT[1], 18.6);
     words(CAP7W[2], t, CAPT[2], 20.95);
     GL2.style.display = t >= F(591) && t < F(632) ? 'block' : 'none';
   }
@@ -503,7 +506,7 @@
         const zc = c.fz - 0.5 * T;
         x = 960 + (c.fx - 960) / zc; y = 540 + (c.fy - 540) / zc; sc = clamp(1.25 / zc, 0.3, 3.0);
         blur = Math.min(9, Math.abs(zc - 1) * 5.5);
-        op = oC(seg(T, (c.i % 7) * 0.03, 0.35 + (c.i % 7) * 0.03)) * clamp((zc - 0.35) / 0.2) * clamp((3.4 - zc) / 0.8) * (1 - seg(T, 2.6, 2.74));
+        op = oC(seg(T, -0.14 + (c.i % 7) * 0.02, 0.22 + (c.i % 7) * 0.02)) * clamp((zc - 0.35) / 0.2) * clamp((3.4 - zc) / 0.8) * (1 - seg(T, 2.6, 2.74));
         for (const [i, a, b] of HILITE) if (i === c.i && T >= a && T < b) hi = 1;
         sc *= 1 + 0.12 * hi;
       } else {
@@ -539,11 +542,11 @@
       m.el.style.transform = `translate(${f1(m.x + 14 * Math.sin(T * 1.3 + m.ph))}px, ${f1(m.y - m.v * u)}px) scale(${f3(m.s)})`;
     }
     // captions bottom-left: together. / dots, / matters.
-    words(C8W[0], t, [21.2, 21.55, 22.25, 23.28, 23.5, 23.85], 24.62);
+    words(C8W[0], t, [21.2, 21.55, 22.25, 23.28, 23.5, 23.85], 24.5);
     wipe(C8B[0], t, 24.0);
-    words(C8W[1], t, [24.75, 25.08, 25.25], 26.12);
+    words(C8W[1], t, [24.78, 25.08, 25.25], 25.95);
     wipe(C8B[1], t, 25.35);
-    words(C8W[2], t, [26.2, 26.42, 26.8, 27.0]);
+    words(C8W[2], t, [26.24, 26.42, 26.8, 27.0]);
     wipe(C8B[2], t, 27.12);
   }
 

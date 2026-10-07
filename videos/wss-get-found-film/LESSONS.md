@@ -30,6 +30,20 @@
   (line-height 1.2 so titles and subtitles don't touch), then flag the intentional layering on the text itself.
   EVIDENCE: check 26 errors → 0.
   GOES IN: hyperreel references/hyperframes-contract.md (gotchas)
+- RULE: Run the gate with `check --samples 30` before calling a draft final. The default sampling can step over a
+  short occlusion inside a 2 s shot.
+  EVIDENCE: the default check passed on the same editor layout; at 30 samples it found a ✓ under the preview pane
+  (18.08–20.42 s).
+  GOES IN: hyperreel SKILL.md §8 (Review loop, gate)
+- RULE: In a split-pane prop (code beside a preview), keep each line's end marker inside its own pane:
+  chars × advance + gutter ≤ pane left − margin. Shorten the line; don't clamp the marker, or it lands on the text.
+  EVIDENCE: a 52-character line put its ✓ at x ≈ 755 px, under the pane at 760 px; with `goal.city` every ✓ is at
+  or before 700 px.
+  GOES IN: hyperreel references/look.md (Props)
+- RULE: Word masks padded for glyph overhang (`padding: … 0.1em`, matching negative margin) overflow a fixed-width
+  slot by exactly 0.1 em per side and trip `container_overflow`. Flag the masks with `data-layout-allow-overflow`.
+  EVIDENCE: shot 1's swap slot warned at 7.59 px per side (0.1 em at 76 px); after flagging, 0 layout warnings.
+  GOES IN: hyperreel references/hyperframes-contract.md (gotchas)
 
 ## Skill feedback
 - GOT IN THE WAY: github raw downloads (Google Fonts) are blocked in the cloud box. FIX: fetch fonts from the

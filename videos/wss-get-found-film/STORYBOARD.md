@@ -33,9 +33,9 @@ bpm: 148 (74 half-time feel)
 | 0:03–0:05 | "Scattered across countless platforms." | shot 3 headline while the signal splits into the platform nodes (3.2–6.9) |
 | 0:06–0:08 | "What if it all connected?" | rises centred as the threads retract (7.0); the dots ring forms around it; shot 4's 3D ring closes around the same words (7.77–8.9) |
 | 0:09–0:10 | "Meet WebSpider Solutions" | shot 5: `Meet` types, then the real WEB SPIDER SOLUTIONS lockup builds (9.4–11.0) |
-| 0:11–0:15 | "Tell us your goal and see multiple growth paths in seconds." | shot 6 `Tell us your goal` + brief box; shots 7–8 caption `See multiple growth paths` over the fan of growth-path cards; shot 9 **in seconds.** |
+| 0:11–0:15 | "Tell us your goal and see multiple growth paths in seconds." | shot 6 `Tell us your goal` + brief box; shots 7–8 caption `and see multiple growth paths` over the fan of growth-path cards; shot 9 **in seconds.** |
 | 0:15–0:20 | "Rank on Google, show up in AI search, and let WebSpider make it work." | shots 10–13 captions: `Rank on Google,` (15.7) → `show up in AI search,` (17.5, the editor's red line is the AI-search check) → `and let WebSpider make it work.` (19.8) |
-| 0:20–0:25 | "Bring ads, SEO, and social together, connect the dots, and scale what matters." | shot 14 captions: `Bring ads, SEO and social together,` (21.3) → `connect the dots,` (23.3, the web grows) → `and scale what matters.` (24.4) |
+| 0:20–0:25 | "Bring ads, SEO, and social together, connect the dots, and scale what matters." | shot 14 captions: `Bring ads, SEO, and social together,` (21.3) → `connect the dots,` (23.3, the web grows) → `and scale what matters.` (24.4) |
 | 0:26–0:29 | "One team to plan, launch, and grow." | shot 15: `One team to` + **plan,** → **launch,** → **and grow.** |
 | 0:30 | "WebSpider Solutions" | shot 15 end card: white WSS lockup + webspidersolutions.com |
 
@@ -49,14 +49,14 @@ bpm: 148 (74 half-time feel)
 | 4 | 233–267 | Cream ground with soft slate shadow rays; dashes close into the **3D glossy spring-green torus** around an ink disc holding the question; "connected?" turns green as the ring locks; a specular sweep circles the ring; the ring ripples into concentric copies | `What if it all` **`connected?`** | ring lock thunk, ripple swell |
 | 5 | 268–338 | Ripples rush past camera onto cream; `Meet` types; slate construction guides draw; the WSS icon draws, the green dot pops; WEB SPIDER reveals L→R, SOLUTIONS below; hold; parts spread apart + blur out | `Meet` + WSS lockup | whoosh through, guide scratches, dot pop + bell, spread whoosh |
 | 6 | 339–399 | Sea-horizon plate at dawn; a tilted, defocused push settles (focus pull); headline + brief box type on; camera pushes into the green send button; its arrow turns | `Tell us your goal` · brief: `More patients for my dental clinic in Noida` · chip `Growth plan ▾` | focus swell, key clicks, push whoosh, button click |
-| 7 | 400–407 | Growth-path cards fly out of the button | `See multiple growth paths` (caption) | burst swish |
+| 7 | 400–407 | Growth-path cards fly out of the button | `and see multiple growth paths` (caption) | burst swish |
 | 8 | 408–437 | A rotating fan of 14 original growth-path cards around the button on cream with green ripple rings (Local SEO, Google Ads, Meta Ads, AI search, Google Business Profile, Website revamp, Reels plan, Review engine, Landing pages, WhatsApp follow-ups, Content calendar, Amazon Ads, Search Console, Schema); the hub grows | caption holds | card flicks, hub swell |
 | 9 | 438–467 | Zoom through the hub onto pale cream-green paper; the words drop in letter by letter, green settling to slate; a green selection box sweeps over them and grows into the editor window | **`in seconds.`** | letter taps, select click |
 | 10 | 468–522 | Misty deodar-forest plate; ink editor window (`grow.js`) materialises; original JavaScript types in; slow drift; window lifts | `Rank on Google,` | soft key bed (single keystrokes) |
 | 11 | 523–533 | Tilted close push; lines tick green with ✓ | `show up in AI search,` | check ticks |
 | 12 | 534–590 | Warm-red warning grade; one line red ✕ `aiSearch = "not cited"` + `fixing…`; the value scrambles and resolves to `"cited"` ✓; scroll | caption holds | error buzz, scramble glitches, fix chime |
 | 13 | 591–631 | Forest plate; the window springs up from the bottom; right half shows the **3D hero: five glossy bars rising, the last one spring green** | `and let WebSpider make it work.` | rise whoosh, bar thumps |
-| 14 | 632–796 | Warm paper; channel and metric chips float at depth (rack-focus drift); dissolve; pull back to the full layout; a **spider web** grows from a hub to every chip, spirals close it, nodes light green; blur pulse; settled with drifting green motes | `Bring ads, SEO and social together,` → `connect the dots,` → `and scale what matters.` | soft pops per chip, web weave rises, settle bell |
+| 14 | 632–796 | Warm paper; channel and metric chips float at depth (rack-focus drift); dissolve; pull back to the full layout; a **spider web** grows from a hub to every chip, spirals close it, nodes light green; blur pulse; settled with drifting green motes | `Bring ads, SEO, and social together,` → `connect the dots,` → `and scale what matters.` | soft pops per chip, web weave rises, settle bell |
 | 15 | 797–929 | Mustard field under sky, slow drift; `One team to` + accent word on a green sticker; white WSS lockup + URL | `One team to` **`plan,`** → **`launch,`** → **`and grow.`** · WSS lockup · `webspidersolutions.com` | word blooms, final hit + chord |
 
 ## As built (after review rounds)
