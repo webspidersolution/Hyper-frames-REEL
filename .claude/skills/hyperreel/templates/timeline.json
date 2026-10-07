@@ -1,0 +1,106 @@
+{
+  "title": "hyperreel",
+  "duration": 15,
+  "fps": 60,
+  "bpm": 120,
+  "formats": [
+    "9x16",
+    "16x9"
+  ],
+  "marks": {
+    "hook": 0,
+    "reveal": 4,
+    "build": 8,
+    "drop": 12,
+    "end": 14
+  },
+  "music": {
+    "style": "cinematic",
+    "key": "D",
+    "chords": [
+      "Dm",
+      "Dm",
+      "Bb",
+      "C",
+      "Dm",
+      "Bb",
+      "C",
+      "D"
+    ],
+    "sections": [
+      {
+        "at": 0,
+        "kind": "intro"
+      },
+      {
+        "at": 4,
+        "kind": "full"
+      },
+      {
+        "at": 8,
+        "kind": "build"
+      },
+      {
+        "at": 11.5,
+        "kind": "gap"
+      },
+      {
+        "at": 12,
+        "kind": "drop"
+      },
+      {
+        "at": 14,
+        "kind": "outro"
+      }
+    ],
+    "accents": [
+      0,
+      4,
+      12
+    ],
+    "melody": "auto",
+    "seed": 7
+  },
+  "sfx": [
+    {
+      "at": 0.0,
+      "lib": "cinematic-hit",
+      "gain": -10
+    },
+    {
+      "ticks": "assets/audio/ticks.json",
+      "synth": "tick",
+      "gain": -9
+    },
+    {
+      "at": 4.0,
+      "lib": "whoosh-cinematic",
+      "gain": -10,
+      "align": "peak"
+    },
+    {
+      "at": 12.0,
+      "lib": "boom-hit",
+      "gain": -7,
+      "maxlen": 2.0
+    },
+    {
+      "at": 12.05,
+      "synth": "shimmer",
+      "gain": -14
+    },
+    {
+      "at": 14.0,
+      "lib": "whoosh-cinematic",
+      "gain": -11,
+      "align": "peak"
+    }
+  ],
+  "mix": {
+    "music": -2,
+    "sfx": 0,
+    "vo": 0,
+    "lufs": -14,
+    "ceiling_db": -1.9
+  }
+}

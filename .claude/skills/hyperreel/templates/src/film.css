@@ -1,0 +1,38 @@
+/* hyperreel starter styles. Swap the font files + tokens for the brand's. No CSS variables on captured layers. */
+@font-face { font-family: "Display"; src: url("assets/fonts/Poppins-ExtraBold.ttf") format("truetype"); font-weight: 800; }
+@font-face { font-family: "UI"; src: url("assets/fonts/Poppins-SemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "UI"; src: url("assets/fonts/Poppins-Medium.ttf") format("truetype"); font-weight: 500; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { margin: 0; overflow: hidden; background: #0d0d10; }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "UI", sans-serif; color: #f2efe9;
+        -webkit-font-smoothing: antialiased; }
+.scene { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; background-color: #0d0d10;
+         background-image: radial-gradient(110% 70% at 50% 40%, rgba(34,30,40,1) 0%, rgba(13,13,16,1) 70%); }
+.scene + .scene { opacity: 0; }
+.abs { position: absolute; left: 0; top: 0; }
+canvas.gl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+.glow { position: absolute; border-radius: 50%; pointer-events: none;
+        background: radial-gradient(circle, rgba(255,90,60,0.34) 0%, rgba(255,90,60,0.12) 34%, rgba(255,90,60,0) 68%); }
+#grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.25; mix-blend-mode: overlay; z-index: 50;
+         background-image: url("assets/tex/grain.png"); background-size: 256px 256px; }
+
+/* type: masked words; hidden words are also transparent (film.js rise/lift) */
+.disp { font-family: "Display", sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 1.04; white-space: nowrap; }
+.line { display: block; white-space: nowrap; }
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.06em 0.12em 0.18em; margin: -0.06em -0.12em -0.18em; }
+.wi { display: inline-block; }
+.hl { color: #ffffff; background-color: #ff4b2b; padding: 0 0.12em; margin: 0 -0.04em; border-radius: 0.12em; box-shadow: 0 0.06em 0 #a3200f; }
+.eyebrow { font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; white-space: nowrap; color: #b9b3aa; }
+.nowrap { white-space: nowrap; }
+
+/* transitions (build these instead of shader transitions when a WebGL layer is present) */
+/* iris ring = SVG strokes, so the width stays bold at any radius (a scaled CSS border is a hairline while the hole is small,
+   and a bare small hole reads as a rendering bug) */
+#t-ring { position: absolute; left: 0; top: 0; overflow: visible; opacity: 0; z-index: 40; pointer-events: none;
+          filter: drop-shadow(0 0 22px rgba(255,190,130,0.8)); }
+#t-ring circle { fill: none; }
+#t-ring .rw { stroke: #ffffff; stroke-width: 46; }
+#t-ring .rr { stroke: #ff4b2b; stroke-width: 30; }
+#t-light { position: absolute; opacity: 0; z-index: 40; pointer-events: none; mix-blend-mode: screen;
+           background: radial-gradient(ellipse at center, rgba(255,251,236,1) 0%, rgba(255,232,170,0.85) 20%, rgba(255,196,110,0.32) 44%, rgba(255,190,110,0) 66%); }
