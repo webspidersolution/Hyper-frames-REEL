@@ -16,7 +16,7 @@ OpenArt GPT Image 2.5 for photo plates (1K, low quality), prompted per `/chatgpt
 | D3 | **Hook** | H1, "the frozen clap" (§3). |
 | D4 | **Render path.** This container has **no GPU**. Hyperreel renders on the GPU (`--gpu --browser-gpu`), and the skill forbids a silent fallback to CPU. | Build and render the drafts here with software WebGL (slower, same pixels), then render the 60 fps finals on your GPU PC (`git pull` and run 2 commands), or here on CPU if you accept roughly 1–2 h per format. |
 | D5 | **Length and formats** | 9:16 (Reels/Shorts) and 16:9 (YouTube, LinkedIn, website), **about 44 s**, locked to whole music bars once the VO is recorded. |
-| D6 | Captions | Designed kinetic key-phrases on screen (they work with the sound off), plus an `.srt` made from the VO timestamps for platform captions. Full burned-in subtitles are optional. |
+| D6 | Captions | **9:16:** designed kinetic key-phrases, plus Instagram's own captions. Instagram reduces reach for "majority text" reels, so we don't add full subtitles. **16:9:** full burned-in captions, because LinkedIn recommends subtitles. Plus an `.srt` for YouTube. |
 
 ---
 
@@ -40,8 +40,46 @@ OpenArt GPT Image 2.5 for photo plates (1K, low quality), prompted per `/chatgpt
 - **Inference:** the logo is literally a set of *digital footprints*. Audience research means following your audience's
   footprints, which gives a brand-native metaphor for the whole video.
 
-### 1b. Topic evidence
-⟨Filled in from the research ledger below once it's verified.⟩
+### 1b. Topic evidence (checked 2026-10-07)
+The three on-screen candidates were opened and quoted by me. The rest come from the research ledger (sources opened
+by the research agent).
+
+| # | Finding (exact quote) | Source | Use |
+|---|---|---|---|
+| **E1** | "creative quality is responsible for almost half (49%) of the incremental sales driven by advertising" and "brands need to truly understand what motivates their target buyers" | NCSolutions, *Five Keys to Advertising Effectiveness* (2023; "nearly 450 CPG campaigns") — https://info.ncsolutions.com/hubfs/2023%20Five%20Keys%20to%20Advertising%20Effectiveness/NCS_Five_Keys_to_Advertising_Effectiveness_E-Book_08-23.pdf | **On screen in F3** as a 49 % count-up |
+| **E2** | "only 25% of marketers say they understand their audiences 'very well'" | Brandwatch, *The Marketer of 2026* (17 Mar 2026; 1,028 marketers) — https://www.aap.com.au/aapreleases/cision20260317ae10995 | hook H4 and post caption |
+| **E3** | "33% of the marketing budget goes to waste due to poor briefs and misdirected work" (a respondents' estimate) | IPA × BetterBriefs (13 Oct 2021; 1,700+ marketers and agency staff, 70+ countries) — https://ipa.co.uk/news/betterbriefs | post caption, worded as "marketers estimate…" |
+
+Context only (not on screen):
+- CMI 2025 says top B2B performers credit "understanding their audience (82%)".
+- Kantar (2022, 970 cases) found that pre-tested top-third ads raised sales in 76 % of cases, against 28 % for the
+  bottom third.
+- Dove *Real Beauty Sketches* started from the finding that "only 4% of women believe that they are beautiful".
+- Netflix *House of Cards*: data sized the audience before the commitment but didn't write the show. Don't repeat the
+  "$100M" figure or "an algorithm made it".
+- *Fatal Attraction*: test audiences were unsatisfied and the ending was reshot six months later, so late research
+  meant a reshoot.
+- India: IAMAI–Kantar 2025 counts 588 M short-form viewers, and 57 % of urban users prefer regional languages, so
+  language is a pre-production decision too.
+
+**Myths we never use:** the 8-second "goldfish" attention span (debunked); "visuals are processed 60,000× faster";
+"1 minute of video = 1.8 M words"; "95 % of a video message is retained"; "an algorithm made House of Cards".
+
+**Audience language:** "It looked beautiful. Nobody watched." and "Views. No leads." These match a 3 M-view YouTube
+feature that drove poor sales (Candy Japan), HubSpot's "You're going after the wrong audience", and CMI 2026's top
+challenge, "content that prompts a desired action" (40 %).
+
+**Competitor scan:** the usual lines are "tell your story", "we craft", "resonate", "strategy first", "discover your
+why", and demographics passed off as research. **Gap:** no studio shows what skipping research costs or tests a hook
+before the shoot. This video owns both: "no edit… can fix the wrong message" and "after the shoot? That's a reshoot."
+
+**Platform notes (official):**
+- Instagram ranks on reshares, completion and likes, and *reduces* reach for reels that are "majority text" or have
+  borders or watermarks. So: VO-led, key-phrase type only, no borders or watermarks.
+- Instagram **Trial Reels** show a reel to non-followers first and report metrics after about 24 h. That's the place to
+  A/B the hook.
+- LinkedIn recommends subtitles and "the most impactful content in the first 10 seconds", so the 16:9 cut gets burned
+  captions.
 
 ---
 
@@ -71,11 +109,12 @@ OpenArt GPT Image 2.5 for photo plates (1K, low quality), prompted per `/chatgpt
 | **H1 ★** | "Before anyone yells 'action'… who is this video for?" | pattern break + concrete question | the 3D clapstick freezes an inch before the clap; the music cuts out | watch time, authority | none (a question) |
 | H2 | "The most expensive video you'll ever make is the one nobody was waiting for." | stakes / pain | a premiere screening room, every seat empty, the film still playing | comments, saves | none (opinion) |
 | H3 | "Most teams research their audience after launch. That's an autopsy, not research." | contrarian | a production timeline card "AUDIENCE RESEARCH" ripped from the end and slapped at the start | comments, debate | none (opinion; "most" would need a source, so the line becomes "Too many teams…" if no source is found) |
-| H4 | ⟨one verified statistic from §1b⟩ | proof first | the number slams in, with its source line | trust | the verified stat |
+| H4 | "Only one in four marketers say they understand their audience 'very well.'" | proof first | "25%" slams in, with the source line Brandwatch 2026 | trust | E2 (verified) |
 | H5 | "Your audience leaves footprints everywhere. Most productions never follow them." | curiosity + brand | circuit footprints walking toward a red tape mark | brand recall | none |
 
-Optional A/B test: the same body with an alternate first 4 s (H1 vs H3). Judge it on 3-second hold and completion
-rate, not on views.
+Optional A/B test: the same body with an alternate first 4 s (H1 vs H3 or H4), posted as Instagram **Trial Reels**
+(shown to non-followers first, metrics after about 24 h). Judge it on 3-second hold and completion rate, not on views.
+Each alternate hook needs one extra VO line generated with the same voice and settings.
 
 ---
 
@@ -119,7 +158,7 @@ words are aligned for the kinetic type and the `.srt`, and the result is resampl
 |---|---|---|---|---|
 | F1 Hook | 0–4 s (0–1) | Macro on the clapstick hinge, already swinging (it cuts in on motion). It freezes 1 inch before the clap with a seeded micro-tremble. Macro → wide pull-back in log space over 3.5 s. "WHO IS THIS **FOR?**" rises through a mask, and FOR? is a red highlight sticker. | frame 0 is never empty | swing whoosh → a pitched-down "freeze" sting → music drops to a drone |
 | F2 Stakes | 4–8 s (2–3) | Iris **out of the slate** into plate P1, an empty screening room with a projector beam, with a slow push 1.00 → 1.06. Two-line headline; "An empty room." is a sticker. | iris from the hero (SVG ring, centred on the slate's projected point) | whoosh peaking on the cut, projector hum bed |
-| F3 Proof | 8–12 s (4–5) | The stat count-up slam (number and scale share one curve; the unit lands after), with an Inter source line underneath and P1 blurred behind. | hard cut on the bar, on motion | one tick per digit, a hit on the last digit |
+| F3 Proof | 8–12 s (4–5) | **"49%"** count-up slam (number and scale share one curve; the % lands after) + "of ad-driven sales come down to **the creative**". Source line in Inter: "NCSolutions, 2023 · ~450 CPG campaigns". P1 blurred behind. The VO here is line 3 ("no edit, no grade, no soundtrack…"). | hard cut on the bar, on motion | one tick per digit, a hit on the last digit |
 | F4 Footprints | 12–18 s (6–8) | Plate P2, a top-down sound-stage floor. The logo's two feet walk up toward the red T-mark, one step per beat, and each step lights its circuit traces. Signal stickers pop beside the steps, staggered 2–3 frames apart. | light sweep | one footstep per landing, panned L/R and physics-synced; soft pops at -20 dB |
 | F5 Slate fills | 18–28 s (9–13) | The last footprint hits the T-mark and we push through to the 3D clapperboard in front of plate P3 (a defocused film set). A slow orbit, with chalk writing **WHO / HOOK / FORMAT**, one field per bar, and a 5 % push on each. On FORMAT, 9:16 and 16:9 frame-lines snap over the set. | push / zoom-through | a chalk scratch per stroke, a soft hit per field |
 | F6 Cost | 28–35.5 s (14–17) | A split screen: P4 (a script page, warm and calm) against P5 (a huge film set, cold and costly). "an afternoon" against "**a reshoot**" (sticker). A red strike-line crosses the shoot side. A riser builds from 32 s and the clapstick swings open again. | push | riser into the gap |
