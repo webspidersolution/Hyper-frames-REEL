@@ -3,7 +3,8 @@
 //   other formats → <fmt>/index.html      (render with `npx hyperframes render <fmt>`; assets shared via a junction)
 // Inlines src/film.css, src/body.html, window.TL (timeline.json), src/physics.js, src/film.js and, as a module,
 // src/hero3d.js (Three.js). Placeholders in body.html: {{icon:name}} (assets/icons/name.svg), {{props:name}}
-// (src/props.mjs default export: (name, {fmt, W, H}) => svg string), {{W}} {{H}} {{FMT}}.
+// (src/props.mjs default export: (name, {fmt, W, H}) => svg string), {{W}} {{H}} {{FMT}}, {{P45}} (split-plate aspect).
+// Also inlines assets/audio/captions.json as window.CAPS (16:9 burned captions).
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -34,7 +35,7 @@ formats.forEach((fmt, i) => {
   const b = body
     .replace(/\{\{icon:([a-z0-9-]+)\}\}/g, (_, n) => icon(n))
     .replace(/\{\{props:([a-z0-9_-]+)\}\}/gi, (_, n) => (propsMod ? propsMod(n, ctx) : ''))
-    .replaceAll('{{W}}', W).replaceAll('{{H}}', H).replaceAll('{{FMT}}', fmt);
+    .replaceAll('{{W}}', W).replaceAll('{{H}}', H).replaceAll('{{FMT}}', fmt).replaceAll('{{P45}}', '5x4');
   const audio = fs.existsSync('assets/audio/mix.wav')
     ? `\n      <audio id="bgm" src="assets/audio/mix.wav" data-start="0" data-duration="${TL.duration}" data-track-index="10" data-volume="1"></audio>` : '';
   const html = `<!doctype html>
@@ -59,6 +60,7 @@ ${b}${audio}
     </div>
     <script>
 window.TL = ${JSON.stringify(TL)};
+window.CAPS = ${rd('assets/audio/captions.json') || '[]'};
 ${physics}
     </script>
     <script>

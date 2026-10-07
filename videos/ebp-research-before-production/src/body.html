@@ -1,19 +1,149 @@
-<!-- Starter: scene 1 = 3D hero + headline, scene 2 = end card. Replace with the approved shotlist. -->
+<!-- Research Before Production — 9 shots, one shared WebGL canvas (#gl) for the clapperboard, type in front layers above it.
+     Scene / front visibility, plate moves, footprints, the count-up, transitions and particles are driven by render(t)
+     in film.js; word rises and stickers are GSAP tweens. -->
+
+<!-- ===== scenes (backgrounds) ===== -->
 <div id="s1" class="scene">
-  <div class="glow" id="s1-glow" data-layout-allow-overflow></div>
-  <canvas class="gl" id="s1-gl" data-layout-allow-overflow></canvas>
-  <div class="abs disp" id="s1-head">
-    <div class="line"><span class="w"><span class="wi">Made</span></span> <span class="w"><span class="wi">in</span></span> <span class="w"><span class="wi">motion.</span></span></div>
-    <div class="line"><span class="w"><span class="wi">Built</span></span> <span class="w"><span class="wi">to</span></span> <span class="w"><span class="wi hl">land.</span></span></div>
-  </div>
+  <div class="plate bgp" id="s1-plate" data-layout-allow-overflow style="background-image:url(assets/photos/p3-set-{{FMT}}-blur.jpg)"></div>
+  {{props:circuit-sa}}
 </div>
 
 <div id="s2" class="scene">
-  <div class="glow" id="s2-glow" data-layout-allow-overflow></div>
-  <div class="abs eyebrow" id="s2-eye"><span class="w"><span class="wi">hyperreel</span></span></div>
-  <div class="abs disp" id="s2-title"><span class="w"><span class="wi">Your</span></span> <span class="w"><span class="wi hl">story</span></span> <span class="w"><span class="wi">here.</span></span></div>
+  <img class="plate" id="s2-plate" data-layout-allow-overflow src="assets/photos/p1-room-{{FMT}}.jpg" alt="" />
+  <div class="glow" id="s2-haze" data-layout-allow-overflow></div>
+  <div class="scrim" id="s2-scrim" data-layout-allow-overflow></div>
 </div>
 
+<div id="s3" class="scene">
+  <img class="plate" id="s3-plate" data-layout-allow-overflow src="assets/photos/p1-room-{{FMT}}-blur.jpg" alt="" />
+  <div class="glow red" id="s3-glow" data-layout-allow-overflow></div>
+</div>
+
+<div id="s4" class="scene">
+  <div id="s4-stage" data-layout-allow-overflow>
+    <div id="s4-plane" data-layout-allow-overflow>
+      <img class="plate" id="s4-plate" data-layout-allow-overflow src="assets/photos/p2-floor-{{FMT}}-ext.jpg" alt="" />
+      <div id="s4-mark" class="abs" style="width:2px;height:2px"></div>
+    </div>
+  </div>
+  <div class="scrim" id="s4-scrim" data-layout-allow-overflow></div>
+</div>
+
+<div id="s5" class="scene">
+  <div class="plate bgp" id="s5-plate" data-layout-allow-overflow style="background-image:url(assets/photos/p3-set-{{FMT}}-blur.jpg)"></div>
+  {{props:circuit-sb}}
+</div>
+
+<div id="s6" class="scene">
+  <div class="half" id="s6-a"><img class="plate" id="s6-a-plate" data-layout-allow-overflow src="assets/photos/p4-paper-{{P45}}.jpg" alt="" /></div>
+  <div class="half" id="s6-b"><img class="plate" id="s6-b-plate" data-layout-allow-overflow src="assets/photos/p5-shoot-{{P45}}.jpg" alt="" /></div>
+  <div class="scrim" id="s6-a-scrim" data-layout-allow-overflow></div>
+  <div class="scrim" id="s6-b-scrim" data-layout-allow-overflow></div>
+  <div class="abs" id="s6-bdim" style="background:#0a0a0a;opacity:0.84"></div>
+  <div class="fill" id="s6-dim" style="background:#0a0a0a;opacity:0"></div>
+</div>
+
+<div id="s7" class="scene">
+  <div class="plate bgp" id="s7-plate" data-layout-allow-overflow style="background-image:url(assets/photos/p3-set-{{FMT}}-blur.jpg)"></div>
+  {{props:circuit-sc}}
+  <div class="glow red" id="s9-glow" data-layout-allow-overflow></div>
+</div>
+
+<!-- ===== one vignette over every scene, the hero glow, the shared 3D layer + chalk dust ===== -->
+<div class="fill vig" id="vig"></div>
+<div class="glow" id="hero-glow" data-layout-allow-overflow></div>
+<canvas class="gl" id="gl" data-layout-allow-overflow></canvas>
+<canvas class="fx" id="fx" data-layout-allow-overflow></canvas>
+
+<!-- ===== front layers (type) ===== -->
+<div id="s1-front" class="front">
+  <div class="abs eyebrow" id="s1-eye"><span class="w" data-layout-allow-overflow><span class="wi">Before anyone yells "action"</span></span></div>
+  <div class="abs disp" id="s1-head">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Who</span></span> <span class="w" data-layout-allow-overflow><span class="wi">is</span></span> <span class="w" data-layout-allow-overflow><span class="wi">this</span></span></div>
+    <div class="line" id="s1-for"><span class="w" data-layout-allow-overflow><span class="wi"><span class="stk" id="s1-stk"><span class="box"></span><span class="dk">for?</span></span></span></span></div>
+  </div>
+</div>
+
+<div id="s2-front" class="front">
+  <div class="abs disp" id="s2-l1"><span class="w" data-layout-allow-overflow><span class="wi">A</span></span> <span class="w" data-layout-allow-overflow><span class="wi">beautiful</span></span> <span class="w" data-layout-allow-overflow><span class="wi">film.</span></span></div>
+  <div class="abs disp" id="s2-l2"><span class="w" data-layout-allow-overflow><span class="wi">An</span></span> <span class="w" data-layout-allow-overflow><span class="wi"><span class="stk" id="s2-stk"><span class="box"></span><span class="dk">empty room.</span></span></span></span></div>
+</div>
+
+<div id="s3-front" class="front">
+  <div class="abs disp" id="s3-num"><span class="w" data-layout-allow-overflow><span class="wi"><span id="s3-n">0</span><span id="s3-pct">%</span></span></span></div>
+  <div class="abs body" id="s3-cap">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">of advertising's sales lift</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">comes down to the creative.</span></span></div>
+  </div>
+  <div class="abs" id="s3-tags">
+    <span class="pill" id="s3-t1">Edit<span class="strike"></span></span>
+    <span class="pill" id="s3-t2">Grade<span class="strike"></span></span>
+    <span class="pill" id="s3-t3">Soundtrack<span class="strike"></span></span>
+  </div>
+  <div class="abs src" id="s3-src">
+    <div>NCSolutions · Five Keys to Advertising Effectiveness (2023)</div>
+    <div>Analysis of ~450 CPG ad campaigns, digital + TV</div>
+  </div>
+</div>
+
+<div id="s4-front" class="front">
+  <div class="abs disp" id="s4-head">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Your</span></span> <span class="w" data-layout-allow-overflow><span class="wi">audience</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">leaves</span></span> <span class="w" data-layout-allow-overflow><span class="wi">footprints.</span></span></div>
+  </div>
+  <div class="abs disp" id="s4-follow">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Follow</span></span> <span class="w" data-layout-allow-overflow><span class="wi">them</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi"><span class="stk" id="s4-stk"><span class="box"></span><span class="dk">first.</span></span></span></span></div>
+  </div>
+</div>
+
+<div id="s5-front" class="front">
+  <div class="abs eyebrow" id="s5-eye"><span class="w" data-layout-allow-overflow><span class="wi">Research decides</span></span></div>
+  <div class="abs disp" id="s5-head">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Research</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">decides:</span></span></div>
+  </div>
+  <div class="frameline" id="s5-f916"><span class="lab">9:16</span></div>
+  <div class="frameline" id="s5-f169"><span class="lab">16:9</span></div>
+</div>
+
+<div id="s6-front" class="front">
+  <div class="abs disp" id="s6-a1">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Change</span></span> <span class="w" data-layout-allow-overflow><span class="wi">it</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">on</span></span> <span class="w" data-layout-allow-overflow><span class="wi">paper?</span></span></div>
+  </div>
+  <div class="abs body" id="s6-a2"><span class="w" data-layout-allow-overflow><span class="wi">= an afternoon.</span></span></div>
+  <div class="abs disp" id="s6-b1">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">After</span></span> <span class="w" data-layout-allow-overflow><span class="wi">the</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">shoot?</span></span></div>
+  </div>
+  <div class="abs disp" id="s6-b2"><span class="w" data-layout-allow-overflow><span class="wi"><span class="stk" id="s6-stk"><span class="box"></span><span class="dk">= a reshoot.</span></span></span></span></div>
+  <div class="abs disp" id="s6-fin">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Research</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi"><span class="stk" id="s6-fstk"><span class="box"></span><span class="dk">first.</span></span></span></span></div>
+  </div>
+</div>
+
+<div id="s7-front" class="front">
+  <div class="abs disp" id="s7-head"><span class="w" data-layout-allow-overflow><span class="wi">Then</span></span> <span class="w" data-layout-allow-overflow><span class="wi"><span class="stk" id="s7-stk"><span class="box"></span><span class="dk">roll.</span></span></span></span></div>
+  <div id="s9-logo">
+    <img id="s9-fl" src="assets/brand/foot-l.png" alt="" />
+    <img id="s9-fr" src="assets/brand/foot-r.png" alt="" />
+  </div>
+  <div class="abs disp" id="s9-name">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Esha</span></span> <span class="w" data-layout-allow-overflow><span class="wi">Bargate</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Productions</span></span></div>
+  </div>
+  <div class="abs body" id="s9-tag">
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">Let's find your audience</span></span></div>
+    <div class="line"><span class="w" data-layout-allow-overflow><span class="wi">before we frame a single shot.</span></span></div>
+  </div>
+  <div class="abs" id="s9-cta"><span class="w" data-layout-allow-overflow><span class="wi"><span class="cta">Book a strategy call</span></span></span></div>
+  <div class="abs body" id="s9-url"><span class="w" data-layout-allow-overflow><span class="wi">eshabargateproductions.com</span></span></div>
+</div>
+
+<!-- ===== overlays ===== -->
+<div id="caps"><span id="caps-t"></span></div>
 <svg id="t-ring" data-layout-allow-overflow><circle class="rw" /><circle class="rr" /></svg>
 <div id="t-light" data-layout-allow-overflow></div>
 <div id="grain"></div>

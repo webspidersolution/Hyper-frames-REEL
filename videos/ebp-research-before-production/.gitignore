@@ -6,3 +6,5 @@ assets/audio/mix_raw.wav
 snapshots/
 renders/
 node_modules/
+16x9/assets
+16x9/snapshots/

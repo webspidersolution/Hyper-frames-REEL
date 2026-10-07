@@ -209,7 +209,7 @@
       "align": "peak"
     },
     {
-      "at": 36.370999999999995,
+      "at": 35.616,
       "lib": "whoosh-short",
       "gain": -15,
       "align": "peak"
@@ -376,7 +376,16 @@
     "esha": 42.041,
     "lets": 44.101,
     "before": 45.951,
-    "shot": 47.406
+    "shot": 47.406,
+    "change2": 35.636,
+    "empty": 9.533,
+    "beautiful": 5.613,
+    "audience1": 16.491,
+    "productions": 43.166,
+    "single": 47.006,
+    "tells": 25.833,
+    "whether": 29.513,
+    "that2": 37.426
   },
   "three": "0.181.2"
 }

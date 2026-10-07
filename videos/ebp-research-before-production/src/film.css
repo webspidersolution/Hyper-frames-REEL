@@ -1,38 +1,93 @@
-/* hyperreel starter styles. Swap the font files + tokens for the brand's. No CSS variables on captured layers. */
-@font-face { font-family: "Display"; src: url("assets/fonts/Poppins-ExtraBold.ttf") format("truetype"); font-weight: 800; }
-@font-face { font-family: "UI"; src: url("assets/fonts/Poppins-SemiBold.ttf") format("truetype"); font-weight: 600; }
-@font-face { font-family: "UI"; src: url("assets/fonts/Poppins-Medium.ttf") format("truetype"); font-weight: 500; }
+/* Research Before Production — EBP brand: ink #0A0A0A · surface #141414 · chalk #EDEDED · EBP red #A81A1D (lip #7A1418,
+   glint #DC2626) · muted #A1A1AA. Space Grotesk (display) + Inter (UI) are the brand's site fonts; Caveat = chalk. */
+@font-face { font-family: "Display"; src: url("assets/fonts/SpaceGrotesk-Bold.ttf") format("truetype"); font-weight: 700; }
+@font-face { font-family: "Display"; src: url("assets/fonts/SpaceGrotesk-Medium.ttf") format("truetype"); font-weight: 500; }
+@font-face { font-family: "UI"; src: url("assets/fonts/Inter-Regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "UI"; src: url("assets/fonts/Inter-Medium.ttf") format("truetype"); font-weight: 500; }
+@font-face { font-family: "UI"; src: url("assets/fonts/Inter-SemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "UI"; src: url("assets/fonts/Inter-Bold.ttf") format("truetype"); font-weight: 700; }
+@font-face { font-family: "Chalk"; src: url("assets/fonts/Caveat-Bold.ttf") format("truetype"); font-weight: 700; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { margin: 0; overflow: hidden; background: #0d0d10; }
-#root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "UI", sans-serif; color: #f2efe9;
-        -webkit-font-smoothing: antialiased; }
-.scene { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; background-color: #0d0d10;
-         background-image: radial-gradient(110% 70% at 50% 40%, rgba(34,30,40,1) 0%, rgba(13,13,16,1) 70%); }
-.scene + .scene { opacity: 0; }
+html, body { margin: 0; overflow: hidden; background: #0a0a0a; }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "UI", sans-serif; color: #ededed;
+        -webkit-font-smoothing: antialiased; background: #0a0a0a; }
+.scene { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; background-color: #0a0a0a; opacity: 0; }
+#s1 { opacity: 1; }
+.front { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; }
+#s1-front { opacity: 1; }
 .abs { position: absolute; left: 0; top: 0; }
-canvas.gl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
-.glow { position: absolute; border-radius: 50%; pointer-events: none;
-        background: radial-gradient(circle, rgba(255,90,60,0.34) 0%, rgba(255,90,60,0.12) 34%, rgba(255,90,60,0) 68%); }
-#grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.25; mix-blend-mode: overlay; z-index: 50;
+.fill { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+.plate { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.bgp { background-size: cover; background-position: 50% 50%; background-repeat: no-repeat; }
+canvas.gl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; opacity: 0; }
+canvas.fx { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+
+/* backgrounds */
+.glow { position: absolute; left: 0; top: 0; border-radius: 50%; pointer-events: none;
+        background: radial-gradient(circle, rgba(255,206,160,0.22) 0%, rgba(255,170,120,0.08) 36%, rgba(255,160,110,0) 68%); }
+.glow.red { background: radial-gradient(circle, rgba(220,38,38,0.28) 0%, rgba(168,26,29,0.10) 38%, rgba(168,26,29,0) 70%); }
+.vig { background: radial-gradient(130% 90% at 50% 50%, rgba(10,10,10,0) 52%, rgba(10,10,10,0.78) 100%); }
+.scrim { position: absolute; border-radius: 50%; pointer-events: none;
+         background: radial-gradient(closest-side, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.45) 55%, rgba(10,10,10,0) 100%); }
+.circuit { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; opacity: 0.1; }
+#grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.22; mix-blend-mode: overlay; z-index: 60;
          background-image: url("assets/tex/grain.png"); background-size: 256px 256px; }
 
 /* type: masked words; hidden words are also transparent (film.js rise/lift) */
-.disp { font-family: "Display", sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 1.04; white-space: nowrap; }
-.line { display: block; white-space: nowrap; }
+.disp { font-family: "Display", sans-serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1.02; white-space: nowrap;
+        text-transform: uppercase; color: #ededed; }
+.line { display: block; white-space: nowrap; line-height: 1.06; }
 .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.06em 0.12em 0.18em; margin: -0.06em -0.12em -0.18em; }
-.wi { display: inline-block; }
-.hl { color: #ffffff; background-color: #ff4b2b; padding: 0 0.12em; margin: 0 -0.04em; border-radius: 0.12em; box-shadow: 0 0.06em 0 #a3200f; }
-.eyebrow { font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; white-space: nowrap; color: #b9b3aa; }
+.wi { display: inline-block; opacity: 0; }
+.eyebrow { font-family: "UI", sans-serif; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; color: #a1a1aa; }
+.body { font-family: "UI", sans-serif; font-weight: 500; letter-spacing: -0.005em; line-height: 1.18; white-space: nowrap; color: #ededed; }
+.src { font-family: "UI", sans-serif; font-weight: 500; color: #a1a1aa; white-space: nowrap; line-height: 1.35; }
 .nowrap { white-space: nowrap; }
 
-/* transitions (build these instead of shader transitions when a WebGL layer is present) */
-/* iris ring = SVG strokes, so the width stays bold at any radius (a scaled CSS border is a hairline while the hole is small,
-   and a bare small hole reads as a rendering bug) */
+/* highlight sticker: chalk text on EBP red with a darker lip. The box wipes in from the left (scaleX, set by GSAP;
+   the text is chalk on dark AND on red, so no colour flip is needed). */
+.stk { position: relative; display: inline-block; line-height: 1.0; }
+.stk .box { position: absolute; left: -0.12em; right: -0.12em; top: 0.02em; bottom: -0.02em; background: #a81a1d;
+            border-radius: 0.1em; box-shadow: 0 0.07em 0 #7a1418; transform-origin: 0% 50%; }
+.stk .dk { position: relative; color: #ededed; }
+.pill { display: inline-block; font-family: "UI", sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+        color: #ededed; border: 3px solid rgba(237,237,237,0.85); border-radius: 0.5em; padding: 0.32em 0.62em 0.28em; position: relative; }
+.pill .strike { position: absolute; left: -0.25em; right: -0.25em; top: 50%; height: 0.16em; margin-top: -0.08em; background: #dc2626;
+                border-radius: 0.08em; transform-origin: 0 50%; }
+.tag { position: absolute; font-family: "Display", sans-serif; font-weight: 700; letter-spacing: 0.02em; color: #ededed;
+       background: #a81a1d; box-shadow: 0 0.08em 0 #7a1418; border-radius: 0.14em; padding: 0.12em 0.36em 0.08em; white-space: nowrap; }
+.cta { display: inline-block; font-family: "UI", sans-serif; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ededed;
+       background: #a81a1d; box-shadow: 0 0.12em 0 #7a1418; border-radius: 0.6em; padding: 0.7em 1.1em 0.62em; white-space: nowrap; }
+.frameline { position: absolute; border: 4px solid rgba(237,237,237,0.92); border-radius: 18px; opacity: 0; }
+.frameline .lab { position: absolute; left: 14px; top: -0.95em; font-family: "UI", sans-serif; font-weight: 700; font-size: 30px;
+                  letter-spacing: 0.08em; color: #0a0a0a; background: #ededed; border-radius: 8px; padding: 0.12em 0.4em 0.06em; }
+
+/* footprints on the tilted floor */
+#s4-stage { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+#s4-plane { position: absolute; transform-style: preserve-3d; }
+#s4-plane .plate { position: absolute; }
+.foot { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; opacity: 0; }
+.foot img { display: block; width: 100%; height: 100%; }
+
+/* split screen */
+.half { position: absolute; overflow: hidden; }
+.half .plate { position: absolute; }
+
+/* end card */
+#s9-logo { position: absolute; }
+#s9-logo img { position: absolute; display: block; }
+
+/* 16:9 captions (burned) */
+#caps { position: absolute; left: 0; width: 100%; text-align: center; z-index: 55; pointer-events: none; }
+#caps span { display: inline-block; font-family: "UI", sans-serif; font-weight: 600; color: #ededed; white-space: nowrap;
+             background: rgba(10,10,10,0.78); border-radius: 0.4em; padding: 0.22em 0.6em 0.2em; }
+
+/* transitions (built by hand: a WebGL layer is present) */
 #t-ring { position: absolute; left: 0; top: 0; overflow: visible; opacity: 0; z-index: 40; pointer-events: none;
-          filter: drop-shadow(0 0 22px rgba(255,190,130,0.8)); }
+          filter: drop-shadow(0 0 18px rgba(255,200,150,0.55)); }
 #t-ring circle { fill: none; }
-#t-ring .rw { stroke: #ffffff; stroke-width: 46; }
-#t-ring .rr { stroke: #ff4b2b; stroke-width: 30; }
+#t-ring .rw { stroke: #ededed; stroke-width: 40; }
+#t-ring .rr { stroke: #a81a1d; stroke-width: 24; }
 #t-light { position: absolute; opacity: 0; z-index: 40; pointer-events: none; mix-blend-mode: screen;
-           background: radial-gradient(ellipse at center, rgba(255,251,236,1) 0%, rgba(255,232,170,0.85) 20%, rgba(255,196,110,0.32) 44%, rgba(255,190,110,0) 66%); }
+           background: radial-gradient(ellipse at center, rgba(255,250,240,1) 0%, rgba(255,226,186,0.8) 22%, rgba(255,190,140,0.3) 46%, rgba(255,180,130,0) 66%); }
