@@ -48,6 +48,9 @@ the T-mark (it no longer looks skewed). Sticker offsets were tightened to stay i
 - Known, accepted: the F4 sticker tags carry `data-layout-allow-occlusion`, because they sit under the mostly clear
   global vignette on purpose.
 
-## Draft (pending)
-- Pull real frames and ±1 frame around every cut with `tools/review.py` once `renders/draft_*.mp4` exist; check
-  loudness.
+## Draft
+- Cloud drafts were stopped at the user's request; the user renders the 60 fps finals on their GPU PC
+  (`RENDER-ON-PC.md`). Review the real render there with `python tools/review.py <mp4>` and with
+  `--at 5.33,5.37,16.04,16.08,24.96,25.0,32.1,32.14,40.13,40.17,41.02,41.06 --name cuts` (±1 frame around every cut).
+- Still unverified until that render: the sound (the score and SFX are composed in code and unheard), motion in real
+  time, and the -14 LUFS / ≤ -1 dBTP master after the AAC mux.
