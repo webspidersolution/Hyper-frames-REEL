@@ -24,7 +24,7 @@ video should have vo from elevenlabs and image real logo from esha and if u need
   (534×772). `tools/prep_brand.py` un-mattes only the outer edge halo, keeps the white circuit traces, and splits it
   into `foot-l.png` / `foot-r.png` (+ `logo-meta.json`).
 - `assets/photos/p1…p5-*.jpg` (JPEG q93 of the PNG originals) — photo plates generated on OpenArt with **GPT Image 2.5 Flare**, text2image, 1K, quality
-  low (5 credits each, 10 images = 50 credits). The prompts are in PLAN.md §8. P1 empty screening room, P2 sound-stage
+  low. 10 images; the account went from 4,778 to 4,708 credits (70 used, against a quote of 5 per image). The prompts are in PLAN.md §8. P1 empty screening room, P2 sound-stage
   floor with a red T-mark, P3 defocused film set (behind the 3D clapperboard), P4 script page ("on paper"), P5 big film
   set ("after the shoot"). No AI-rendered text is used on screen.
 - `assets/fonts/` — Space Grotesk 500/700 (display) and Inter 400–700 (UI), the brand's site fonts. OFL, from Google Fonts.
